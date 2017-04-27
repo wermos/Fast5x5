@@ -1,12 +1,18 @@
 #include<boost/simd/pack.hpp>
 #include<boost/simd/constant/zero.hpp>
 #include<boost/simd/function/aligned_store.hpp>
+#include<boost/simd/algorithm/reduce.hpp>
+#include<boost/simd/function/dot.hpp>
 #include<iostream>
 #include<cstring>
 
 
 #ifndef SIZE
 #define SIZE 4
+#endif
+
+#ifndef VECSIZE
+#define VECSIZE 8
 #endif
 
 namespace bs = boost::simd;
@@ -16,6 +22,12 @@ class PaddedMatrix;
 template <typename T, int MatSize, int VecSize>
 void matrix_mul(PaddedMatrix<T, MatSize, VecSize> &a,
                 PaddedMatrix<T, MatSize, VecSize> &b,
+                PaddedMatrix<T, MatSize, VecSize> &c);
+
+template <typename T, int MatSize, int VecSize>
+void matrix_mul_sym(PaddedMatrix<T, MatSize, VecSize> &a,
+                PaddedMatrix<T, MatSize, VecSize> &b,
+                //T *b,
                 PaddedMatrix<T, MatSize, VecSize> &c);
 
 template <typename T, int MatSize, int VecSize>
@@ -53,6 +65,7 @@ class PaddedMatrix {
 
 
     friend void matrix_mul<T, MatSize, VecSize>(matrix_t &a, matrix_t &b, matrix_t &c);
+    friend void matrix_mul_sym<T, MatSize, VecSize>(matrix_t &a, matrix_t &b, matrix_t &c);
     friend std::ostream & operator<<<T, MatSize, VecSize>(std::ostream &os, matrix_t &mat);
     private:
     alignas(sizeof(T)*VecSize) float array[MatSize*VecSize] = {0};
@@ -77,6 +90,62 @@ static inline void matrix_mul(PaddedMatrix<T, MatSize, VecSize> &a,
     }
 }
 
+
+template <typename T, int MatSize, int VecSize>
+static inline void matrix_mul_sym(PaddedMatrix<T, MatSize, VecSize> &a,
+                PaddedMatrix<T, MatSize, VecSize> &b,
+                PaddedMatrix<T, MatSize, VecSize> &c)
+{
+    using pack_t = bs::pack<T, VecSize>;
+    for (int i=0; i<MatSize; i++) {
+        pack_t row(&a.array[VecSize*i]);
+
+        for (int j=0; j<MatSize; j++) {
+            pack_t row_transpose(&b.array[VecSize*j]);
+            c.array[VecSize*i + j] = bs::dot(row, row_transpose);
+        }
+    }
+}
+
+
+/*
+template <typename T, int MatSize, int VecSize>
+static inline void matrix_mul_sym(PaddedMatrix<T, MatSize, VecSize> &a,
+                //PaddedMatrix<T, MatSize, VecSize> &b,
+                T b[MatSize*MatSize],
+                PaddedMatrix<T, MatSize, VecSize> &c)
+{
+    PaddedMatrix<T, MatSize, VecSize> t_b;
+    for (int i=0; i<MatSize; i++) {
+        for (int j=0; j<MatSize; j++) {
+            t_b.array[j*VecSize+i] = b[i*MatSize+j];
+        }
+    }
+    matrix_mul<T, MatSize, VecSize>(a, t_b, c);
+}
+*/
+
+/*
+template <typename T, int MatSize, int VecSize>
+static inline void matrix_mul_sym(PaddedMatrix<T, MatSize, VecSize> &a,
+                PaddedMatrix<T, MatSize, VecSize> &b,
+                PaddedMatrix<T, MatSize, VecSize> &c)
+{
+    for (int i=0; i<MatSize; i++) {
+        int mult1 = i*VecSize;
+        for (int j=0; j<MatSize; j++) {
+            int mult2 = j*VecSize;
+            T sum = 0;
+            for (int k=0; k<MatSize; k++) {
+                sum += a.array[mult1 + k] * b.array[mult2 + k];
+            }
+            c.array[mult1+j] = sum;
+        }
+    }
+}
+*/
+
+
 int main(int argc, char **argv) {
     alignas(32) float a[SIZE*SIZE];
     alignas(32) float b[SIZE*SIZE];
@@ -99,7 +168,7 @@ int main(int argc, char **argv) {
         }
     }
 
-    PaddedMatrix<float, SIZE, 8> pa, pb, pf;
+    PaddedMatrix<float, SIZE, VECSIZE> pa, pb, pf;
     pa = a;
     pb = b;
 
@@ -107,8 +176,10 @@ int main(int argc, char **argv) {
 //    std::cout << pb << std::endl;
 
     for (unsigned int i=0; i<200000000; i++) {
-        matrix_mul<float, SIZE, 8>(pa, pb, pf);
-        matrix_mul<float, SIZE, 8>(pf, pb, pa);
+        //matrix_mul<float, SIZE, VECSIZE>(pb, pa, pf);
+        //matrix_mul_sym<float, SIZE, VECSIZE>(pf, pb, pa);
+        matrix_mul_sym<float, SIZE, VECSIZE>(pb, pa, pf);
+        matrix_mul<float, SIZE, VECSIZE>(pf, pb, pa);
     }
 
     std::cout << pa << std::endl;
