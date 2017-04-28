@@ -31,8 +31,8 @@ int main(int argc, char **argv) {
 //    std::cout << pb << std::endl;
 
     for (unsigned int i=0; i<200000000; i++) {
-        pf = pb * pa;
-        pa = pb * pf;
+        pf = pb * pa.transpose();
+        pa = pf * pb;
     }
 
     std::cout << pa << std::endl;
