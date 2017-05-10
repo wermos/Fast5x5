@@ -39,8 +39,8 @@ int main(int argc, char **argv) {
 //    std::cout << pb << std::endl;
 
     for (unsigned int i=0; i<200000000; i++) {
-        matrix_mul<M>(pb, pa, pf);
-        matrix_mul<M>(pf, pb, pa);
+        matrix_mul_m_m<M>(pb, pa, pf);
+        matrix_mul_m_m<M>(pf, pb, pa);
         //matrix_mul_sym<M>(pb, pa, pf);
         //matrix_mul<M>(pf, pb, pa);
     }
