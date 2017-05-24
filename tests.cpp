@@ -196,9 +196,32 @@ void test_column_scalar_product() {
 }
 
 void test_identity() {
-    IdentityMatrix<float, 5, 8> A;
+    //IdentityMatrix<float, 5, 8> A;
+    BaseMatrix<float, 5, 8> A(1);
     std::cout << "Testing identity matrix" << std::endl;
     std::cout << A;
+}
+
+void test_matrix_inv() {
+    alignas(32) float input[3*3] = {
+        1, 0, 0,
+        0, 2, 0,
+        0, 0, 4,
+    };
+    alignas(32) float truth[3*3] = {
+        1, 0, 0,
+        0, 0.5, 0,
+        0, 0, 0.25,
+    };
+
+    BaseMatrix<float, 3, 4> A(input), I;
+    matrix_inv<BaseMatrix<float, 3, 4>, 20>(A, I);
+    std::cout << "Testing Matrix inversion" << std::endl;
+    std::cout << "\tOutput: " << std::endl;
+    print_matrix<float>(I.dump_array(), 3, 3);
+    std::cout << "\tTruth: " << std::endl;
+    print_matrix<float>(truth, 3, 3);
+    std::cout << std::endl;
 }
 
 int main(int argc, char **argv) {
@@ -209,5 +232,6 @@ int main(int argc, char **argv) {
     test_column_dot_product();
     test_column_scalar_product();
     test_identity();
+    test_matrix_inv();
     return 0;
 }
