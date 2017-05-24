@@ -1,2 +1,4 @@
-
-For the moment, just a place to store the Docker images.
+# FastMatrix
+## Dependencies
+ * libboost (>= 1.61)
+ * bsimd 
