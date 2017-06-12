@@ -183,38 +183,59 @@ pack_t& protect_for_division(pack_t &vector) {
     return vector;
 }
 
-template <typename M, int N>
-void matrix_inv(M &A, M &X) {
-    using pack_t = bs::pack<typename M::ElementType, M::VecSize>;
-    static BaseMatrix<typename M::ElementType, M::MatSize, M::MaxVecSize> Id(1);
-    M R, P, AP, AlphaP, AlphaAP;
-    pack_t alpha, rs_old, rs_new, tmp;
+template <typename M>
+void matrix_inv(M &a, M &inv) {
+    /* Computes inverse of `a` by using Cholesky decomposition.
+     * M must be symmetric, positive-definite.
+     * a = t(r)*r, where r is upper triangular.
+     * a^-1 = (r^-1)*t(r^-1) = inv
+     */
+    M r;
+    using pack_t = typename M::pack_t;
 
-    X = Id;
-    matrix_sub(Id, A, R);
-    P = R;
+    // Cholesky decomposition
+    for (int i=0; i<M::MatSize; i++) {
+        pack_t sum_row = bs::Zero<pack_t>();
 
-    rs_old = column_dot_product(R, R);
-    for (int i=0; i<N && !bs::none(rs_old); i++) {
-        matrix_mul_m_m(A, P, AP);
-        tmp = column_dot_product(P, AP);
-        alpha = rs_old / protect_for_division<pack_t, M::MatSize>(tmp);
-        column_scalar_product(alpha, P, AlphaP);
-        matrix_add(X, AlphaP, X);
-        column_scalar_product(alpha, AP, AlphaAP);
-        matrix_sub(R, AlphaAP, R);
-        rs_new = column_dot_product(R, R);
-        tmp = rs_new / protect_for_division<pack_t, M::MatSize>(rs_old);
-        column_scalar_product(tmp, P, P);
-        matrix_add(R, P, P);
-        rs_old = rs_new;
-    } /*
-    matrix_mul_m_m(A, P, AP);
-    tmp = column_dot_product(P, AP);
-    alpha = rs_old / protect_for_division<pack_t, M::MatSize>(tmp);
-    column_scalar_product(alpha, P, AlphaP);
-    matrix_add(X, AlphaP, X);
-    */
+        for (int j=0; j<i; j++) {
+            pack_t cur_row(&r.array[j*M::VecSize]);
+            pack_t factor {r.array[j*M::VecSize+i]};
+            sum_row += cur_row*factor;
+        }
+
+        pack_t res_row(&a.array[i*M::VecSize]);
+        res_row -= sum_row;
+        pack_t diviser {1/std::sqrt(res_row[i])};
+        res_row *= diviser;
+        bs::aligned_store(res_row, &r.array[i*M::VecSize]);
+    }
+
+    M inv_r;
+    static M Id(1);
+    // Inversion of R by backward substitution
+    for (int i=(M::MatSize-1); i>=0; i--) {
+        pack_t sum_row = bs::Zero<pack_t>();
+
+        for (int j=(M::MatSize-1); j > i; j--) {
+            pack_t cur_row(&inv_r.array[j*M::VecSize]);
+            pack_t factor {r.array[i*M::VecSize+j]};
+            sum_row += cur_row*factor;
+        }
+
+        pack_t res_row(&Id.array[i*M::VecSize]);
+        res_row -= sum_row;
+        pack_t diviser {1/r.array[i*M::VecSize+i]};
+        res_row *= diviser;
+        bs::aligned_store(res_row, &inv_r.array[i*M::VecSize]);
+    }
+
+
+    // Compute inverse of initial matrix
+    /* TODO: Since inv_r is a triangular matrix there is room
+     * for optimisation on this product
+     */ 
+    matrix_mul_mt_m(inv_r, inv_r, inv);
+
 }
 
 template <typename T, int MatrixSize, int MaximumVectorSize>
@@ -290,6 +311,7 @@ class BaseMatrix {
     friend void matrix_mul_m_m<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
     friend void matrix_mul_mt_m<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
     friend void matrix_mul_m_mt<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
+    friend void matrix_inv<matrix_t>(matrix_t &a, matrix_t &b);
     friend bs::pack<ElementType, VecSize> column_dot_product<matrix_t>(matrix_t &a, matrix_t &b);
     friend void column_scalar_product<matrix_t, pack_t>(pack_t &scalar, matrix_t &b, matrix_t &c);
     template <typename M, int N> friend void matrix_inv(M &a, M &b);

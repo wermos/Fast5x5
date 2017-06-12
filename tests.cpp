@@ -215,7 +215,7 @@ void test_matrix_inv() {
     };
 
     BaseMatrix<float, 3, 4> A(input), I;
-    matrix_inv<BaseMatrix<float, 3, 4>, 20>(A, I);
+    matrix_inv(A, I);
     std::cout << "Testing Matrix inversion" << std::endl;
     std::cout << "\tOutput: " << std::endl;
     print_matrix<float>(I.dump_array(), 3, 3);

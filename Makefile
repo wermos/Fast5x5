@@ -10,7 +10,7 @@ all:
 
 test: bin/tests
 
-bin/tests: tests.cpp
+bin/tests: tests.cpp fast_matrix.hpp
 	$(CXX) $(CPATH) $(CXXFLAGS) $< -o $@
 	$@
 
