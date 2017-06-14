@@ -309,6 +309,6 @@ class BaseMatrix {
     friend std::ostream & operator<<<T, NRows, NCols, MaxVecSize>(std::ostream &os, matrix_t &mat);
 
     protected:
-    alignas(sizeof(T)*VecSize) float array[NRows*VecSize] = {0};
+    alignas(sizeof(T)*VecSize) T array[NRows*VecSize] = {0};
 
 };
