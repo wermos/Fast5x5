@@ -1,5 +1,6 @@
 #include<iostream>
 #include<cstring>
+#include<array>
 
 #include<boost/simd/pack.hpp>
 #include<boost/simd/constant/zero.hpp>
@@ -284,10 +285,10 @@ class BaseMatrix {
         return *this;
     }
 
-    ElementType* dump_array() {
-        ElementType* returned_array = new ElementType[NRows*NCols];
+    std::array<ElementType, NRows*NCols> dump_array() const {
+        std::array<ElementType, NRows*NCols> returned_array;
         if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
-            std::memcpy(returned_array, this->array, sizeof(T)*NRows*VecSize);
+            std::memcpy(&returned_array[0], this->array, sizeof(T)*NRows*VecSize);
         }
         else {
             for (int i=0; i<NRows; i++) {
