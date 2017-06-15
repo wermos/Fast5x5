@@ -211,8 +211,7 @@ class Inverse {
         /* TODO: Since inv_r is a triangular matrix there is room
          * for optimisation on this product
          */ 
-        matrix_mul_mt_m(inv_r, inv_r, inv);
-
+        matrix_mul_m_mt(inv_r, inv_r, inv);
     }
 };
 
@@ -220,7 +219,7 @@ template <typename T, int MaximumVectorSize>
 class Inverse<T, 2, 2, MaximumVectorSize> {
     using M = BaseMatrix<T, 2, 2, MaximumVectorSize>;
     public:
-    static void matrix_inv(M &a, M &inv) {
+    static void inverse(M &a, M &inv) {
         T inv_det = 1/(a.array[0]*a.array[M::VecSize + 1]- a.array[1]*a.array[1]);
         inv.array[0] = inv_det*a.array[M::VecSize + 1];
         inv.array[1] = inv.array[M::VecSize] = -inv_det*a.array[1];
