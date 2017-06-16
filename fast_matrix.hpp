@@ -44,7 +44,7 @@ Matrix<T, MatrixSize, MaxVecSize> transpose(TransposedMatrix<T, MatrixSize, MaxV
 }
 */
 template <typename T, int NRows, int NCols, int MaxVecSize>
-std::ostream & operator<<(std::ostream &os, BaseMatrix<T, NRows, NCols, MaxVecSize> &mat) {
+std::ostream & operator<<(std::ostream &os, const BaseMatrix<T, NRows, NCols, MaxVecSize> &mat) {
 // Matrix printing function
     for (int i=0; i<NRows; i++) {
         for (int j=0; j<NCols; j++) {
@@ -243,9 +243,9 @@ class BaseMatrix {
 
     using matrix_t = BaseMatrix<T, NumberRows, NumberCols, MaximumVectorSize>;
     using pack_t = bs::pack<T, VecSize>;
-    using ElementType = T;
 
     public:
+    using ElementType = T;
     static constexpr int NRows = NumberRows;
     static constexpr int NCols = NumberCols;
 
@@ -306,7 +306,7 @@ class BaseMatrix {
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_mt_m(BaseMatrix<U, m, l, MVS> &a, BaseMatrix<U, m, n, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_m_mt(BaseMatrix<U, l, m, MVS> &a, BaseMatrix<U, n, m, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
     friend class Inverse<T, NRows, NCols, MaxVecSize>;
-    friend std::ostream & operator<<<T, NRows, NCols, MaxVecSize>(std::ostream &os, matrix_t &mat);
+    friend std::ostream & operator<<<T, NRows, NCols, MaxVecSize>(std::ostream &os, const matrix_t &mat);
 
     protected:
     alignas(sizeof(T)*VecSize) T array[NRows*VecSize] = {0};
