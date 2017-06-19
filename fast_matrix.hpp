@@ -21,6 +21,9 @@ constexpr int nearest_power_of_two(int min_value, int current_value) {
 template <typename T, int NRows, int NCols, int MaxVecSize>
 class BaseMatrix;
 
+template <typename T, int NCols, int MaxVecSize>
+class Vector;
+
 /*
 template <typename T, int MatrixSize, int MaxVecSize>
 class IdentityMatrix;
@@ -155,6 +158,19 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n,
             // Dot is a slow operation but it will get better with newer hardware.
             c.array[ResVecSize*i + j] = bs::dot(row, row_transpose);
         }
+    }
+}
+
+template <typename T, int l, int m, int MVS>
+static inline void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS> &b, Vector<T, l, MVS> &c) {
+    static constexpr int VecSize = BaseMatrix<T, l, m, MVS>::VecSize;
+
+    using pack_t = bs::pack<T, VecSize>;
+    pack_t vector(&b.array[0]);
+
+    for (int i=0; i < l; i++) {
+        pack_t row(&a.array[VecSize*i]);
+        c.array[i] = bs::dot(row, vector);
     }
 }
 
@@ -305,10 +321,21 @@ class BaseMatrix {
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_m_m(BaseMatrix<U, l, m, MVS> &a, BaseMatrix<U, m, n, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_mt_m(BaseMatrix<U, m, l, MVS> &a, BaseMatrix<U, m, n, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_m_mt(BaseMatrix<U, l, m, MVS> &a, BaseMatrix<U, n, m, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
+    template <typename U, int l, int m, int MVS> friend void matrix_mul_m_v(BaseMatrix<U, l, m, MVS> &a, Vector<U, m, MVS> &b, Vector<U, l, MVS> &c);
     friend class Inverse<T, NRows, NCols, MaxVecSize>;
     friend std::ostream & operator<<<T, NRows, NCols, MaxVecSize>(std::ostream &os, const matrix_t &mat);
 
     protected:
     alignas(sizeof(T)*VecSize) T array[NRows*VecSize] = {0};
 
+};
+
+template <typename T, int NumberCols, int MaximumVectorSize>
+class Vector: public BaseMatrix<T, 1, NumberCols, MaximumVectorSize> {
+    public:
+    using BaseMatrix<T, 1, NumberCols, MaximumVectorSize>::BaseMatrix;
+    using BaseMatrix<T, 1, NumberCols, MaximumVectorSize>::operator=;
+
+    private:
+    template <typename U, int l, int m, int MVS> friend void matrix_mul_m_v(BaseMatrix<U, l, m, MVS> &a, Vector<U, m, MVS> &b, Vector<U, l, MVS> &c);
 };
