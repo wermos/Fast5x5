@@ -336,6 +336,11 @@ class Vector: public BaseMatrix<T, 1, NumberCols, MaximumVectorSize> {
     using BaseMatrix<T, 1, NumberCols, MaximumVectorSize>::BaseMatrix;
     using BaseMatrix<T, 1, NumberCols, MaximumVectorSize>::operator=;
 
+    protected:
+    using vector_t = Vector<T, NumberCols, MaximumVectorSize>;
+
     private:
     template <typename U, int l, int m, int MVS> friend void matrix_mul_m_v(BaseMatrix<U, l, m, MVS> &a, Vector<U, m, MVS> &b, Vector<U, l, MVS> &c);
+    friend void matrix_add<vector_t>(vector_t &a, vector_t &b, vector_t &c);
+    friend void matrix_sub<vector_t>(vector_t &a, vector_t &b, vector_t &c);
 };
