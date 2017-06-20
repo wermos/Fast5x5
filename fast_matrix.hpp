@@ -156,7 +156,7 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n,
         for (int j=0; j<n; j++) {
             pack_t row_transpose(&b.array[VecSize*j]);
             // Dot is a slow operation but it will get better with newer hardware.
-            c.array[ResVecSize*i + j] = bs::dot(row, row_transpose);
+            c.array[ResVecSize*i + j] = bs::sum(row * row_transpose);
         }
     }
 }
@@ -170,7 +170,7 @@ static inline void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS>
 
     for (int i=0; i < l; i++) {
         pack_t row(&a.array[VecSize*i]);
-        c.array[i] = bs::dot(row, vector);
+        c.array[i] = bs::sum(row * vector);
     }
 }
 
@@ -308,10 +308,24 @@ class BaseMatrix {
         }
         else {
             for (int i=0; i<NRows; i++) {
-                std::memcpy(&returned_array[i*NCols], &this->array[i*VecSize], sizeof(T)*NCols);
+                //std::memcpy(&returned_array[i*NCols], &this->array[i*VecSize], sizeof(T)*NCols);
+                for (int j=0; j<NCols; j++) {
+                    returned_array[i*NCols+j] = this->array[i*VecSize+j];
+                }
             }
         }
         return returned_array;
+    }
+
+    void store(T* addr) {
+        if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
+            std::memcpy(addr, this->array, sizeof(T)*NRows*VecSize);
+        }
+        else {
+            for (int i=0; i<NRows; i++) {
+                std::memcpy(addr, &this->array[i*VecSize], sizeof(T)*NCols);
+            }
+        }
     }
 
 
