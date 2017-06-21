@@ -6,6 +6,7 @@
 #include<boost/simd/constant/zero.hpp>
 #include<boost/simd/constant/one.hpp>
 #include<boost/simd/function/aligned_store.hpp>
+#include<boost/simd/function/load.hpp>
 #include<boost/simd/function/dot.hpp>
 #include<boost/simd/function/shuffle.hpp>
 #include<boost/simd/function/none.hpp>
@@ -257,6 +258,10 @@ class BaseMatrix {
     // We use the smallest vector size possible
     static constexpr int VecSize = nearest_power_of_two(NumberCols, MaximumVectorSize);
 
+    static constexpr int blend_index (int i, int c) {
+        return i < NumberCols ? i : c+i;
+    }
+
     using matrix_t = BaseMatrix<T, NumberRows, NumberCols, MaximumVectorSize>;
     using pack_t = bs::pack<T, VecSize>;
 
@@ -273,7 +278,9 @@ class BaseMatrix {
         else {
             for (int i=0; i<NRows; i++) {
                 // In this case we copy data row by row
-                std::memcpy(&this->array[i*VecSize], &a[i*NCols], sizeof(T)*NCols);
+                pack_t row = bs::load<pack_t>(&a[i*NCols]);
+                pack_t blended = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
+                bs::aligned_store(blended, &this->array[i*VecSize]);
             }
         }
     }
@@ -289,9 +296,12 @@ class BaseMatrix {
             std::memcpy(this->array, a, sizeof(T)*NRows*VecSize);
         }
         else {
+            const pack_t zero = bs::Zero<pack_t>();
             for (int i=0; i<NRows; i++) {
                 // In this case we copy data row by row
-                std::memcpy(&this->array[i*VecSize], &a[i*NCols], sizeof(T)*NCols);
+                pack_t row = bs::load<pack_t>(&a[i*NCols]);
+                pack_t blended = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
+                bs::aligned_store(blended, &this->array[i*VecSize]);
             }
         }
         return *this;
