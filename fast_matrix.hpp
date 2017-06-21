@@ -59,7 +59,7 @@ std::ostream & operator<<(std::ostream &os, const BaseMatrix<T, NRows, NCols, Ma
 }
 
 template <typename M>
-static inline void matrix_add(M &a, M &b, M &c) {
+static void matrix_add(M &a, M &b, M &c) {
     using pack_t = typename M::pack_t;
     for (int i=0; i<M::NRows; i++) {
         int index = M::VecSize*i;
@@ -69,7 +69,7 @@ static inline void matrix_add(M &a, M &b, M &c) {
 }
 
 template <typename M>
-static inline void matrix_sub(M &a, M &b, M &c) {
+static void matrix_sub(M &a, M &b, M &c) {
     using pack_t = typename M::pack_t;
     for (int i=0; i<M::NRows; i++) {
         int index = M::VecSize*i;
@@ -79,7 +79,7 @@ static inline void matrix_sub(M &a, M &b, M &c) {
 }
 
 template <typename T, int l, int m, int n, int MVS>
-static inline void matrix_mul_m_m(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, m, n, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
+static void matrix_mul_m_m(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, m, n, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
 /*
  * Computes the following matrix product C = A*B
  * where A, B and C are BaseMatrix objects.
@@ -110,7 +110,7 @@ static inline void matrix_mul_m_m(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, m, 
 }
 
 template <typename T, int l, int m, int n, int MVS>
-static inline void matrix_mul_mt_m(BaseMatrix<T, m, l, MVS> &a, BaseMatrix<T, m, n, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
+static void matrix_mul_mt_m(BaseMatrix<T, m, l, MVS> &a, BaseMatrix<T, m, n, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
 /*
  * Computes the following matrix product C = t(A)*B
  * where A, B and C are BaseMatrix objects.
@@ -132,7 +132,7 @@ static inline void matrix_mul_mt_m(BaseMatrix<T, m, l, MVS> &a, BaseMatrix<T, m,
 }
 
 template <typename T, int l, int m, int n, int MVS>
-static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n, m, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
+static void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n, m, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
 /*
  * Computes the following matrix product C = A*t(B)
  * where A, B and C are BaseMatrix objects.
@@ -162,7 +162,7 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n,
 }
 
 template <typename T, int l, int m, int MVS>
-static inline void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS> &b, Vector<T, l, MVS> &c) {
+static void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS> &b, Vector<T, l, MVS> &c) {
     static constexpr int VecSize = BaseMatrix<T, l, m, MVS>::VecSize;
 
     using pack_t = bs::pack<T, VecSize>;
