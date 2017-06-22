@@ -327,13 +327,13 @@ class BaseMatrix {
         return returned_array;
     }
 
-    void store(T* addr) {
+    void store(T addr[]) {
         if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
             std::memcpy(addr, this->array, sizeof(T)*NRows*VecSize);
         }
         else {
             for (int i=0; i<NRows; i++) {
-                std::memcpy(addr, &this->array[i*VecSize], sizeof(T)*NCols);
+                std::memcpy(&addr[i*NCols], &this->array[i*VecSize], sizeof(T)*NCols);
             }
         }
     }
