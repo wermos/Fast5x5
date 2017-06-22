@@ -8,18 +8,21 @@ TEST(BaseMatrixInstanciation, NoArguments) {
     const std::array<float, 6> null_matrix = {0, 0, 0, 0, 0, 0};
     BaseMatrix<float, 2, 3, 8> no_args_matrix;
     ASSERT_EQ(no_args_matrix.dump_array(), null_matrix);
+    EXPECT_TRUE(no_args_matrix.is_padding_zero());
 }
 
 TEST(BaseMatrixInstanciation, ScalarArguments) {
     const std::array<float, 9> diag_matrix = {5, 0, 0, 0, 5, 0, 0, 0, 5};
     BaseMatrix<float, 3, 3, 8> scalar_arg_matrix(5);
     ASSERT_EQ(scalar_arg_matrix.dump_array(), diag_matrix);
+    EXPECT_TRUE(scalar_arg_matrix.is_padding_zero());
 }
 
 TEST(BaseMatrixInstanciation, ArrayArguments) {
     const std::array<float, 6> array = {1, 2, 3, 4, 5, 6};
     BaseMatrix<float, 3, 2, 8> array_3x2_float_matrix(&array[0]);
     ASSERT_EQ(array_3x2_float_matrix.dump_array(), array);
+    EXPECT_TRUE(array_3x2_float_matrix.is_padding_zero());
     BaseMatrix<float, 2, 3, 8> array_2x3_float_matrix(&array[0]);
     ASSERT_EQ(array_2x3_float_matrix.dump_array(), array);
     BaseMatrix<float, 1, 6, 8> array_1x6_float_matrix(&array[0]);
@@ -30,6 +33,7 @@ TEST(BaseMatrixInstanciation, ArrayArguments) {
     const std::array<double, 6> double_array = {1, 2, 3, 4, 5, 6};
     BaseMatrix<double, 3, 2, 8> array_3x2_double_matrix(&double_array[0]);
     ASSERT_EQ(array_3x2_double_matrix.dump_array(), double_array);
+    EXPECT_TRUE(array_3x2_double_matrix.is_padding_zero());
 }
 
 TEST(BaseMatrixAssignment, ArrayRValue) {
@@ -37,6 +41,7 @@ TEST(BaseMatrixAssignment, ArrayRValue) {
     BaseMatrix<float, 3, 2, 8> array_3x2_float_matrix;
     array_3x2_float_matrix = &array[0];
     ASSERT_EQ(array_3x2_float_matrix.dump_array(), array);
+    EXPECT_TRUE(array_3x2_float_matrix.is_padding_zero());
 }
 
 TEST(BaseMatrixAssignment, BaseMatrixRValue) {
@@ -46,4 +51,5 @@ TEST(BaseMatrixAssignment, BaseMatrixRValue) {
 
     left_matrix = right_matrix;
     ASSERT_EQ(left_matrix.dump_array(), right_matrix.dump_array());
+    EXPECT_TRUE(left_matrix.is_padding_zero());
 }

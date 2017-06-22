@@ -296,7 +296,6 @@ class BaseMatrix {
             std::memcpy(this->array, a, sizeof(T)*NRows*VecSize);
         }
         else {
-            const pack_t zero = bs::Zero<pack_t>();
             for (int i=0; i<NRows; i++) {
                 // In this case we copy data row by row
                 pack_t row = bs::load<pack_t>(&a[i*NCols]);
@@ -336,6 +335,16 @@ class BaseMatrix {
                 std::memcpy(&addr[i*NCols], &this->array[i*VecSize], sizeof(T)*NCols);
             }
         }
+    }
+
+    bool is_padding_zero() const {
+        bool padding_ok = true;
+        for (int i=0; i<NRows; i++) {
+            for (int j=NCols; j<VecSize; j++) {
+                if (array[i*VecSize+j] != 0) padding_ok = false;
+            }
+        }
+        return padding_ok;
     }
 
 

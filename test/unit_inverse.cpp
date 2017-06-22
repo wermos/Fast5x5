@@ -14,7 +14,7 @@ template <typename M>
     using my_type = typename M::ElementType;
     double precision = 1e-13;
     if (typeid(my_type) == typeid(float)) {
-        precision = 1e-5;
+        precision = 5e-6;
     }
     bool is_equal = true;
     std::array<my_type, M::NRows * M::NCols> array_a = a.dump_array(); 
@@ -54,6 +54,7 @@ TEST(Inverse, Cholesky) {
 
     Inverse<float, 3, 3, 8>::inverse(base_easy_float_mat, inverse_easy_float_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_easy_float_mat, result_easy_float_mat);
+    EXPECT_TRUE(inverse_easy_float_mat.is_padding_zero());
 
     const std::array<float, 9> base_harder_float_array = {
         14, 16, 11,
@@ -73,6 +74,7 @@ TEST(Inverse, Cholesky) {
 
     Inverse<float, 3, 3, 8>::inverse(base_harder_float_mat, inverse_harder_float_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_harder_float_mat, result_harder_float_mat);
+    EXPECT_TRUE(inverse_harder_float_mat.is_padding_zero());
 
 
 
@@ -94,6 +96,7 @@ TEST(Inverse, Cholesky) {
 
     Inverse<double, 3, 3, 8>::inverse(base_easy_double_mat, inverse_easy_double_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_easy_double_mat, result_easy_double_mat);
+    EXPECT_TRUE(inverse_easy_double_mat.is_padding_zero());
 
     const std::array<double, 9> base_harder_double_array = {
         14, 16, 11,
@@ -113,4 +116,5 @@ TEST(Inverse, Cholesky) {
 
     Inverse<double, 3, 3, 8>::inverse(base_harder_double_mat, inverse_harder_double_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_harder_double_mat, result_harder_double_mat);
+    EXPECT_TRUE(inverse_harder_double_mat.is_padding_zero());
 }
