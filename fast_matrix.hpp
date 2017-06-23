@@ -26,28 +26,7 @@ class BaseMatrix;
 template <typename T, int NCols, int MaxVecSize>
 class Vector;
 
-/*
-template <typename T, int MatrixSize, int MaxVecSize>
-class IdentityMatrix;
 
-template<typename T, int MatrixSize, int MaxVecSize>
-class Matrix: public BaseMatrix<T, MatrixSize, MaxVecSize> {
-};
-
-template<typename T, int MatrixSize, int MaxVecSize>
-class TransposedMatrix: public BaseMatrix<T, MatrixSize, MaxVecSize> {};
-
-template <typename T, int MatrixSize, int MaxVecSize>
-TransposedMatrix<T, MatrixSize, MaxVecSize> transpose(Matrix<T, MatrixSize, MaxVecSize> &m) {
-    return static_cast<TransposedMatrix<T, MatrixSize, MaxVecSize>>(m);
-}
-
-
-template <typename T, int MatrixSize, int MaxVecSize>
-Matrix<T, MatrixSize, MaxVecSize> transpose(TransposedMatrix<T, MatrixSize, MaxVecSize> &m) {
-    return static_cast<Matrix<T, MatrixSize, MaxVecSize>>(m);
-}
-*/
 template <typename T, int NRows, int NCols, int MaxVecSize>
 std::ostream & operator<<(std::ostream &os, const BaseMatrix<T, NRows, NCols, MaxVecSize> &mat) {
 // Matrix printing function
