@@ -118,3 +118,42 @@ TEST(Inverse, Cholesky) {
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_harder_double_mat, result_harder_double_mat);
     EXPECT_TRUE(inverse_harder_double_mat.is_padding_zero());
 }
+
+TEST(Inverse, Small) {
+    const std::array<float, 4> base_float_array = {
+        14, 8, 
+        8, 5, 
+    };
+
+    const std::array<float, 4> result_float_array = {
+        5./6, -4./3,
+        -4./3, 7./3,
+    };
+
+    BaseMatrix<float, 2, 2, 8> base_float_mat(&base_float_array[0]);
+    BaseMatrix<float, 2, 2, 8> inverse_float_mat;
+    BaseMatrix<float, 2, 2, 8> result_float_mat(&result_float_array[0]);
+
+    Inverse<float, 2, 2, 8>::inverse(base_float_mat, inverse_float_mat);
+    EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_float_mat, result_float_mat);
+    EXPECT_TRUE(inverse_float_mat.is_padding_zero());
+
+
+    const std::array<double, 4> base_double_array = {
+        14, 8, 
+        8, 5, 
+    };
+
+    const std::array<double, 4> result_double_array = {
+        5./6, -4./3,
+        -4./3, 7./3,
+    };
+
+    BaseMatrix<double, 2, 2, 8> base_double_mat(&base_double_array[0]);
+    BaseMatrix<double, 2, 2, 8> inverse_double_mat;
+    BaseMatrix<double, 2, 2, 8> result_double_mat(&result_double_array[0]);
+
+    Inverse<double, 2, 2, 8>::inverse(base_double_mat, inverse_double_mat);
+    EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_double_mat, result_double_mat);
+    EXPECT_TRUE(inverse_double_mat.is_padding_zero());
+}
