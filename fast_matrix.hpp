@@ -7,6 +7,7 @@
 #include<boost/simd/constant/one.hpp>
 #include<boost/simd/function/aligned_store.hpp>
 #include<boost/simd/function/load.hpp>
+#include<boost/simd/function/store.hpp>
 #include<boost/simd/function/dot.hpp>
 #include<boost/simd/function/shuffle.hpp>
 #include<boost/simd/function/none.hpp>
@@ -326,14 +327,19 @@ class BaseMatrix {
         return returned_array;
     }
 
-    void store(T addr[]) {
+    void store(T addr[]) const {
         if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
             std::memcpy(addr, this->array, sizeof(T)*NRows*VecSize);
         }
         else {
-            for (int i=0; i<NRows; i++) {
-                std::memcpy(&addr[i*NCols], &this->array[i*VecSize], sizeof(T)*NCols);
+            for (int i=0; i< NRows - 1; i++) {
+                pack_t row(&this->array[i*VecSize]);
+                bs::store(row, &addr[i*NCols]);
             }
+            pack_t row(&this->array[(NRows-1)*VecSize]);
+            pack_t blend = bs::load<pack_t>(&addr[(NRows-1)*NCols]);
+            pack_t blended = bs::shuffle<bs::pattern<blend_index>>(row, blend);
+            bs::store(blended, &addr[(NRows-1)*NCols]);
         }
     }
 
