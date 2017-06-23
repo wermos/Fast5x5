@@ -176,9 +176,9 @@ static void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS> &b, Ve
     }
 }
 
-template <typename T, int NumberRows, int NumberCols, int MaximumVectorSize>
+template <typename T, int Size, int MaximumVectorSize>
 class Inverse {
-    using M = BaseMatrix<T, NumberRows, NumberCols, MaximumVectorSize>;
+    using M = BaseMatrix<T, Size, Size, MaximumVectorSize>;
     public:
     static void inverse(M &a, M &inv) {
         /* Computes inverse of `a` by using Cholesky decomposition.
@@ -235,7 +235,7 @@ class Inverse {
 };
 
 template <typename T, int MaximumVectorSize>
-class Inverse<T, 2, 2, MaximumVectorSize> {
+class Inverse<T, 2, MaximumVectorSize> {
     using M = BaseMatrix<T, 2, 2, MaximumVectorSize>;
     public:
     static void inverse(M &a, M &inv) {
@@ -361,7 +361,7 @@ class BaseMatrix {
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_mt_m(BaseMatrix<U, m, l, MVS> &a, BaseMatrix<U, m, n, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
     template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_m_mt(BaseMatrix<U, l, m, MVS> &a, BaseMatrix<U, n, m, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
     template <typename U, int l, int m, int MVS> friend void matrix_mul_m_v(BaseMatrix<U, l, m, MVS> &a, Vector<U, m, MVS> &b, Vector<U, l, MVS> &c);
-    friend class Inverse<T, NRows, NCols, MaxVecSize>;
+    friend class Inverse<T, NCols, MaxVecSize>;
     friend std::ostream & operator<<<T, NRows, NCols, MaxVecSize>(std::ostream &os, const matrix_t &mat);
 
     protected:
