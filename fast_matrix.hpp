@@ -252,16 +252,11 @@ class BaseMatrix {
 
     BaseMatrix() = default;
     BaseMatrix(T const a[]) {
-        if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
-            std::memcpy(this->array, a, sizeof(T)*NRows*VecSize);
-        }
-        else {
-            for (int i=0; i<NRows; i++) {
-                // In this case we copy data row by row
-                pack_t row = bs::load<pack_t>(&a[i*NCols]);
-                pack_t blended = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
-                bs::aligned_store(blended, &this->array[i*VecSize]);
-            }
+        for (int i=0; i<NRows; i++) {
+            // In this case we copy data row by row
+            pack_t row = bs::load<pack_t>(&a[i*NCols]);
+            if (NCols != VecSize) row = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
+            bs::aligned_store(row, &this->array[i*VecSize]);
         }
     }
 
@@ -272,19 +267,15 @@ class BaseMatrix {
     }
 
     matrix_t operator=(T const a[]) {
-        if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
-            std::memcpy(this->array, a, sizeof(T)*NRows*VecSize);
-        }
-        else {
-            for (int i=0; i<NRows; i++) {
-                // In this case we copy data row by row
-                pack_t row = bs::load<pack_t>(&a[i*NCols]);
-                pack_t blended = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
-                bs::aligned_store(blended, &this->array[i*VecSize]);
-            }
+        for (int i=0; i<NRows; i++) {
+            // In this case we copy data row by row
+            pack_t row = bs::load<pack_t>(&a[i*NCols]);
+            if (NCols != VecSize) row = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
+            bs::aligned_store(row, &this->array[i*VecSize]);
         }
         return *this;
     }
+
     matrix_t operator=(matrix_t &other) {
         std::memcpy(this->array, other.array, sizeof(T)*NRows*VecSize);
         return *this;
@@ -307,18 +298,12 @@ class BaseMatrix {
     }
 
     void store(T addr[]) const {
-        if (NCols == VecSize) { // In this case there is no padding, we can copy directly the array
-            std::memcpy(addr, this->array, sizeof(T)*NRows*VecSize);
+        for (int i=0; i< NRows - 1; i++) {
+            pack_t row(&this->array[i*VecSize]);
+            bs::store(row, &addr[i*NCols]);
         }
-        else {
-            for (int i=0; i< NRows - 1; i++) {
-                pack_t row(&this->array[i*VecSize]);
-                bs::store(row, &addr[i*NCols]);
-            }
-            pack_t row(&this->array[(NRows-1)*VecSize]);
-            pack_t blend = bs::load<pack_t>(&addr[(NRows-1)*NCols]);
-            pack_t blended = bs::shuffle<bs::pattern<blend_index>>(row, blend);
-            bs::store(blended, &addr[(NRows-1)*NCols]);
+        if (NCols != VecSize) {
+            std::memcpy(&addr[(NRows-1)*NCols], &this->array[(NRows-1)*VecSize], sizeof(T)*NCols);
         }
     }
 
