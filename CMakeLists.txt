@@ -19,6 +19,7 @@ ExternalProject_Add(
     gtest
     URL https://github.com/google/googletest/archive/release-1.8.0.zip
     PREFIX ${CMAKE_CURRENT_BINARY_DIR}/gtest
+    CMAKE_CACHE_ARGS "-DCMAKE_C_COMPILER:FILEPATH=${CMAKE_C_COMPILER}" "-DCMAKE_CXX_COMPILER:FILEPATH=${CMAKE_CXX_COMPILER}"
     # Disable install step
     INSTALL_COMMAND ""
 )
