@@ -298,12 +298,17 @@ class BaseMatrix {
     }
 
     void store(T addr[]) const {
-        for (int i=0; i< NRows - 1; i++) {
-            pack_t row(&this->array[i*VecSize]);
-            bs::store(row, &addr[i*NCols]);
-        }
         if (NCols != VecSize) {
+            for (int i=0; i< NRows - 1; i++) {
+                pack_t row(&this->array[i*VecSize]);
+                bs::store(row, &addr[i*NCols]);
+            }
             std::memcpy(&addr[(NRows-1)*NCols], &this->array[(NRows-1)*VecSize], sizeof(T)*NCols);
+        } else {
+            for (int i=0; i< NRows; i++) {
+                pack_t row(&this->array[i*VecSize]);
+                bs::store(row, &addr[i*NCols]);
+            }
         }
     }
 

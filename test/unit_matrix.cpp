@@ -30,6 +30,10 @@ TEST(BaseMatrixInstanciation, ArrayArguments) {
     BaseMatrix<float, 6, 1, 8> array_6x1_float_matrix(&array[0]);
     ASSERT_EQ(array_6x1_float_matrix.dump_array(), array);
 
+    const std::array<float, 16> squared_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    BaseMatrix<float, 4, 4, 4> array_4x4_float_matrix(&squared_array[0]);
+    ASSERT_EQ(array_4x4_float_matrix.dump_array(), squared_array);
+
     const std::array<double, 6> double_array = {1, 2, 3, 4, 5, 6};
     BaseMatrix<double, 3, 2, 8> array_3x2_double_matrix(&double_array[0]);
     ASSERT_EQ(array_3x2_double_matrix.dump_array(), double_array);
@@ -42,6 +46,11 @@ TEST(BaseMatrixAssignment, ArrayRValue) {
     array_3x2_float_matrix = &array[0];
     ASSERT_EQ(array_3x2_float_matrix.dump_array(), array);
     EXPECT_TRUE(array_3x2_float_matrix.is_padding_zero());
+
+    const std::array<float, 16> squared_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    BaseMatrix<float, 4, 4, 4> array_4x4_float_matrix;
+    array_4x4_float_matrix = &squared_array[0];
+    ASSERT_EQ(array_4x4_float_matrix.dump_array(), squared_array);
 }
 
 TEST(BaseMatrixAssignment, BaseMatrixRValue) {
@@ -52,4 +61,36 @@ TEST(BaseMatrixAssignment, BaseMatrixRValue) {
     left_matrix = right_matrix;
     ASSERT_EQ(left_matrix.dump_array(), right_matrix.dump_array());
     EXPECT_TRUE(left_matrix.is_padding_zero());
+}
+
+TEST(BaseMatrixStore, StoreMethod) {
+    const std::array<float, 6> array = {1, 2, 3, 4, 5, 6};
+    std::array<float, 6> stored_array;
+    BaseMatrix<float, 3, 2, 8> array_3x2_float_matrix(&array[0]);
+    array_3x2_float_matrix.store(&stored_array[0]);
+    ASSERT_EQ(stored_array, array);
+    EXPECT_TRUE(array_3x2_float_matrix.is_padding_zero());
+    BaseMatrix<float, 2, 3, 8> array_2x3_float_matrix(&array[0]);
+    array_2x3_float_matrix.store(&stored_array[0]);
+    ASSERT_EQ(stored_array, array);
+    BaseMatrix<float, 1, 6, 8> array_1x6_float_matrix(&array[0]);
+    array_1x6_float_matrix.store(&stored_array[0]);
+    ASSERT_EQ(stored_array, array);
+    BaseMatrix<float, 6, 1, 8> array_6x1_float_matrix(&array[0]);
+    array_6x1_float_matrix.store(&stored_array[0]);
+    ASSERT_EQ(stored_array, array);
+
+    const std::array<float, 16> squared_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    std::array<float, 16> squared_stored_array;
+    BaseMatrix<float, 4, 4, 4> array_4x4_float_matrix(&squared_array[0]);
+    array_4x4_float_matrix.store(&squared_stored_array[0]);
+    ASSERT_EQ(squared_stored_array, squared_array);
+
+    const std::array<double, 6> double_array = {1, 2, 3, 4, 5, 6};
+    std::array<double, 6> double_stored_array = {1, 2, 3, 4, 5, 6};
+    BaseMatrix<double, 3, 2, 8> array_3x2_double_matrix(&double_array[0]);
+    array_3x2_double_matrix.store(&double_stored_array[0]);
+    ASSERT_EQ(double_stored_array, double_array);
+    EXPECT_TRUE(array_3x2_double_matrix.is_padding_zero());
+
 }
