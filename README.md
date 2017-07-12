@@ -5,8 +5,6 @@ FastMatrix: A very efficient linear algebra library for extremely small matrices
  * libboost (>= 1.61)
  * Boost.Simd
 
-## Testing
-
 ## Using the library
 FastMatrix is a template-based header-only library.
 That means the only requirement is to correctly add Boost.SIMD and Boost include directory at the list of directories used by your compiler.
@@ -18,7 +16,7 @@ There is only one header to import in order to use the library:
 ```
 
 ### Creating a matrix
-In order to create a matrix you need to create a object from the `BaseMatrix<Type, NRows, NCols, MatSize, MaxVecSize>` class
+In order to create a matrix you need to create a object from the `BaseMatrix<Type, NRows, NCols, MaxVecSize>` class
 where `NRows` and `NCols` are the matrix dimensions and `MaxVecSize` the maximum vector size of type `Type` your hardware can support.
 
 ```c++
