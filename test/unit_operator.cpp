@@ -205,6 +205,59 @@ TEST(MatrixMulMM, Rectangular2x3t3x2) {
     EXPECT_TRUE(result_double_mat.is_padding_zero());
 }
 
+TEST(MatrixMulMM, Rectangular2x5t5x2) {
+    const std::array<float, 10> left_float_array = {
+        1, 2, 3, 4, 5,
+        6, 7, 8, 9, 10,
+    };
+
+    const std::array<float, 10> right_float_array = {
+        1, 2,
+        3, 4,
+        5, 6,
+        7, 8,
+        9, 10,
+    };
+    const std::array<float, 4> result_float_array = {
+        95, 110,
+        220, 260,
+    };
+
+    BaseMatrix<float, 2, 5, 8> left_float_mat(&left_float_array[0]);
+    BaseMatrix<float, 5, 2, 8> right_float_mat(&right_float_array[0]);
+    BaseMatrix<float, 2, 2, 8> result_float_mat;
+
+    matrix_mul_m_m(left_float_mat, right_float_mat, result_float_mat);
+    EXPECT_EQ(result_float_mat.dump_array(), result_float_array);
+    EXPECT_TRUE(result_float_mat.is_padding_zero());
+
+
+    const std::array<double, 10> left_double_array = {
+        1, 2, 3, 4, 5,
+        6, 7, 8, 9, 10,
+    };
+
+    const std::array<double, 10> right_double_array = {
+        1, 2,
+        3, 4,
+        5, 6,
+        7, 8,
+        9, 10,
+    };
+    const std::array<double, 4> result_double_array = {
+        95, 110,
+        220, 260,
+    };
+
+    BaseMatrix<double, 2, 5, 8> left_double_mat(&left_double_array[0]);
+    BaseMatrix<double, 5, 2, 8> right_double_mat(&right_double_array[0]);
+    BaseMatrix<double, 2, 2, 8> result_double_mat;
+
+    matrix_mul_m_m(left_double_mat, right_double_mat, result_double_mat);
+    EXPECT_EQ(result_double_mat.dump_array(), result_double_array);
+    EXPECT_TRUE(result_double_mat.is_padding_zero());
+}
+
 TEST(MatrixMulMtM, Square) {
     const std::array<float, 9> left_float_array = {
         1, 2, 1,
