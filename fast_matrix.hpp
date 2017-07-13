@@ -16,23 +16,23 @@ namespace bs = boost::simd;
 
 constexpr int nearest_power_of_two(int min_value, int current_value) {
     // Computes the nearest power of two relative to `min_value` starting from the power of two `current_value`
-    return min_value > current_value/2 ? current_value : nearest_power_of_two(min_value, current_value/2);
+    return min_value <= current_value ? current_value : nearest_power_of_two(min_value, current_value*2);
 }
 
 
-template <typename T, int NRows, int NCols, int MaxVecSize>
+template <typename T, int NRows, int NCols>
 class BaseMatrix;
 
-template <typename T, int NCols, int MaxVecSize>
+template <typename T, int NCols>
 class Vector;
 
 
-template <typename T, int NRows, int NCols, int MaxVecSize>
-std::ostream & operator<<(std::ostream &os, const BaseMatrix<T, NRows, NCols, MaxVecSize> &mat) {
+template <typename T, int NRows, int NCols>
+std::ostream & operator<<(std::ostream &os, const BaseMatrix<T, NRows, NCols> &mat) {
 // Matrix printing function
     for (int i=0; i<NRows; i++) {
         for (int j=0; j<NCols; j++) {
-            os << mat.array[i*BaseMatrix<T, NRows, NCols, MaxVecSize>::VecSize + j] << ", ";
+            os << mat.array[i*BaseMatrix<T, NRows, NCols>::VecSize + j] << ", ";
         }
         os << std::endl;
     }
@@ -59,8 +59,8 @@ static inline void matrix_sub(M &a, M &b, M &c) {
     }
 }
 
-template <typename T, int l, int m, int n, int MVS>
-static inline void matrix_mul_m_m(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, m, n, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
+template <typename T, int l, int m, int n>
+static inline void matrix_mul_m_m(BaseMatrix<T, l, m> &a, BaseMatrix<T, m, n> &b, BaseMatrix<T, l, n> &c) {
 /*
  * Computes the following matrix product C = A*B
  * where A, B and C are BaseMatrix objects.
@@ -68,8 +68,8 @@ static inline void matrix_mul_m_m(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, m, 
  * of C in one vector.
  * This use only vector operations so the compiler can optimize easily.
  */
-    static constexpr int LeftVecSize = BaseMatrix<T, l, m, MVS>::VecSize;
-    static constexpr int RightVecSize = BaseMatrix<T, m, n, MVS>::VecSize;
+    static constexpr int LeftVecSize = BaseMatrix<T, l, m>::VecSize;
+    static constexpr int RightVecSize = BaseMatrix<T, m, n>::VecSize;
     using pack_t = bs::pack<T, RightVecSize>;
     /* Algorithm:
      * For each row of C matrix:
@@ -90,16 +90,16 @@ static inline void matrix_mul_m_m(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, m, 
     }
 }
 
-template <typename T, int l, int m, int n, int MVS>
-static inline void matrix_mul_mt_m(BaseMatrix<T, m, l, MVS> &a, BaseMatrix<T, m, n, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
+template <typename T, int l, int m, int n>
+static inline void matrix_mul_mt_m(BaseMatrix<T, m, l> &a, BaseMatrix<T, m, n> &b, BaseMatrix<T, l, n> &c) {
 /*
  * Computes the following matrix product C = t(A)*B
  * where A, B and C are BaseMatrix objects.
  * This code is nearly identical to matrix_mul_m_m but we
  * run through A in column instead of row
  */
-    static constexpr int LeftVecSize = BaseMatrix<T, m, l, MVS>::VecSize;
-    static constexpr int RightVecSize = BaseMatrix<T, m, n, MVS>::VecSize;
+    static constexpr int LeftVecSize = BaseMatrix<T, m, l>::VecSize;
+    static constexpr int RightVecSize = BaseMatrix<T, m, n>::VecSize;
     using pack_t = bs::pack<T, RightVecSize>;
     for (int i=0; i<l; i++) {
         pack_t res = bs::Zero<pack_t>();
@@ -112,8 +112,8 @@ static inline void matrix_mul_mt_m(BaseMatrix<T, m, l, MVS> &a, BaseMatrix<T, m,
     }
 }
 
-template <typename T, int l, int m, int n, int MVS>
-static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n, m, MVS> &b, BaseMatrix<T, l, n, MVS> &c) {
+template <typename T, int l, int m, int n>
+static inline void matrix_mul_m_mt(BaseMatrix<T, l, m> &a, BaseMatrix<T, n, m> &b, BaseMatrix<T, l, n> &c) {
 /*
  * Computes the following matrix product C = A*t(B)
  * where A, B and C are BaseMatrix objects.
@@ -122,8 +122,8 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n,
  * to load columns of t(B) into vector register we can load row of B instead.
  * Assuming that B is store in row order, row of B are correctly aligned for loading.
  */
-    static constexpr int VecSize = BaseMatrix<T, l, m, MVS>::VecSize; //VecSize are the same for left and right matrices 
-    static constexpr int ResVecSize = BaseMatrix<T, l, n, MVS>::VecSize;
+    static constexpr int VecSize = BaseMatrix<T, l, m>::VecSize; //VecSize are the same for left and right matrices 
+    static constexpr int ResVecSize = BaseMatrix<T, l, n>::VecSize;
     using pack_t = bs::pack<T, VecSize>;
     /* Algorithm:
      * For each C matrix element:
@@ -142,9 +142,9 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m, MVS> &a, BaseMatrix<T, n,
     }
 }
 
-template <typename T, int l, int m, int MVS>
-static inline void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS> &b, Vector<T, l, MVS> &c) {
-    static constexpr int VecSize = BaseMatrix<T, l, m, MVS>::VecSize;
+template <typename T, int l, int m>
+static inline void matrix_mul_m_v(BaseMatrix<T, l, m> &a, Vector<T, m> &b, Vector<T, l> &c) {
+    static constexpr int VecSize = BaseMatrix<T, l, m>::VecSize;
 
     using pack_t = bs::pack<T, VecSize>;
     pack_t vector(&b.array[0]);
@@ -155,9 +155,9 @@ static inline void matrix_mul_m_v(BaseMatrix<T, l, m, MVS> &a, Vector<T, m, MVS>
     }
 }
 
-template <typename T, int Size, int MaximumVectorSize>
+template <typename T, int Size>
 class Inverse {
-    using M = BaseMatrix<T, Size, Size, MaximumVectorSize>;
+    using M = BaseMatrix<T, Size, Size>;
     public:
     static void inverse(M &a, M &inv) {
         /* Computes inverse of `a` by using Cholesky decomposition.
@@ -213,9 +213,9 @@ class Inverse {
     }
 };
 
-template <typename T, int MaximumVectorSize>
-class Inverse<T, 2, MaximumVectorSize> {
-    using M = BaseMatrix<T, 2, 2, MaximumVectorSize>;
+template <typename T>
+class Inverse<T, 2> {
+    using M = BaseMatrix<T, 2, 2>;
     public:
     static void inverse(M &a, M &inv) {
         T inv_det = 1/(a.array[0]*a.array[M::VecSize + 1]- a.array[1]*a.array[1]);
@@ -225,24 +225,20 @@ class Inverse<T, 2, MaximumVectorSize> {
     }
 };
 
-template <typename T, int NumberRows, int NumberCols, int MaximumVectorSize>
+template <typename T, int NumberRows, int NumberCols>
 class BaseMatrix {
 /* Class for matrix object
  * Matrix object are linearized 2D array with padded line to fit vector size
  */
-    static_assert(NumberCols <= MaximumVectorSize, "Matrix width must be less than maximum vector size");
-    static_assert((MaximumVectorSize >= 4) & !(MaximumVectorSize & (MaximumVectorSize - 1)), "Maximum vector size must be a power of two.");
-
     protected:
-    static constexpr int MaxVecSize = MaximumVectorSize;
     // We use the smallest vector size possible
-    static constexpr int VecSize = nearest_power_of_two(NumberCols, MaximumVectorSize);
+    static constexpr int VecSize = nearest_power_of_two(NumberCols, 1);
 
     static constexpr int blend_index (int i, int c) {
         return i < NumberCols ? i : c+i;
     }
 
-    using matrix_t = BaseMatrix<T, NumberRows, NumberCols, MaximumVectorSize>;
+    using matrix_t = BaseMatrix<T, NumberRows, NumberCols>;
     using pack_t = bs::pack<T, VecSize>;
 
     public:
@@ -326,29 +322,29 @@ class BaseMatrix {
     private:
     friend void matrix_add<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
     friend void matrix_sub<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
-    template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_m_m(BaseMatrix<U, l, m, MVS> &a, BaseMatrix<U, m, n, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
-    template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_mt_m(BaseMatrix<U, m, l, MVS> &a, BaseMatrix<U, m, n, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
-    template <typename U, int l, int m, int n, int MVS> friend void matrix_mul_m_mt(BaseMatrix<U, l, m, MVS> &a, BaseMatrix<U, n, m, MVS> &b, BaseMatrix<U, l, n, MVS> &c);
-    template <typename U, int l, int m, int MVS> friend void matrix_mul_m_v(BaseMatrix<U, l, m, MVS> &a, Vector<U, m, MVS> &b, Vector<U, l, MVS> &c);
-    friend class Inverse<T, NCols, MaxVecSize>;
-    friend std::ostream & operator<<<T, NRows, NCols, MaxVecSize>(std::ostream &os, const matrix_t &mat);
+    template <typename U, int l, int m, int n> friend void matrix_mul_m_m(BaseMatrix<U, l, m> &a, BaseMatrix<U, m, n> &b, BaseMatrix<U, l, n> &c);
+    template <typename U, int l, int m, int n> friend void matrix_mul_mt_m(BaseMatrix<U, m, l> &a, BaseMatrix<U, m, n> &b, BaseMatrix<U, l, n> &c);
+    template <typename U, int l, int m, int n> friend void matrix_mul_m_mt(BaseMatrix<U, l, m> &a, BaseMatrix<U, n, m> &b, BaseMatrix<U, l, n> &c);
+    template <typename U, int l, int m> friend void matrix_mul_m_v(BaseMatrix<U, l, m> &a, Vector<U, m> &b, Vector<U, l> &c);
+    friend class Inverse<T, NCols>;
+    friend std::ostream & operator<<<T, NRows, NCols>(std::ostream &os, const matrix_t &mat);
 
     protected:
     alignas(sizeof(T)*VecSize) T array[NRows*VecSize] = {0};
 
 };
 
-template <typename T, int NumberCols, int MaximumVectorSize>
-class Vector: public BaseMatrix<T, 1, NumberCols, MaximumVectorSize> {
+template <typename T, int NumberCols>
+class Vector: public BaseMatrix<T, 1, NumberCols> {
     public:
-    using BaseMatrix<T, 1, NumberCols, MaximumVectorSize>::BaseMatrix;
-    using BaseMatrix<T, 1, NumberCols, MaximumVectorSize>::operator=;
+    using BaseMatrix<T, 1, NumberCols>::BaseMatrix;
+    using BaseMatrix<T, 1, NumberCols>::operator=;
 
     protected:
-    using vector_t = Vector<T, NumberCols, MaximumVectorSize>;
+    using vector_t = Vector<T, NumberCols>;
 
     private:
-    template <typename U, int l, int m, int MVS> friend void matrix_mul_m_v(BaseMatrix<U, l, m, MVS> &a, Vector<U, m, MVS> &b, Vector<U, l, MVS> &c);
+    template <typename U, int l, int m> friend void matrix_mul_m_v(BaseMatrix<U, l, m> &a, Vector<U, m> &b, Vector<U, l> &c);
     friend void matrix_add<vector_t>(vector_t &a, vector_t &b, vector_t &c);
     friend void matrix_sub<vector_t>(vector_t &a, vector_t &b, vector_t &c);
 };

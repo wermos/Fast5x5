@@ -48,11 +48,11 @@ TEST(Inverse, Cholesky) {
         1, -4, 6,
     };
 
-    BaseMatrix<float, 3, 3, 8> base_easy_float_mat(&base_easy_float_array[0]);
-    BaseMatrix<float, 3, 3, 8> inverse_easy_float_mat;
-    BaseMatrix<float, 3, 3, 8> result_easy_float_mat(&result_easy_float_array[0]);
+    BaseMatrix<float, 3, 3> base_easy_float_mat(&base_easy_float_array[0]);
+    BaseMatrix<float, 3, 3> inverse_easy_float_mat;
+    BaseMatrix<float, 3, 3> result_easy_float_mat(&result_easy_float_array[0]);
 
-    Inverse<float, 3, 8>::inverse(base_easy_float_mat, inverse_easy_float_mat);
+    Inverse<float, 3>::inverse(base_easy_float_mat, inverse_easy_float_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_easy_float_mat, result_easy_float_mat);
     EXPECT_TRUE(inverse_easy_float_mat.is_padding_zero());
 
@@ -68,11 +68,11 @@ TEST(Inverse, Cholesky) {
         -71./529, 36./529, 38./529,
     };
 
-    BaseMatrix<float, 3, 3, 8> base_harder_float_mat(&base_harder_float_array[0]);
-    BaseMatrix<float, 3, 3, 8> inverse_harder_float_mat;
-    BaseMatrix<float, 3, 3, 8> result_harder_float_mat(&result_harder_float_array[0]);
+    BaseMatrix<float, 3, 3> base_harder_float_mat(&base_harder_float_array[0]);
+    BaseMatrix<float, 3, 3> inverse_harder_float_mat;
+    BaseMatrix<float, 3, 3> result_harder_float_mat(&result_harder_float_array[0]);
 
-    Inverse<float, 3, 8>::inverse(base_harder_float_mat, inverse_harder_float_mat);
+    Inverse<float, 3>::inverse(base_harder_float_mat, inverse_harder_float_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_harder_float_mat, result_harder_float_mat);
     EXPECT_TRUE(inverse_harder_float_mat.is_padding_zero());
 
@@ -90,11 +90,11 @@ TEST(Inverse, Cholesky) {
         1, -4, 6,
     };
 
-    BaseMatrix<double, 3, 3, 8> base_easy_double_mat(&base_easy_double_array[0]);
-    BaseMatrix<double, 3, 3, 8> inverse_easy_double_mat;
-    BaseMatrix<double, 3, 3, 8> result_easy_double_mat(&result_easy_double_array[0]);
+    BaseMatrix<double, 3, 3> base_easy_double_mat(&base_easy_double_array[0]);
+    BaseMatrix<double, 3, 3> inverse_easy_double_mat;
+    BaseMatrix<double, 3, 3> result_easy_double_mat(&result_easy_double_array[0]);
 
-    Inverse<double, 3, 8>::inverse(base_easy_double_mat, inverse_easy_double_mat);
+    Inverse<double, 3>::inverse(base_easy_double_mat, inverse_easy_double_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_easy_double_mat, result_easy_double_mat);
     EXPECT_TRUE(inverse_easy_double_mat.is_padding_zero());
 
@@ -110,11 +110,11 @@ TEST(Inverse, Cholesky) {
         -71./529, 36./529, 38./529,
     };
 
-    BaseMatrix<double, 3, 3, 8> base_harder_double_mat(&base_harder_double_array[0]);
-    BaseMatrix<double, 3, 3, 8> inverse_harder_double_mat;
-    BaseMatrix<double, 3, 3, 8> result_harder_double_mat(&result_harder_double_array[0]);
+    BaseMatrix<double, 3, 3> base_harder_double_mat(&base_harder_double_array[0]);
+    BaseMatrix<double, 3, 3> inverse_harder_double_mat;
+    BaseMatrix<double, 3, 3> result_harder_double_mat(&result_harder_double_array[0]);
 
-    Inverse<double, 3, 8>::inverse(base_harder_double_mat, inverse_harder_double_mat);
+    Inverse<double, 3>::inverse(base_harder_double_mat, inverse_harder_double_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_harder_double_mat, result_harder_double_mat);
     EXPECT_TRUE(inverse_harder_double_mat.is_padding_zero());
 }
@@ -130,11 +130,11 @@ TEST(Inverse, Small) {
         -4./3, 7./3,
     };
 
-    BaseMatrix<float, 2, 2, 8> base_float_mat(&base_float_array[0]);
-    BaseMatrix<float, 2, 2, 8> inverse_float_mat;
-    BaseMatrix<float, 2, 2, 8> result_float_mat(&result_float_array[0]);
+    BaseMatrix<float, 2, 2> base_float_mat(&base_float_array[0]);
+    BaseMatrix<float, 2, 2> inverse_float_mat;
+    BaseMatrix<float, 2, 2> result_float_mat(&result_float_array[0]);
 
-    Inverse<float, 2, 8>::inverse(base_float_mat, inverse_float_mat);
+    Inverse<float, 2>::inverse(base_float_mat, inverse_float_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_float_mat, result_float_mat);
     EXPECT_TRUE(inverse_float_mat.is_padding_zero());
 
@@ -149,11 +149,11 @@ TEST(Inverse, Small) {
         -4./3, 7./3,
     };
 
-    BaseMatrix<double, 2, 2, 8> base_double_mat(&base_double_array[0]);
-    BaseMatrix<double, 2, 2, 8> inverse_double_mat;
-    BaseMatrix<double, 2, 2, 8> result_double_mat(&result_double_array[0]);
+    BaseMatrix<double, 2, 2> base_double_mat(&base_double_array[0]);
+    BaseMatrix<double, 2, 2> inverse_double_mat;
+    BaseMatrix<double, 2, 2> result_double_mat(&result_double_array[0]);
 
-    Inverse<double, 2, 8>::inverse(base_double_mat, inverse_double_mat);
+    Inverse<double, 2>::inverse(base_double_mat, inverse_double_mat);
     EXPECT_PRED_FORMAT2(compare_floating_point_matrices, inverse_double_mat, result_double_mat);
     EXPECT_TRUE(inverse_double_mat.is_padding_zero());
 }

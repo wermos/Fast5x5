@@ -2,8 +2,9 @@
 FastMatrix: A very efficient linear algebra library for extremely small matrices.
 
 ## Dependencies
- * libboost (>= 1.61)
+ * libboost (>= 1.62) with `program_options`
  * Boost.Simd
+ * cmake (>= 3.4)
 
 ## Using the library
 FastMatrix is a template-based header-only library.
@@ -16,11 +17,11 @@ There is only one header to import in order to use the library:
 ```
 
 ### Creating a matrix
-In order to create a matrix you need to create a object from the `BaseMatrix<Type, NRows, NCols, MaxVecSize>` class
-where `NRows` and `NCols` are the matrix dimensions and `MaxVecSize` the maximum vector size of type `Type` your hardware can support.
+In order to create a matrix you need to create a object from the `BaseMatrix<Type, NRows, NCols>` class
+where `NRows` and `NCols` are the matrix dimensions.
 
 ```c++
-BaseMatrix<float, 2, 3, 8> my_matrix;
+BaseMatrix<float, 2, 3> my_matrix;
 ```
 
 By default your matrix will be initialized to zero.
@@ -28,7 +29,7 @@ If you want to initialize it to existing values you can pass an array to the con
 Values in the array are considered to be row-major.
 ```c++
 double data[16] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,160};
-BaseMatrix<double, 4, 4, 4> my_matrix(data);
+BaseMatrix<double, 4, 4> my_matrix(data);
 ```
 
 ### Getting the data back
@@ -63,9 +64,9 @@ int main (int argc, char **argv) {
         10, 11, 12
     };
 
-    BaseMatrix<float, 2, 3, 8> a(left_data);
-    BaseMatrix<float, 3, 2, 8> b(right_data);
-    BaseMatrix<float, 2, 2, 8> c;
+    BaseMatrix<float, 2, 3> a(left_data);
+    BaseMatrix<float, 3, 2> b(right_data);
+    BaseMatrix<float, 2, 2> c;
 
     matrix_mul_m_m(a, b, c); // The matrix product c = a*b
 
@@ -84,7 +85,7 @@ Building them require to build Boost.SIMD first.
 cd /path/to/Fast-Matrix/
 mkdir build && cd build
 export Boost_DIR=/path/to/boost/root # Only if you didn't install boost from your distribution
-cmake -D CMAKE_PREFIX_PATH=path/to/boost.simd/build ..
+cmake -D CMAKE_PREFIX_PATH=path/to/boost.simd_build_dir/ ..
 make
 ```
 Once the tests are built you can launch them from the test directory.
