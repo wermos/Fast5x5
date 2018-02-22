@@ -1,6 +1,6 @@
 #include<iostream>
 #include "gemm_header.h"
-#include "../fast_matrix.hpp"
+#include "../fast5x5.hpp"
 
 int main(int argc, char **argv) {
     alignas(32) float a[SIZE*SIZE];

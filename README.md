@@ -1,22 +1,34 @@
-# FastMatrix
-FastMatrix: A very efficient linear algebra library for extremely small matrices.
+
+# Fast5x5
+
+A linear algebra library which focus on 5x5 operations.
 
 ## Dependencies
+
+For the basic usage of the library:
  * libboost (>= 1.62) with `program_options`
- * Boost.Simd
+ * https://github.com/NumScale/boost.simd.git -b master
+
+For the test and benchmarking
  * cmake (>= 3.4)
+ * eigen 3.2.10
+ * googletest 1.8.0
+ * R
 
 ## Using the library
+
 FastMatrix is a template-based header-only library.
 That means the only requirement is to correctly add Boost.SIMD and Boost include directory at the list of directories used by your compiler.
 
 ### Importing
+
 There is only one header to import in order to use the library:
 ```c++
-#include "../path/to/Fast-Matrix/fast_matrix.hpp"
+#include "../path/to/Fast5x5/fast5x5.hpp"
 ```
 
 ### Creating a matrix
+
 In order to create a matrix you need to create a object from the `BaseMatrix<Type, NRows, NCols>` class
 where `NRows` and `NCols` are the matrix dimensions.
 
@@ -33,6 +45,7 @@ BaseMatrix<double, 4, 4> my_matrix(data);
 ```
 
 ### Getting the data back
+
 You can dump the matrix data with the `dump_array()` method.
 The returned value is an std::array in row-major order.
 ```c++
@@ -47,12 +60,13 @@ std::cout << my_matrix << std::endl;
 ```
 
 ### Simple example
+
 This is a simple example for matrix multiplication.
 
 ```c++
 #include <iostream>
 
-#include "../Fast-Matrix/fast_matrix.hpp"
+#include "../Fast-Matrix/fast5x5.hpp"
 
 int main (int argc, char **argv) {
     float left_data[6] = {
@@ -77,12 +91,13 @@ int main (int argc, char **argv) {
 ```
 
 ## Testing
+
 Testing functionalities of the library is available through a set of unit tests.
 Prior running the tests you must build them with cmake.
 Building them require to build Boost.SIMD first.
 
 ```bash
-cd /path/to/Fast-Matrix/
+cd /path/to/Fast5x5/
 mkdir build && cd build
 export Boost_DIR=/path/to/boost/root # Only if you didn't install boost from your distribution
 cmake -D CMAKE_PREFIX_PATH=path/to/boost.simd_build_dir/ ..

@@ -2,7 +2,7 @@
 #include <array>
 #include <gtest/gtest.h>
 
-#include "../fast_matrix.hpp"
+#include "../fast5x5.hpp"
 
 TEST(MatrixAdd, Square) {
     const std::array<float, 9> base_float_array =  {1,2,3,4,5,6,7,8,9};

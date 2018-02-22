@@ -2,7 +2,7 @@
 #include <array>
 #include <gtest/gtest.h>
 
-#include "../fast_matrix.hpp"
+#include "../fast5x5.hpp"
 
 TEST(VectorInstanciation, NoArguments) {
     const std::array<float, 5> null_vector = {0, 0, 0, 0, 0};

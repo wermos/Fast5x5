@@ -1,6 +1,6 @@
 #include<iostream>
 
-#include"fast_matrix.hpp"
+#include "fast5x5.hpp"
 
 #ifndef SIZE
 #define SIZE 4

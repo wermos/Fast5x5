@@ -6,7 +6,7 @@
 #include <iomanip>
 #include <cmath>
 
-#include "../fast_matrix.hpp"
+#include "../fast5x5.hpp"
 
 
 template <typename M>
