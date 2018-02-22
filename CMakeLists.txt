@@ -1,6 +1,7 @@
+
 cmake_minimum_required(VERSION 2.8)
 
-project (FastMatrix)
+project (Fast5x5)
 
 find_package(Boost REQUIRED)
 find_package(Boost.SIMD REQUIRED)
