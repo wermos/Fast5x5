@@ -103,8 +103,7 @@ Building them require to build Boost.SIMD first.
 
 For what concerns the external dependencies, if you have Docker installed
 on your machine, you can move the main Fast5x5 directory and type
-```docker/run.sh```.
-
+`docker/run.sh`.
 
 ```bash
 cd /path/to/Fast5x5/
@@ -117,6 +116,7 @@ make
 #### Run
 
 Once the tests are built you can launch them from the test directory.
+
 ```bash
 test/unit_tests
 ```
