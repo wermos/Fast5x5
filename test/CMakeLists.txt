@@ -1,3 +1,4 @@
+
 file(GLOB SRCS *.cpp)
 
 enable_testing()

@@ -1,6 +1,6 @@
 
 # This image is used to pack the needed externals for Fast5x5
-FROM gcc:7.2
+FROM gcc:6.2
 
 # Ensure use of bash
 SHELL ["/bin/bash","-c"]
@@ -29,7 +29,9 @@ RUN export BOOST_VERSION="1.62.0" && export BOOST_VERSION_=${BOOST_VERSION//./_}
 ENV BOOST_ROOT /opt/boost
 
 # bSIMD
-RUN git clone https://github.com/NumScale/boost.simd.git -b master /opt/boost.simd
+#RUN git clone https://github.com/NumScale/boost.simd.git -b master /opt/boost.simd
+COPY boost.simd /opt/boost.simd
+RUN cd /opt/boost.simd && mkdir -p build && cd build && cmake ..
 ENV BOOST_SIMD_ROOT /opt/boost.simd
 
 # Use of BOOST and BOOST.SIMD

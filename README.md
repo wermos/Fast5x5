@@ -99,11 +99,21 @@ Building them require to build Boost.SIMD first.
  * googletest 1.8.0
  * R
 
-#### Build
+#### Build within the Docker image
 
-For what concerns the external dependencies, if you have Docker installed
+or what concerns the external dependencies, if you have Docker installed
 on your machine, you can move the main Fast5x5 directory and type
 `docker/run.sh`.
+
+```bash
+cd /path/to/Fast5x5/
+docker/run.sh
+mkdir build && cd build
+cmake -D CMAKE_PREFIX_PATH=/opt/boost.simd/build/ ..
+make
+```
+
+#### Build without Docker
 
 ```bash
 cd /path/to/Fast5x5/
