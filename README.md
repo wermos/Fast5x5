@@ -69,8 +69,9 @@ int main (int argc, char **argv) {
         4, 5, 6
     };
     float right_data[6] = {
-        7, 8, 9,
-        10, 11, 12
+        7, 8,
+        9, 10,
+        11, 12
     };
 
     BaseMatrix<float, 2, 3> a(left_data);
