@@ -120,7 +120,7 @@ make
 cd /path/to/Fast5x5/
 mkdir build && cd build
 export Boost_DIR=/path/to/boost/root # Only if you didn't install boost from your distribution
-cmake -D CMAKE_PREFIX_PATH=path/to/boost.simd_build_dir/ ..
+cmake -D CMAKE_PREFIX_PATH=/path/to/boost.simd_build_dir/ ..
 make
 ```
 

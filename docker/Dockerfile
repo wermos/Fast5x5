@@ -16,6 +16,7 @@ RUN apt-get update \
 && apt-get install -y x11-apps \
 && apt-get install -y xemacs21 \
 && apt-get install -y cmake \
+&& apt-get install -y r-base \
 && rm -rf /var/lib/apt/lists/*
 
 # boost
