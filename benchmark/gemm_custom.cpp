@@ -24,12 +24,12 @@ int main(int argc, char **argv) {
         }
     }
 
-    using M = BaseMatrix<float, SIZE, VECSIZE>;
+    using M = BaseMatrix<float, SIZE, SIZE>;
     M pa(a), pb(b), pc;
 
     for (unsigned int i=0; i < REPEAT; i++) {
-        matrix_mul_m_m<M>(pa, pb, pc);
-        matrix_mul_m_m<M>(pb, pc, pa);
+        matrix_mul_m_m(pa, pb, pc);
+        matrix_mul_m_m(pb, pc, pa);
     }
 
     std::cout << pa << std::endl;

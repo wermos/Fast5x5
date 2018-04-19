@@ -32,17 +32,17 @@ int main(int argc, char **argv) {
         }
     }
 
-    using M = BaseMatrix<float, SIZE, VECSIZE>;
+    using M = BaseMatrix<float, SIZE, SIZE>;
     M pa(a), pb(b), pf;
 
 //    std::cout << pa << std::endl;
 //    std::cout << pb << std::endl;
 
     for (unsigned int i=0; i<200000000; i++) {
-        matrix_mul_m_m<M>(pb, pa, pf);
-        matrix_mul_m_m<M>(pf, pb, pa);
-        //matrix_mul_sym<M>(pb, pa, pf);
-        //matrix_mul<M>(pf, pb, pa);
+        matrix_mul_m_m(pb, pa, pf);
+        matrix_mul_m_m(pf, pb, pa);
+        //matrix_mul_sym(pb, pa, pf);
+        //matrix_mul(pf, pb, pa);
     }
 
     std::cout << pa << std::endl;
