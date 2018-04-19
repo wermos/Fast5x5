@@ -25,7 +25,7 @@ RUN export BOOST_VERSION="1.62.0" && export BOOST_VERSION_=${BOOST_VERSION//./_}
     tar xf boost-${BOOST_VERSION_}.tar.gz && \
     cd boost_${BOOST_VERSION_}/ && \
     ./bootstrap.sh --prefix=/opt/boost/ --with-libraries=program_options,test && \
-    ./b2 install && \
+    ./b2 install -j8 && \
     cd .. && rm boost-${BOOST_VERSION_}.tar.gz && rm -r boost_${BOOST_VERSION_}
 ENV BOOST_ROOT /opt/boost
 
