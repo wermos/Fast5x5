@@ -15,7 +15,7 @@ for size in $(seq 3 8); do
         # stdout and stderr first.
         /usr/bin/time -f "%U, " ./a.out 3>&1 1>&2 2>&3 3>&-                    \
                     | tr -d '\n' | tee -a custom_${FILE}                       \
-        && echo
+        && echo -ne "\n\n\n"
     done
     echo >> custom_${FILE}
 
@@ -24,7 +24,7 @@ for size in $(seq 3 8); do
         # Same as above, only targeting a different file
         /usr/bin/time -f "%U, " ./a.out 3>&1 1>&2 2>&3 3>&-                    \
                     | tr -d '\n' | tee -a eigen_${FILE}                        \
-        && echo
+        && echo -ne "\n\n\n"
     done
     echo >> eigen_${FILE}
 done

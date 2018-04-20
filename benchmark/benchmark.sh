@@ -19,7 +19,7 @@ for size in $(seq 3 8); do
         # stdout and stderr first.
         /usr/bin/time -f "%U, " ./a.out 3>&1 1>&2 2>&3 3>&-                    \
                     | tr -d '\n' | tee -a ${FILE}_simple.res                   \
-        && echo
+        && echo -ne "\n\n\n"
     done
     echo >> ${FILE}_simple.res
 
@@ -29,7 +29,7 @@ for size in $(seq 3 8); do
         # Same as above, only targeting a different file
         /usr/bin/time -f "%U, " ./a.out 3>&1 1>&2 2>&3 3>&-                    \
                     | tr -d '\n' | tee -a ${FILE}_eigen.res                    \
-        && echo
+        && echo -ne "\n\n\n"
     done
     echo >> ${FILE}_eigen.res
 
@@ -39,7 +39,7 @@ for size in $(seq 3 8); do
         # Same as above, only targeting a different file
         /usr/bin/time -f "%U, " ./a.out 3>&1 1>&2 2>&3 3>&-                    \
                     | tr -d '\n' | tee -a ${FILE}_custom.res                   \
-        && echo
+        && echo -ne "\n\n\n"
     done
     echo >> ${FILE}_custom.res
 
