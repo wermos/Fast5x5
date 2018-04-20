@@ -1,5 +1,4 @@
 #!/bin/bash
-
 export REPEAT=20
 export PROG="a.out"
 export FILE="gemm"
@@ -27,7 +26,7 @@ for size in $(seq 3 8); do
     echo >> ${FILE}_eigen.res
 
     echo -e "\t Custom"
-    g++ gemm_custom.cpp -I ${BOOST_SIMD_ROOT} -DSIZE=$size -O3 -march=native
+    g++ gemm_custom.cpp -DSIZE=$size -O3 -march=native
     for i in $(seq 1 ${REPEAT}); do
         ${TIME} -f "%U, " ./a.out 2> >(tr -d '\n' | tee -a ${FILE}_custom.res) && echo
     done
