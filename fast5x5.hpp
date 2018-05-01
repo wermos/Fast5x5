@@ -1,18 +1,11 @@
 #include<iostream>
 #include<cstring>
 #include<array>
+#include <utility>
 
-#include<boost/simd/pack.hpp>
-#include<boost/simd/constant/zero.hpp>
-#include<boost/simd/constant/one.hpp>
-#include<boost/simd/function/aligned_store.hpp>
-#include<boost/simd/function/load.hpp>
-#include<boost/simd/function/store.hpp>
-#include<boost/simd/function/dot.hpp>
-#include<boost/simd/function/shuffle.hpp>
-#include<boost/simd/function/none.hpp>
+#include <xsimd/xsimd.hpp>
 
-namespace bs = boost::simd;
+namespace xs = xsimd;
 
 constexpr int nearest_power_of_two(int min_value, int current_value) {
     // Computes the nearest power of two relative to `min_value` starting from the power of two `current_value`
@@ -41,21 +34,25 @@ std::ostream & operator<<(std::ostream &os, const BaseMatrix<T, NRows, NCols> &m
 
 template <typename M>
 static inline void matrix_add(M &a, M &b, M &c) {
-    using pack_t = typename M::pack_t;
+    using batch_t = typename M::batch_t;
     for (int i=0; i<M::NRows; i++) {
         int index = M::VecSize*i;
-        pack_t row_a(&a.array[index]), row_b(&b.array[index]);
-        bs::aligned_store(row_a + row_b, &c.array[index]);
+        batch_t row_a(&a.array[index], xs::aligned_mode());
+        batch_t row_b(&b.array[index], xs::aligned_mode());
+        row_a += row_b;
+        row_a.store_aligned(&c.array[index]);
     }
 }
 
 template <typename M>
 static inline void matrix_sub(M &a, M &b, M &c) {
-    using pack_t = typename M::pack_t;
+    using batch_t = typename M::batch_t;
     for (int i=0; i<M::NRows; i++) {
         int index = M::VecSize*i;
-        pack_t row_a(&a.array[index]), row_b(&b.array[index]);
-        bs::aligned_store(row_a - row_b, &c.array[index]);
+        batch_t row_a(&a.array[index], xs::aligned_mode());
+        batch_t row_b(&b.array[index], xs::aligned_mode());
+        row_a -= row_b;
+        row_a.store_aligned(&c.array[index]);
     }
 }
 
@@ -70,7 +67,7 @@ static inline void matrix_mul_m_m(BaseMatrix<T, l, m> &a, BaseMatrix<T, m, n> &b
  */
     static constexpr int LeftVecSize = BaseMatrix<T, l, m>::VecSize;
     static constexpr int RightVecSize = BaseMatrix<T, m, n>::VecSize;
-    using pack_t = bs::pack<T, RightVecSize>;
+    using batch_t = xs::batch<T, RightVecSize>;
     /* Algorithm:
      * For each row of C matrix:
      *  * Load one element of A and broadcast it into vector.
@@ -80,13 +77,13 @@ static inline void matrix_mul_m_m(BaseMatrix<T, l, m> &a, BaseMatrix<T, m, n> &b
      *  * Store the sommation as corresponding row of C.
      */
     for (int i=0; i<l; i++) {
-        pack_t res = bs::Zero<pack_t>();
+        batch_t res = xs::zero<batch_t>();
         for (int j=0; j<m; j++) {
-            pack_t factor {a.array[LeftVecSize*i + j]};
-            pack_t row(&b.array[RightVecSize*j]);
+            batch_t factor(a.array[LeftVecSize*i + j]);
+            batch_t row(&b.array[RightVecSize*j], xs::aligned_mode());
             res += factor * row;
         }
-        bs::aligned_store(res, &c.array[RightVecSize*i]);
+        res.store_aligned(&c.array[RightVecSize*i]);
     }
 }
 
@@ -100,15 +97,15 @@ static inline void matrix_mul_mt_m(BaseMatrix<T, m, l> &a, BaseMatrix<T, m, n> &
  */
     static constexpr int LeftVecSize = BaseMatrix<T, m, l>::VecSize;
     static constexpr int RightVecSize = BaseMatrix<T, m, n>::VecSize;
-    using pack_t = bs::pack<T, RightVecSize>;
+    using batch_t = xs::batch<T, RightVecSize>;
     for (int i=0; i<l; i++) {
-        pack_t res = bs::Zero<pack_t>();
+        batch_t res = xs::zero<batch_t>();
         for (int j=0; j<m; j++) {
-            pack_t factor {a.array[LeftVecSize*j + i]};
-            pack_t row(&b.array[RightVecSize*j]);
+            batch_t factor(a.array[LeftVecSize*j + i]);
+            batch_t row(&b.array[RightVecSize*j], xs::aligned_mode());
             res += factor * row;
         }
-        bs::aligned_store(res, &c.array[RightVecSize*i]);
+        xs::store_aligned(&c.array[RightVecSize*i], res);
     }
 }
 
@@ -124,7 +121,7 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m> &a, BaseMatrix<T, n, m> &
  */
     static constexpr int VecSize = BaseMatrix<T, l, m>::VecSize; //VecSize are the same for left and right matrices 
     static constexpr int ResVecSize = BaseMatrix<T, l, n>::VecSize;
-    using pack_t = bs::pack<T, VecSize>;
+    using batch_t = xs::batch<T, VecSize>;
     /* Algorithm:
      * For each C matrix element:
      *  * Load corresponding row of A into vector.
@@ -133,11 +130,11 @@ static inline void matrix_mul_m_mt(BaseMatrix<T, l, m> &a, BaseMatrix<T, n, m> &
      *  * Store the resulting scalar of C.
      */
     for (int i=0; i<l; i++) {
-        pack_t row(&a.array[VecSize*i]);
+        batch_t row(&a.array[VecSize*i]);
         for (int j=0; j<n; j++) {
-            pack_t row_transpose(&b.array[VecSize*j]);
+            batch_t row_transpose(&b.array[VecSize*j], xs::aligned_mode());
             // Dot is a slow operation but it will get better with newer hardware.
-            c.array[ResVecSize*i + j] = bs::sum(row * row_transpose);
+            c.array[ResVecSize*i + j] = xs::hadd(row * row_transpose);
         }
     }
 }
@@ -146,12 +143,12 @@ template <typename T, int l, int m>
 static inline void matrix_mul_m_v(BaseMatrix<T, l, m> &a, Vector<T, m> &b, Vector<T, l> &c) {
     static constexpr int VecSize = BaseMatrix<T, l, m>::VecSize;
 
-    using pack_t = bs::pack<T, VecSize>;
-    pack_t vector(&b.array[0]);
+    using batch_t = xs::batch<T, VecSize>;
+    batch_t vector(&b.array[0], xs::aligned_mode());
 
     for (int i=0; i < l; i++) {
-        pack_t row(&a.array[VecSize*i]);
-        c.array[i] = bs::sum(row * vector);
+        batch_t row(&a.array[VecSize*i], xs::aligned_mode());
+        c.array[i] = xs::hadd(row * vector);
     }
 }
 
@@ -166,42 +163,42 @@ class Inverse {
          * a^-1 = (r^-1)*t(r^-1) = inv
          */
         M r;
-        using pack_t = typename M::pack_t;
+        using batch_t = typename M::batch_t;
 
         // Cholesky decomposition
         for (int i=0; i<M::NRows; i++) {
-            pack_t sum_row = bs::Zero<pack_t>();
+            batch_t sum_row = xs::zero<batch_t>();
 
             for (int j=0; j<i; j++) {
-                pack_t cur_row(&r.array[j*M::VecSize]);
-                pack_t factor {r.array[j*M::VecSize+i]};
+                batch_t cur_row(&r.array[j*M::VecSize], xs::aligned_mode());
+                batch_t factor(r.array[j*M::VecSize+i]);
                 sum_row += cur_row*factor;
             }
 
-            pack_t res_row(&a.array[i*M::VecSize]);
+            batch_t res_row(&a.array[i*M::VecSize], xs::aligned_mode());
             res_row -= sum_row;
-            pack_t diviser {1/std::sqrt(res_row[i])};
+            batch_t diviser(1/std::sqrt(res_row[i]));
             res_row *= diviser;
-            bs::aligned_store(res_row, &r.array[i*M::VecSize]);
+            xs::store_aligned(&r.array[i*M::VecSize], res_row);
         }
 
         M inv_r;
         static M Id(1);
         // Inversion of R by backward substitution
         for (int i=(M::NRows-1); i>=0; i--) {
-            pack_t sum_row = bs::Zero<pack_t>();
+            batch_t sum_row = xs::zero<batch_t>();
 
             for (int j=(M::NRows-1); j > i; j--) {
-                pack_t cur_row(&inv_r.array[j*M::VecSize]);
-                pack_t factor {r.array[i*M::VecSize+j]};
+                batch_t cur_row(&inv_r.array[j*M::VecSize], xs::aligned_mode());
+                batch_t factor(r.array[i*M::VecSize+j]);
                 sum_row += cur_row*factor;
             }
 
-            pack_t res_row(&Id.array[i*M::VecSize]);
+            batch_t res_row(&Id.array[i*M::VecSize], xs::aligned_mode());
             res_row -= sum_row;
-            pack_t diviser {1/r.array[i*M::VecSize+i]};
+            batch_t diviser(1/r.array[i*M::VecSize+i]);
             res_row *= diviser;
-            bs::aligned_store(res_row, &inv_r.array[i*M::VecSize]);
+            xs::store_aligned(&inv_r.array[i*M::VecSize], res_row);
         }
 
 
@@ -234,12 +231,17 @@ class BaseMatrix {
     // We use the smallest vector size possible
     static constexpr int VecSize = nearest_power_of_two(NumberCols, 1);
 
-    static constexpr int blend_index (int i, int c) {
-        return i < NumberCols ? i : c+i;
+    static xs::batch_bool<T, VecSize> select_mask() {
+        return select_mask_impl(std::make_index_sequence<VecSize>());
+    }
+
+    template<std::size_t... Indices>
+    static xs::batch_bool<T, VecSize> select_mask_impl(std::index_sequence<Indices...>) {
+        return xs::batch_bool<T, VecSize>((Indices < NumberCols)...);
     }
 
     using matrix_t = BaseMatrix<T, NumberRows, NumberCols>;
-    using pack_t = bs::pack<T, VecSize>;
+    using batch_t = xs::batch<T, VecSize>;
 
     public:
     using ElementType = T;
@@ -250,9 +252,9 @@ class BaseMatrix {
     BaseMatrix(T const a[]) {
         for (int i=0; i<NRows; i++) {
             // In this case we copy data row by row
-            pack_t row = bs::load<pack_t>(&a[i*NCols]);
-            if (NCols != VecSize) row = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
-            bs::aligned_store(row, &this->array[i*VecSize]);
+            batch_t row(&a[i*NCols], xs::unaligned_mode());
+            if (NCols != VecSize) row = xs::select(select_mask(), row, xs::zero<batch_t>());
+            row.store_aligned(&this->array[i*VecSize]);
         }
     }
 
@@ -265,9 +267,9 @@ class BaseMatrix {
     matrix_t operator=(T const a[]) {
         for (int i=0; i<NRows; i++) {
             // In this case we copy data row by row
-            pack_t row = bs::load<pack_t>(&a[i*NCols]);
-            if (NCols != VecSize) row = bs::shuffle<bs::pattern<blend_index>>(row, bs::Zero<pack_t>());
-            bs::aligned_store(row, &this->array[i*VecSize]);
+            batch_t row(&a[i*NCols], xs::unaligned_mode());
+            if (NCols != VecSize) row = xs::select(select_mask(), row, xs::zero<batch_t>());
+            row.store_aligned(&this->array[i*VecSize]);
         }
         return *this;
     }
@@ -296,14 +298,14 @@ class BaseMatrix {
     void store(T addr[]) const {
         if (NCols != VecSize) {
             for (int i=0; i< NRows - 1; i++) {
-                pack_t row(&this->array[i*VecSize]);
-                bs::store(row, &addr[i*NCols]);
+                batch_t row(&this->array[i*VecSize], xs::aligned_mode());
+                xs::store_unaligned(&addr[i*NCols], row);
             }
             std::memcpy(&addr[(NRows-1)*NCols], &this->array[(NRows-1)*VecSize], sizeof(T)*NCols);
         } else {
             for (int i=0; i< NRows; i++) {
-                pack_t row(&this->array[i*VecSize]);
-                bs::store(row, &addr[i*NCols]);
+                batch_t row(&this->array[i*VecSize], xs::aligned_mode());
+                xs::store_unaligned(&addr[i*NCols], row);
             }
         }
     }
