@@ -3,11 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project (Fast5x5)
 
-find_package(Boost REQUIRED)
-find_package(Boost.SIMD REQUIRED)
-
-include_directories(${Boost_INCLUDE_DIRS})
-include_directories(${Boost.SIMD_INCLUDE_DIRS})
+find_package(xsimd 4.1.2 REQUIRED)
 
 # We need thread support
 find_package(Threads REQUIRED)

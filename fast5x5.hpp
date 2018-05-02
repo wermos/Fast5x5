@@ -105,7 +105,7 @@ static inline void matrix_mul_mt_m(BaseMatrix<T, m, l> &a, BaseMatrix<T, m, n> &
             batch_t row(&b.array[RightVecSize*j], xs::aligned_mode());
             res += factor * row;
         }
-        xs::store_aligned(&c.array[RightVecSize*i], res);
+        res.store_aligned(&c.array[RightVecSize*i]);
     }
 }
 
@@ -179,7 +179,7 @@ class Inverse {
             res_row -= sum_row;
             batch_t diviser(1/std::sqrt(res_row[i]));
             res_row *= diviser;
-            xs::store_aligned(&r.array[i*M::VecSize], res_row);
+            res_row.store_aligned(&r.array[i*M::VecSize]);
         }
 
         M inv_r;
@@ -198,7 +198,7 @@ class Inverse {
             res_row -= sum_row;
             batch_t diviser(1/r.array[i*M::VecSize+i]);
             res_row *= diviser;
-            xs::store_aligned(&inv_r.array[i*M::VecSize], res_row);
+            res_row.store_aligned(&inv_r.array[i*M::VecSize]);
         }
 
 
@@ -299,13 +299,13 @@ class BaseMatrix {
         if (NCols != VecSize) {
             for (int i=0; i< NRows - 1; i++) {
                 batch_t row(&this->array[i*VecSize], xs::aligned_mode());
-                xs::store_unaligned(&addr[i*NCols], row);
+                row.store_unaligned(&addr[i*NCols]);
             }
             std::memcpy(&addr[(NRows-1)*NCols], &this->array[(NRows-1)*VecSize], sizeof(T)*NCols);
         } else {
             for (int i=0; i< NRows; i++) {
                 batch_t row(&this->array[i*VecSize], xs::aligned_mode());
-                xs::store_unaligned(&addr[i*NCols], row);
+                row.store_unaligned(&addr[i*NCols]);
             }
         }
     }
