@@ -11,9 +11,9 @@ A linear algebra library which focus on 5x5 operations.
 
 #### Dependencies
 
-Fast5x5 is a template-based header-only library, relying on Boost (>= 1.62) and
-Boost.SIMD (master branch). The only usage requirement is to correctly add Boost.SIMD and
-Boost include directory at the list of directories used by your compiler.
+Fast5x5 is a template-based header-only library, relying on xsimd (>= 4.1.2).
+The only usage requirement is to correctly add the xsimd include
+directories at the list of directories used by your compiler.
 
 #### Importing
 
@@ -91,7 +91,7 @@ int main (int argc, char **argv) {
 
 Testing functionalities of the library is available through a set of unit tests.
 Prior running the tests you must build them with cmake.
-Building them require to build Boost.SIMD first.
+Building them require to install xsimd first.
 
 #### Additional dependencies
 
@@ -110,7 +110,7 @@ on your machine, you can move the main Fast5x5 directory and type
 cd /path/to/Fast5x5/
 docker/run.sh
 mkdir build && cd build
-cmake -D CMAKE_PREFIX_PATH=/opt/boost.simd/build/ ..
+cmake ..
 make
 ```
 
@@ -119,8 +119,7 @@ make
 ```bash
 cd /path/to/Fast5x5/
 mkdir build && cd build
-export Boost_DIR=/path/to/boost/root # Only if you didn't install boost from your distribution
-cmake -D CMAKE_PREFIX_PATH=/path/to/boost.simd_build_dir/ ..
+cmake ..
 make
 ```
 
