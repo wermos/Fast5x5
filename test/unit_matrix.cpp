@@ -1,4 +1,6 @@
 // Unitary tests for BaseMatrix class
+#define XSIMD_ENABLE_FALLBACK 1
+
 #include <array>
 #include <gtest/gtest.h>
 

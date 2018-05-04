@@ -1,4 +1,6 @@
 // Unitary tests for inversion
+#define XSIMD_ENABLE_FALLBACK 1
+
 #include <array>
 #include <gtest/gtest.h>
 #include <gtest/gtest-spi.h>
