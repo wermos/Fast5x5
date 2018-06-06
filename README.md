@@ -11,7 +11,7 @@ A linear algebra library which focus on 5x5 operations.
 
 #### Dependencies
 
-Fast5x5 is a template-based header-only library, relying on xsimd (>= 4.1.2).
+Fast5x5 is a template-based header-only library, relying on xsimd (>= 5.0.0).
 The only usage requirement is to correctly add the xsimd include
 directories at the list of directories used by your compiler.
 

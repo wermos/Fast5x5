@@ -3,7 +3,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project (Fast5x5)
 
-find_package(xsimd 4.1.2 REQUIRED)
+find_package(xsimd 5.0.0 REQUIRED)
 
 # We need thread support
 find_package(Threads REQUIRED)
