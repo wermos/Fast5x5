@@ -1,0 +1,87 @@
+
+# =========================
+# Bootstrap images
+# =========================
+
+FROM continuumio/miniconda3:4.5.12
+FROM ubuntu:bionic
+
+## Ensure use of bash
+SHELL ["/bin/bash","-c"]
+
+
+# =========================
+# Apt-get installations
+# =========================
+
+## So to avoid debconf interactive questions
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+ARG DEBIAN_FRONTEND=noninteractive
+
+RUN apt-get update \
+&& apt-get install -y apt-utils \
+&& apt-get install -y vim \
+&& apt-get install -y wget \
+&& apt-get install -y x11-apps \
+&& apt-get install -y xemacs21 \
+&& apt-get install -y cmake \
+&& apt-get install -y git \
+&& apt-get install -y r-base \
+&& apt-get install -y libeigen3-dev
+&& rm -rf /var/lib/apt/lists/*
+
+
+# =========================
+# Conda installations
+# =========================
+
+## Miniconda
+ENV MINICONDA_ROOT /opt/miniconda3
+ENV PATH ${PATH}:${MINICONDA_ROOT}/bin
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p ${MINICONDA_ROOT} && \
+    rm Miniconda3-latest-Linux-x86_64.sh && \
+    conda update -y conda
+RUN echo "${MINICONDA_ROOT}/lib" >> /etc/ld.so.conf
+RUN ldconfig
+
+## Update config
+RUN conda update -n base -c defaults conda
+RUN conda config --add channels conda-forge
+
+## Packages
+RUN conda install gcc=4.8.2
+RUN conda install xsimd=5.0.0
+RUN conda install eigen=3.3.7
+RUN conda install gtest=1.8.1
+RUN conda install r=3.5.1
+
+
+# =========================
+# Installations from source
+# =========================
+
+## R
+RUN export R_VERSION="3.5.3" && cd /opt && \
+    wget https://pbil.univ-lyon1.fr/CRAN/src/base/R-3/R-${R_VERSION}.tar.gz && \
+    tar xf R-${R_VERSION}.tar.gz && \
+    cd R-${R_VERSION} && ./configure && make
+
+## Google Test, for test & benchmarking
+RUN git clone https://github.com/google/googletest.git -b release-1.8.0 /opt/googletest
+ENV GTEST_ROOT /opt/googletest/googletest
+
+## Xsimd
+RUN export XSIMD_VERSION="5.0.0" && \
+    git clone https://github.com/QuantStack/xsimd.git -b ${XSIMD_VERSION} /opt/xsimd && \
+    cd /opt/xsimd && mkdir build && cd build && \
+    cmake -DCMAKE_INSTALL_PREFIX=/opt/xsimd .. && \
+    make install
+
+## Eigen, for test & benchmarking
+RUN export EIGEN_VERSION="3.2.10" && \
+    wget http://bitbucket.org/eigen/eigen/get/${EIGEN_VERSION}.tar.gz && \
+    tar xf ${EIGEN_VERSION}.tar.gz && \
+    mkdir -p /opt/ && \
+    mv eigen-eigen-*/ /opt/eigen/ && \
+    rm ${EIGEN_VERSION}.tar.gz
