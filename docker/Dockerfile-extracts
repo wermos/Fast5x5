@@ -5,6 +5,7 @@
 
 FROM continuumio/miniconda3:4.5.12
 FROM ubuntu:bionic
+FROM jupyter/scipy-notebook
 
 ## Ensure use of bash
 SHELL ["/bin/bash","-c"]
@@ -24,6 +25,7 @@ RUN apt-get update \
 && apt-get install -y wget \
 && apt-get install -y x11-apps \
 && apt-get install -y xemacs21 \
+&& apt-get install -y doxygen \
 && apt-get install -y cmake \
 && apt-get install -y git \
 && apt-get install -y r-base \
@@ -55,6 +57,15 @@ RUN conda install xsimd=5.0.0
 RUN conda install eigen=3.3.7
 RUN conda install gtest=1.8.1
 RUN conda install r=3.5.1
+
+## NbGrader
+USER root
+RUN conda install nbgrader
+RUN mkdir -p /srv/nbgrader/exchange
+RUN chmod ugo+rw /srv/nbgrader/exchange
+RUN jupyter nbextension install --sys-prefix --py nbgrader --overwrite
+RUN jupyter nbextension enable --sys-prefix --py nbgrader
+RUN jupyter serverextension enable --sys-prefix --py nbgrader
 
 
 # =========================
