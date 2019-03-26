@@ -17,6 +17,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Installations apt-get
 RUN apt-get update \
 && apt-get install -y apt-utils \
+&& apt-get install -y time \
+&& apt-get install -y bc \
 && apt-get install -y vim \
 && apt-get install -y wget \
 && apt-get install -y x11-apps \
