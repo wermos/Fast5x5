@@ -1,0 +1,44 @@
+
+# This image is used to pack the needed externals for Fast5x5
+FROM ubuntu:bionic
+
+# => g++ 7.3.0
+# => R 3.4.4
+# => Eigen 3.3.4-4
+# => GoogleTest 1.8.0-6
+
+# Ensure use of bash
+SHELL ["/bin/bash","-c"]
+
+# So to avoid debconf interactive questions
+RUN echo 'debconf debconf/frontend select Noninteractive' | debconf-set-selections
+ARG DEBIAN_FRONTEND=noninteractive
+
+# Installations apt-get
+RUN apt-get update \
+&& apt-get install -y apt-utils \
+&& apt-get install -y vim \
+&& apt-get install -y wget \
+&& apt-get install -y x11-apps \
+&& apt-get install -y xemacs21 \
+&& apt-get install -y cmake \
+&& apt-get install -y git \
+&& apt-get install -y r-base \
+&& apt-get install -y libeigen3-dev \
+&& rm -rf /var/lib/apt/lists/*
+
+# Miniconda
+ENV MINICONDA_ROOT /opt/miniconda3
+ENV PATH ${PATH}:${MINICONDA_ROOT}/bin
+RUN wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p ${MINICONDA_ROOT} && \
+    rm Miniconda3-latest-Linux-x86_64.sh && \
+    conda update -y conda
+RUN echo "${MINICONDA_ROOT}/lib" >> /etc/ld.so.conf
+RUN ldconfig
+
+# Installations conda
+RUN conda update -n base -c defaults conda
+RUN conda config --add channels conda-forge
+#RUN conda install gtest=1.8.1
+RUN conda install xsimd=5.0.0

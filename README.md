@@ -13,7 +13,7 @@ A linear algebra library which focus on 5x5 operations.
 
 Fast5x5 is a template-based header-only library, relying on xsimd (>= 5.0.0).
 The only usage requirement is to correctly add the xsimd include
-directories at the list of directories used by your compiler.
+directories to the list of directories used by your compiler.
 
 #### Importing
 
@@ -35,7 +35,7 @@ By default your matrix will be initialized to zero.
 If you want to initialize it to existing values you can pass an array to the constructor.
 Values in the array are considered to be row-major.
 ```c++
-double data[16] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,160};
+double data[16] {1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16};
 BaseMatrix<double, 4, 4> my_matrix(data);
 ```
 
@@ -86,6 +86,7 @@ int main (int argc, char **argv) {
 }
 ```
 
+
 ---
 ## Testing
 
@@ -100,21 +101,13 @@ Building them require to install xsimd first.
  * googletest 1.8.0
  * R
 
-#### Build within the Docker image
+#### Possibly start a Docker image
 
-or what concerns the external dependencies, if you have Docker installed
-on your machine, you can move the main Fast5x5 directory and type
-`docker/run.sh`.
+For what concerns the external dependencies above, if you have Docker installed
+on your machine, you can move the main Fast5x5/docker directory and type
+`run.sh`.
 
-```bash
-cd /path/to/Fast5x5/
-docker/run.sh
-mkdir build && cd build
-cmake ..
-make
-```
-
-#### Build without Docker
+#### Build
 
 ```bash
 cd /path/to/Fast5x5/
