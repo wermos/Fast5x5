@@ -103,11 +103,11 @@ Building them require to install xsimd first.
 
 #### Possibly start a Docker image
 
-For what concerns the external dependencies above, if you have Docker installed on your machine, you can move the main Fast5x5/docker/xsimd directory and type `run.sh`.
+For what concerns the external dependencies above, if you have Docker installed on your machine, you can move the main Fast5x5 directory and type `docker/xsimd/run.sh`:
 
 ```bash
-cd /path/to/Fast5x5/docker/xsimd
-run.sh
+cd /path/to/Fast5x5
+docker/xsimd/run.sh
 ```
 
 #### Build
