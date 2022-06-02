@@ -1,8 +1,6 @@
 
 cmake_minimum_required(VERSION 3.4)
-
 project (Fast5x5)
-
 find_package(xsimd 5.0.0 REQUIRED)
 
 # We need thread support
@@ -28,7 +26,6 @@ ExternalProject_Get_Property(gtest source_dir binary_dir)
 add_library(libgtest IMPORTED STATIC GLOBAL)
 add_dependencies(libgtest gtest)
 
-
 # Set libgtest properties
 set_target_properties(libgtest PROPERTIES
     "IMPORTED_LOCATION" "${binary_dir}/googlemock/gtest/libgtest.a"
@@ -37,6 +34,5 @@ set_target_properties(libgtest PROPERTIES
 
 # I couldn't make it work with INTERFACE_INCLUDE_DIRECTORIES
 include_directories("${source_dir}/googletest/include")
-
 
 add_subdirectory(test/)
