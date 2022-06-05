@@ -1,9 +1,10 @@
-[submodule "libs/benchmark"]
-	path = libs/benchmark
+[submodule "src/libs/benchmark"]
+	path = src/libs/benchmark
 	url = https://github.com/google/benchmark.git
-[submodule "libs/xsimd"]
-	path = libs/xsimd
-	url = https://github.com/xtensor-stack/xsimd.git
-[submodule "libs/googletest"]
-	path = libs/googletest
+[submodule "src/libs/googletest"]
+	path = src/libs/googletest
 	url = https://github.com/google/googletest.git
+[submodule "src/libs/xsimd"]
+	path = src/libs/xsimd
+	url = https://github.com/xtensor-stack/xsimd.git
+	branch = 5.0.0
