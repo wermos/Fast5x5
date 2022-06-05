@@ -1,10 +1,11 @@
-
-file(GLOB SRCS *.cpp)
-
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
+file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS *.cpp)
 
 enable_testing()
-add_executable(unit_tests ${SRCS})
-target_link_libraries(unit_tests PRIVATE libgtest xsimd)
-#install(TARGETS unit_tests DESTINATION bin)
-add_test(unit_tests unit_tests)
+
+add_executable(tests ${SOURCES})
+
+target_link_libraries(tests PUBLIC gtest xsimd)
+target_include_directories(test PUBLIC ../../libs/googletest/include)
+target_include_directories(test PUBLIC ../../libs/xsimd/include)
+
+add_test(tests tests)
