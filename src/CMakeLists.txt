@@ -7,14 +7,14 @@ set(BENCHMARK_INSTALL_DOCS OFF CACHE BOOL "" FORCE)
 set(BENCHMARK_ENABLE_GTEST_TESTS OFF CACHE BOOL "" FORCE)
 
 # add Google Bencmark
-add_subdirectory(../libs/benchmark)
+add_subdirectory(libs/benchmark)
 
 # Googletest build flags
 set(BUILD_GMOCK OFF CACHE BOOL "" FORCE)
 set(INSTALL_GTEST OFF CACHE BOOL "" FORCE)
 
 # add Googletest 
-add_subdirectory(../libs/googletest)
+add_subdirectory(libs/googletest)
 
 # xsimd build flags
 if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_COMPILER_IS_GNUCXX)
@@ -23,4 +23,7 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_COMPILER_IS_GNUCXX)
 endif()
 
 # add xsimd
-add_subdirectory(../libs/xsimd)
+add_subdirectory(libs/xsimd)
+
+add_subdirectory(benchmark)
+add_subdirectory(test)

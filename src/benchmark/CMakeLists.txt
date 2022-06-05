@@ -1,7 +1,8 @@
 file(GLOB_RECURSE SOURCES CONFIGURE_DEPENDS *.cpp)
 
-add_executable(benchmark ${SOURCES})
+add_executable(benchmarks ${SOURCES})
 
-target_link_libraries(tests PUBLIC benchmark::benchmark PUBLIC xsimd)
-target_include_directories(benchmark PUBLIC ../../libs/benchmark/include)
-target_include_directories(benchmark PUBLIC ../../libs/xsimd/include)
+target_link_libraries(benchmarks PUBLIC benchmark::benchmark PUBLIC xsimd)
+target_include_directories(benchmarks PUBLIC ../libs/benchmark/include)
+target_include_directories(benchmarks PUBLIC ../libs/xsimd/include)
+target_include_directories(benchmarks PUBLIC ../../include)
