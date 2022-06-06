@@ -2,9 +2,12 @@
 #define GEMM_CUSTOM_H
 
 #include "fast5x5/fast5x5.hpp"
+
 #include "gemm_header.h"
 
-static void gemm_custom(const benchmark::State& state) {
+#include "benchmark/benchmark.h"
+
+static void gemm_custom(benchmark::State& state) {
 	for (auto _ : state) {
 		alignas(32) float a[SIZE*SIZE];
 		alignas(32) float b[SIZE*SIZE];

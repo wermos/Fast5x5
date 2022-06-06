@@ -1,6 +1,8 @@
 #ifndef GEMM_HEADER_H
 #define GEMM_HEADER_H
 
+#include <iostream>
+
 #define REPEAT 200000000
 #define SIZE 4
 #define VECSIZE 8

@@ -3,7 +3,11 @@
 
 #include "gemm_header.h"
 
-static void gemm_eigen(const benchmark::State& state) {
+#include "Eigen/Dense"
+
+#include "benchmark/benchmark.h"
+
+static void gemm_eigen(benchmark::State& state) {
 	for (auto _ : state) {
 		Eigen::Matrix<float, SIZE, SIZE> pa, pb, pc;
 

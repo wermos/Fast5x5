@@ -2,8 +2,9 @@
 #define GEMM_SIMPLE_H
 
 #include "gemm_header.h"
+#include "benchmark/benchmark.h"
 
-static void gemm_simple(const benchmark::State& state) {
+static void gemm_simple(benchmark::State& state) {
     for (auto _ : state) {
         alignas(32) float a[SIZE*SIZE];
         alignas(32) float b[SIZE*SIZE];
