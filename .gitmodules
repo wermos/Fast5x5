@@ -8,3 +8,6 @@
 	path = src/libs/xsimd
 	url = https://github.com/xtensor-stack/xsimd.git
 	branch = 5.0.0
+[submodule "src/libs/eigen"]
+	path = src/libs/eigen
+	url = https://gitlab.com/libeigen/eigen.git

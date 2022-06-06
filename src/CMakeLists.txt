@@ -25,5 +25,8 @@ endif()
 # add xsimd
 add_subdirectory(libs/xsimd)
 
+# add Eigen
+add_subdirectory(libs/eigen)
+
 add_subdirectory(benchmark)
 add_subdirectory(test)
