@@ -33,6 +33,8 @@ static void gemm_custom(benchmark::State& state) {
 		using M = BaseMatrix<float, SIZE, SIZE>;
 		M pa(a), pb(b), pc;
 
+		benchmark::DoNotOptimize(pc);
+
 		for (unsigned int i=0; i < REPEAT; i++) {
 			matrix_mul_m_m(pa, pb, pc);
 			matrix_mul_m_m(pb, pc, pa);

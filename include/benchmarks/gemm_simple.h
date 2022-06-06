@@ -10,6 +10,8 @@ static void gemm_simple(benchmark::State& state) {
         alignas(32) float b[SIZE*SIZE];
         alignas(32) float c[SIZE*SIZE];
 
+		benchmark::DoNotOptimize(c);
+
         for (int i=0; i<SIZE; i++) {
             for (int j=0; j<SIZE; j++) {
                 a[i*SIZE+j] = i+j;

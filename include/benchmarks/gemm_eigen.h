@@ -29,6 +29,8 @@ static void gemm_eigen(benchmark::State& state) {
 			}
 		}
 
+		benchmark::DoNotOptimize(pc);
+
 		for (unsigned int i=0; i < REPEAT; i++) {
 			pc = pa * pb;
 			pa = pb * pc;
