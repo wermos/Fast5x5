@@ -1,17 +1,18 @@
 // Unitary tests for BaseMatrix class
-#include <array>
 #include <gtest/gtest.h>
 
-#include "../fast5x5.hpp"
+#include <array>
 
-TEST(VectorInstanciation, NoArguments) {
+#include "fast5x5/fast5x5.hpp"
+
+TEST(VectorInstantiation, NoArguments) {
     const std::array<float, 5> null_vector = {0, 0, 0, 0, 0};
     Vector<float, 5> no_args_vector;
     ASSERT_EQ(no_args_vector.dump_array(), null_vector);
     EXPECT_TRUE(no_args_vector.is_padding_zero());
 }
 
-TEST(VectorInstanciation, ArrayArguments) {
+TEST(VectorInstantiation, ArrayArguments) {
     const std::array<float, 6> float_array = {1, 2, 3, 4, 5, 6};
     Vector<float, 6> float_vector(&float_array[0]);
     ASSERT_EQ(float_vector.dump_array(), float_array);
@@ -43,8 +44,7 @@ TEST(VectorAssignment, VectorRValue) {
 
 TEST(MatrixVectorProduct, SimpleProduct) {
     const std::array<float, 6> matrix_array = {
-        1, -1, 2,
-        0, -3, 1,
+        1, -1, 2, 0, -3, 1,
     };
     const std::array<float, 3> vector_array = {2, 1, 0};
     const std::array<float, 2> result_array = {1, -3};

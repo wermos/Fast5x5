@@ -1,26 +1,25 @@
 // Unitary tests for BaseMatrix class
-#define XSIMD_ENABLE_FALLBACK 1
-
-#include <array>
 #include <gtest/gtest.h>
 
-#include "../fast5x5.hpp"
+#include <array>
 
-TEST(BaseMatrixInstanciation, NoArguments) {
+#include "fast5x5/fast5x5.hpp"
+
+TEST(BaseMatrixInstantiation, NoArguments) {
     const std::array<float, 6> null_matrix = {0, 0, 0, 0, 0, 0};
     BaseMatrix<float, 2, 3> no_args_matrix;
     ASSERT_EQ(no_args_matrix.dump_array(), null_matrix);
     EXPECT_TRUE(no_args_matrix.is_padding_zero());
 }
 
-TEST(BaseMatrixInstanciation, ScalarArguments) {
+TEST(BaseMatrixInstantiation, ScalarArguments) {
     const std::array<float, 9> diag_matrix = {5, 0, 0, 0, 5, 0, 0, 0, 5};
     BaseMatrix<float, 3, 3> scalar_arg_matrix(5);
     ASSERT_EQ(scalar_arg_matrix.dump_array(), diag_matrix);
     EXPECT_TRUE(scalar_arg_matrix.is_padding_zero());
 }
 
-TEST(BaseMatrixInstanciation, ArrayArguments) {
+TEST(BaseMatrixInstantiation, ArrayArguments) {
     const std::array<float, 6> array = {1, 2, 3, 4, 5, 6};
     BaseMatrix<float, 3, 2> array_3x2_float_matrix(&array[0]);
     ASSERT_EQ(array_3x2_float_matrix.dump_array(), array);
@@ -32,7 +31,8 @@ TEST(BaseMatrixInstanciation, ArrayArguments) {
     BaseMatrix<float, 6, 1> array_6x1_float_matrix(&array[0]);
     ASSERT_EQ(array_6x1_float_matrix.dump_array(), array);
 
-    const std::array<float, 16> squared_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    const std::array<float, 16> squared_array = {1, 2,  3,  4,  5,  6,  7,  8,
+                                                 9, 10, 11, 12, 13, 14, 15, 16};
     BaseMatrix<float, 4, 4> array_4x4_float_matrix(&squared_array[0]);
     ASSERT_EQ(array_4x4_float_matrix.dump_array(), squared_array);
 
@@ -49,7 +49,8 @@ TEST(BaseMatrixAssignment, ArrayRValue) {
     ASSERT_EQ(array_3x2_float_matrix.dump_array(), array);
     EXPECT_TRUE(array_3x2_float_matrix.is_padding_zero());
 
-    const std::array<float, 16> squared_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    const std::array<float, 16> squared_array = {1, 2,  3,  4,  5,  6,  7,  8,
+                                                 9, 10, 11, 12, 13, 14, 15, 16};
     BaseMatrix<float, 4, 4> array_4x4_float_matrix;
     array_4x4_float_matrix = &squared_array[0];
     ASSERT_EQ(array_4x4_float_matrix.dump_array(), squared_array);
@@ -82,7 +83,8 @@ TEST(BaseMatrixStore, StoreMethod) {
     array_6x1_float_matrix.store(&stored_array[0]);
     ASSERT_EQ(stored_array, array);
 
-    const std::array<float, 16> squared_array = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16};
+    const std::array<float, 16> squared_array = {1, 2,  3,  4,  5,  6,  7,  8,
+                                                 9, 10, 11, 12, 13, 14, 15, 16};
     std::array<float, 16> squared_stored_array;
     BaseMatrix<float, 4, 4> array_4x4_float_matrix(&squared_array[0]);
     array_4x4_float_matrix.store(&squared_stored_array[0]);
@@ -94,5 +96,4 @@ TEST(BaseMatrixStore, StoreMethod) {
     array_3x2_double_matrix.store(&double_stored_array[0]);
     ASSERT_EQ(double_stored_array, double_array);
     EXPECT_TRUE(array_3x2_double_matrix.is_padding_zero());
-
 }
