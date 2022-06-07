@@ -334,19 +334,25 @@ class BaseMatrix {
    private:
     friend void matrix_add<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
     friend void matrix_sub<matrix_t>(matrix_t &a, matrix_t &b, matrix_t &c);
+
     template <typename U, int l, int m, int n>
     friend void matrix_mul_m_m(BaseMatrix<U, l, m> &a, BaseMatrix<U, m, n> &b,
                                BaseMatrix<U, l, n> &c);
+
     template <typename U, int l, int m, int n>
     friend void matrix_mul_mt_m(BaseMatrix<U, m, l> &a, BaseMatrix<U, m, n> &b,
                                 BaseMatrix<U, l, n> &c);
+
     template <typename U, int l, int m, int n>
     friend void matrix_mul_m_mt(BaseMatrix<U, l, m> &a, BaseMatrix<U, n, m> &b,
                                 BaseMatrix<U, l, n> &c);
+
     template <typename U, int l, int m>
     friend void matrix_mul_m_v(BaseMatrix<U, l, m> &a, Vector<U, m> &b,
                                Vector<U, l> &c);
+
     friend class Inverse<T, NCols>;
+
     friend std::ostream &operator<<(std::ostream &os, const matrix_t &mat) {
         // Matrix printing function
         for (int i = 0; i < NRows; i++) {
@@ -376,6 +382,8 @@ class Vector : public BaseMatrix<T, 1, NumberCols> {
     template <typename U, int l, int m>
     friend void matrix_mul_m_v(BaseMatrix<U, l, m> &a, Vector<U, m> &b,
                                Vector<U, l> &c);
+
     friend void matrix_add<vector_t>(vector_t &a, vector_t &b, vector_t &c);
+
     friend void matrix_sub<vector_t>(vector_t &a, vector_t &b, vector_t &c);
 };
