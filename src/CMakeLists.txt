@@ -22,6 +22,8 @@ if(CMAKE_CXX_COMPILER_ID MATCHES "Clang" OR CMAKE_COMPILER_IS_GNUCXX)
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -march=native")
 endif()
 
+set(BUILD_TESTS OFF CACHE BOOL "" FORCE)
+
 # add xsimd
 add_subdirectory(libs/xsimd)
 

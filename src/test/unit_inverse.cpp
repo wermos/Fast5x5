@@ -1,6 +1,4 @@
 // Unitary tests for inversion
-#define XSIMD_ENABLE_FALLBACK 1
-
 #include <gtest/gtest-spi.h>
 #include <gtest/gtest.h>
 
@@ -9,6 +7,7 @@
 #include <cstdio>
 #include <iomanip>
 
+#define XSIMD_ENABLE_FALLBACK 1
 #include "fast5x5/fast5x5.hpp"
 
 template <typename M>

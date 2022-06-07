@@ -3,6 +3,7 @@
 
 #include <array>
 
+#define XSIMD_ENABLE_FALLBACK 1
 #include "fast5x5/fast5x5.hpp"
 
 TEST(BaseMatrixInstantiation, NoArguments) {
