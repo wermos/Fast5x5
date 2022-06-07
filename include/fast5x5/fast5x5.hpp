@@ -20,20 +20,6 @@ class BaseMatrix;
 template <typename T, int NCols>
 class Vector;
 
-template <typename T, int NRows, int NCols>
-std::ostream &operator<<(std::ostream &os,
-                         const BaseMatrix<T, NRows, NCols> &mat) {
-    // Matrix printing function
-    for (int i = 0; i < NRows; i++) {
-        for (int j = 0; j < NCols; j++) {
-            os << mat.array[i * BaseMatrix<T, NRows, NCols>::VecSize + j]
-               << ", ";
-        }
-        os << std::endl;
-    }
-    return os;
-}
-
 template <typename M>
 static inline void matrix_add(M &a, M &b, M &c) {
     using batch_t = typename M::batch_t;
@@ -78,7 +64,7 @@ static inline void matrix_mul_m_m(BaseMatrix<T, l, m> &a,
      *  * Load the corresponding row of B into vector.
      *  * Computes element-wise product between these two vector.
      *  * Repeat for each element of A in the row and sum these results.
-     *  * Store the sommation as corresponding row of C.
+     *  * Store the summation as corresponding row of C.
      */
     for (int i = 0; i < l; i++) {
         batch_t res = xs::zero<batch_t>();
@@ -361,8 +347,18 @@ class BaseMatrix {
     friend void matrix_mul_m_v(BaseMatrix<U, l, m> &a, Vector<U, m> &b,
                                Vector<U, l> &c);
     friend class Inverse<T, NCols>;
-    friend std::ostream &operator<<<T, NRows, NCols>(std::ostream &os,
-                                                     const matrix_t &mat);
+    friend std::ostream &operator<<(std::ostream &os,
+                                                     const matrix_t &mat) {
+		// Matrix printing function
+		for (int i = 0; i < NRows; i++) {
+			for (int j = 0; j < NCols; j++) {
+				os << mat.array[i * BaseMatrix<T, NRows, NCols>::VecSize + j]
+				   << ", ";
+			}
+			os << std::endl;
+		}
+		return os;
+	}
 
    protected:
     alignas(sizeof(T) * VecSize) T array[NRows * VecSize] = {0};
