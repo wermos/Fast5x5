@@ -1,8 +1,6 @@
 #ifndef GEMM_SIMPLE_H
 #define GEMM_SIMPLE_H
 
-#include <chrono>
-
 #include "benchmark/benchmark.h"
 #include "gemm_header.h"
 
@@ -37,15 +35,8 @@ static void gemm_simple(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(c);
 
-        auto start = std::chrono::high_resolution_clock::now();
-        for (unsigned int i = 0; i < REPEAT; i++) {  // Computation Loop
-            gemm<float, SIZE>(a, b, c);
-            gemm<float, SIZE>(b, c, a);
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = end - start;
-
-        std::cout << "gemm_simple time taken: " << elapsed.count() << '\n';
+		gemm<float, SIZE>(a, b, c);
+		gemm<float, SIZE>(b, c, a);
 
         // print_matrix<float>(a, SIZE, SIZE);
     }

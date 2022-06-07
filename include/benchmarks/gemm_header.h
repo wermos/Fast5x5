@@ -3,9 +3,7 @@
 
 #include <iostream>
 
-#define REPEAT 200'000'000
-#define SIZE 4
-#define VECSIZE 8
+#define SIZE 8
 
 template <typename T>
 void print_matrix(T *matrix, int n, int m) {
@@ -29,4 +27,4 @@ void gemm(T *a, T *b, T *c) {
     }
 }
 
-#endif  // GEMM_HEADER_H
+#endif // GEMM_HEADER_H

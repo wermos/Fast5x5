@@ -1,8 +1,6 @@
 #ifndef GEMM_CUSTOM_H
 #define GEMM_CUSTOM_H
 
-#include <chrono>
-
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
 #include "gemm_header.h"
@@ -40,15 +38,8 @@ static void gemm_custom(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(pc);
 
-        auto start = std::chrono::high_resolution_clock::now();
-        for (unsigned int i = 0; i < REPEAT; i++) {
-            matrix_mul_m_m(pa, pb, pc);
-            matrix_mul_m_m(pb, pc, pa);
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = end - start;
-
-        std::cout << "gemm_custom time taken: " << elapsed.count() << '\n';
+		matrix_mul_m_m(pa, pb, pc);
+		matrix_mul_m_m(pb, pc, pa);
 
         // std::cout << pa << std::endl;
     }

@@ -1,8 +1,6 @@
 #ifndef GEMM_EIGEN_H
 #define GEMM_EIGEN_H
 
-#include <chrono>
-
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
 #include "gemm_header.h"
@@ -36,15 +34,8 @@ static void gemm_eigen(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(pc);
 
-        auto start = std::chrono::high_resolution_clock::now();
-        for (unsigned int i = 0; i < REPEAT; i++) {
-            pc = pa * pb;
-            pa = pb * pc;
-        }
-        auto end = std::chrono::high_resolution_clock::now();
-        std::chrono::duration<double> elapsed = end - start;
-
-        std::cout << "gemm_eigen time taken: " << elapsed.count() << '\n';
+		pc = pa * pb;
+		pa = pb * pc;
 
         // std::cout << pa << std::endl;
     }
