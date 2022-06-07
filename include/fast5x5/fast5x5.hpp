@@ -347,18 +347,17 @@ class BaseMatrix {
     friend void matrix_mul_m_v(BaseMatrix<U, l, m> &a, Vector<U, m> &b,
                                Vector<U, l> &c);
     friend class Inverse<T, NCols>;
-    friend std::ostream &operator<<(std::ostream &os,
-                                                     const matrix_t &mat) {
-		// Matrix printing function
-		for (int i = 0; i < NRows; i++) {
-			for (int j = 0; j < NCols; j++) {
-				os << mat.array[i * BaseMatrix<T, NRows, NCols>::VecSize + j]
-				   << ", ";
-			}
-			os << std::endl;
-		}
-		return os;
-	}
+    friend std::ostream &operator<<(std::ostream &os, const matrix_t &mat) {
+        // Matrix printing function
+        for (int i = 0; i < NRows; i++) {
+            for (int j = 0; j < NCols; j++) {
+                os << mat.array[i * BaseMatrix<T, NRows, NCols>::VecSize + j]
+                   << ", ";
+            }
+            os << std::endl;
+        }
+        return os;
+    }
 
    protected:
     alignas(sizeof(T) * VecSize) T array[NRows * VecSize] = {0};
