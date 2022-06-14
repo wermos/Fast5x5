@@ -11,3 +11,6 @@
 [submodule "src/libs/eigen"]
 	path = src/libs/eigen
 	url = https://gitlab.com/libeigen/eigen.git
+[submodule "src/libs/blaze"]
+	path = src/libs/blaze
+	url = https://bitbucket.org/blaze-lib/blaze.git
