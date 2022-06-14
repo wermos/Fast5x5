@@ -34,8 +34,8 @@ static void gemm_eigen(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(pc);
 
-		pc = pa * pb;
-		pa = pb * pc;
+        pc = pa * pb;
+        pa = pb * pc;
 
         // std::cout << pa << std::endl;
     }

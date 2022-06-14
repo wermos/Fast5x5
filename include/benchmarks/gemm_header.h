@@ -27,4 +27,4 @@ void gemm(T *a, T *b, T *c) {
     }
 }
 
-#endif // GEMM_HEADER_H
+#endif  // GEMM_HEADER_H

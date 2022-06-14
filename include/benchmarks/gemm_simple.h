@@ -35,8 +35,8 @@ static void gemm_simple(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(c);
 
-		gemm<float, SIZE>(a, b, c);
-		gemm<float, SIZE>(b, c, a);
+        gemm<float, SIZE>(a, b, c);
+        gemm<float, SIZE>(b, c, a);
 
         // print_matrix<float>(a, SIZE, SIZE);
     }

@@ -38,8 +38,8 @@ static void gemm_custom(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(pc);
 
-		matrix_mul_m_m(pa, pb, pc);
-		matrix_mul_m_m(pb, pc, pa);
+        matrix_mul_m_m(pa, pb, pc);
+        matrix_mul_m_m(pb, pc, pa);
 
         // std::cout << pa << std::endl;
     }
