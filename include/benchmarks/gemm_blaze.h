@@ -10,7 +10,7 @@ static void gemm_blaze(benchmark::State& state) {
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            pa[i][j] = i + j;
+            pa(i, j) = i + j;
         }
     }
 
@@ -27,7 +27,7 @@ static void gemm_blaze(benchmark::State& state) {
                 val = 1;
             else
                 val = 0;
-            pb[i][j] = val;
+            pb(i, j) = val;
         }
     }
 
