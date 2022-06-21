@@ -6,7 +6,7 @@
 #include "gemm_header.h"
 
 static void gemm_blaze(benchmark::State& state) {
-    blaze::StaticMatrix<float, SIZE, SIZE> pa, pb, pc;
+    blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor> pa, pb, pc;
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
