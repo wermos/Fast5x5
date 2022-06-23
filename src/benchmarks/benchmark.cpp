@@ -10,7 +10,6 @@ constexpr int repetitions = 20;
 #define BENCHMARK_SUITE(x)            \
     BENCHMARK(x)                      \
         ->Threads(1)                  \
-        ->Threads(8)                  \
         ->Repetitions(repetitions)    \
         ->DisplayAggregatesOnly(true) \
         ->UseRealTime();
