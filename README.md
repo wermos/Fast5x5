@@ -98,31 +98,5 @@ Building them require to install xsimd first.
 
  * cmake (>= 3.4)
  * eigen 3.2.10
- * googletest 1.8.0
- * R
+ * googletest 1.8.
 
-#### Possibly start a Docker image
-
-For what concerns the external dependencies above, if you have Docker installed on your machine, you can move the main Fast5x5 directory and type `docker/xsimd/run.sh`:
-
-```bash
-cd /path/to/Fast5x5
-docker/xsimd/run.sh
-```
-
-#### Build
-
-```bash
-cd /path/to/Fast5x5/
-mkdir build && cd build
-cmake ..
-make
-```
-
-#### Run
-
-Once the tests are built you can launch them from the test directory.
-
-```bash
-test/unit_tests
-```
