@@ -1,5 +1,7 @@
+#ifndef FAST5x5_HPP
+#define FAST5x5_HPP
+
 #include <array>
-#include <cstring>
 #include <iostream>
 #include <utility>
 #include <xsimd/xsimd.hpp>
@@ -387,3 +389,5 @@ class Vector : public BaseMatrix<T, 1, NumberCols> {
 
     friend void matrix_sub<vector_t>(vector_t &a, vector_t &b, vector_t &c);
 };
+
+#endif // FAST5x5_HPP
