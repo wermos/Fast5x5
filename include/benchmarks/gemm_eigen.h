@@ -6,38 +6,15 @@
 #include "gemm_header.h"
 
 static void gemm_eigen(benchmark::State& state) {
-    Eigen::Matrix<float, SIZE, SIZE> pa, pb, pc;
+    Eigen::Matrix<float, SIZE, SIZE> m1, m2, res;
 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            pa(i, j) = i + j;
-        }
-    }
-
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            float val;
-            if (i == 0 && j == 1)
-                val = -1;
-            else if (i == 1 && j == 0)
-                val = 1;
-            else if (i > 1 && i == j && i % 2)
-                val = -1;
-            else if (i > 1 && i == j && !(i % 2))
-                val = 1;
-            else
-                val = 0;
-            pb(i, j) = val;
-        }
-    }
+    m1 = Eigen::Matrix<float, SIZE, SIZE>::Random();
+    m2 = Eigen::Matrix<float, SIZE, SIZE>::Random();
 
     for (auto _ : state) {
-        benchmark::DoNotOptimize(pc);
+        benchmark::DoNotOptimize(res);
 
-        pc = pa * pb;
-        pa = pb * pc;
-
-        // std::cout << pa << std::endl;
+        res = m1 * m2;
     }
 }
 

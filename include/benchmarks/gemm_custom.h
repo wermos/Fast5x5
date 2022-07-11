@@ -4,6 +4,7 @@
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
 #include "gemm_header.h"
+#include "random.hpp"
 
 static void gemm_custom(benchmark::State& state) {
     alignas(32) float a[SIZE * SIZE];
@@ -11,37 +12,18 @@ static void gemm_custom(benchmark::State& state) {
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            a[i * SIZE + j] = i + j;
-        }
-    }
-
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE; j++) {
-            float val;
-            if (i == 0 && j == 1)
-                val = -1;
-            else if (i == 1 && j == 0)
-                val = 1;
-            else if (i > 1 && i == j && i % 2)
-                val = -1;
-            else if (i > 1 && i == j && !(i % 2))
-                val = 1;
-            else
-                val = 0;
-            b[i * SIZE + j] = val;
+            a[i][j] = randomFloat(0, 100'000.0);
+            b[i][j] = randomFloat(0, 100'000.0);
         }
     }
 
     using M = BaseMatrix<float, SIZE, SIZE>;
-    M pa(a), pb(b), pc;
+    M m1(a), m2(b), res;
 
     for (auto _ : state) {
-        benchmark::DoNotOptimize(pc);
+        benchmark::DoNotOptimize(res);
 
-        matrix_mul_m_m(pa, pb, pc);
-        matrix_mul_m_m(pb, pc, pa);
-
-        // std::cout << pa << std::endl;
+        matrix_mul_m_m(m1, m2, res);
     }
 }
 
