@@ -3,7 +3,7 @@
 
 #include <array>
 #include <cstddef> // for the std::size_t data type
-#include <iostream>
+#include <ostream>
 #include <utility>
 #include <xsimd/xsimd.hpp>
 
@@ -357,7 +357,7 @@ class BaseMatrix {
     friend class Inverse<T, NCols>;
 
     friend std::ostream &operator<<(std::ostream &os, const matrix_t &mat) {
-        // Matrix prstd::size_ting function
+        // Matrix printing function
         for (std::size_t i = 0; i < NRows; i++) {
             for (std::size_t j = 0; j < NCols; j++) {
                 os << mat.array[i * BaseMatrix<T, NRows, NCols>::VecSize + j]

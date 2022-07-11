@@ -3,7 +3,7 @@
 
 #include <iostream>
 
-#define SIZE 8
+static constexpr int SIZE = 8;
 
 template <typename T>
 void print_matrix(T *matrix, int n, int m) {
