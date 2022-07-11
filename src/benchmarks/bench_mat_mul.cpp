@@ -21,5 +21,3 @@ BENCHMARK_SUITE(gemm_eigen);
 BENCHMARK_SUITE(gemm_blaze);
 
 BENCHMARK_SUITE(gemm_custom);
-
-BENCHMARK_MAIN();

@@ -12,8 +12,8 @@ static void gemm_custom(benchmark::State& state) {
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            a[i][j] = randomFloat(0, 100'000.0);
-            b[i][j] = randomFloat(0, 100'000.0);
+            a[i * SIZE + j] = randomFloat(0, 100'000.0);
+            b[i * SIZE + j] = randomFloat(0, 100'000.0);
         }
     }
 
