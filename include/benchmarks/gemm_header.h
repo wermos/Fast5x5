@@ -4,6 +4,7 @@
 #include <iostream>
 
 static constexpr int SIZE = 8;
+constexpr int repetitions = 20;
 
 template <typename T>
 void print_matrix(T *matrix, int n, int m) {

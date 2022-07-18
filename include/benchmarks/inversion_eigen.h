@@ -4,7 +4,6 @@
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
 #include "gemm_header.h"
-#include "random.hpp"
 
 static void inversion_eigen(benchmark::State& state) {
     Eigen::Matrix<float, SIZE, SIZE> m1, res;

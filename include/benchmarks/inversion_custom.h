@@ -4,14 +4,17 @@
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
 #include "gemm_header.h"
+#include "random.hpp"
 
 static void inversion_custom(benchmark::State& state) {
-    alignas(256) float a[SIZE * SIZE];
+    alignas(32) float a[SIZE * SIZE];
 
     for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE - i; j++) {
+        for (int j = i; j < SIZE; j++) {
             // filling the upper triangle
             a[i * SIZE + j] = randomFloat(0, 100'000.0);
+			// copying the upper triangle element into
+			// the lower triangle
             a[j * SIZE + i] = a[i * SIZE + j];
         }
     }

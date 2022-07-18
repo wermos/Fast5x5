@@ -7,17 +7,17 @@
 #include "random.hpp"
 
 static void gemm_custom(benchmark::State& state) {
-    alignas(32) float a[SIZE * SIZE];
-    alignas(32) float b[SIZE * SIZE];
+    alignas(32) double a[SIZE * SIZE];
+    alignas(32) double b[SIZE * SIZE];
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            a[i * SIZE + j] = randomFloat(0, 100'000.0);
-            b[i * SIZE + j] = randomFloat(0, 100'000.0);
+            a[i * SIZE + j] = randomDouble(0, 100'000.0);
+            b[i * SIZE + j] = randomDouble(0, 100'000.0);
         }
     }
 
-    using M = BaseMatrix<float, SIZE, SIZE>;
+    using M = BaseMatrix<double, SIZE, SIZE>;
     M m1(a), m2(b), res;
 
     for (auto _ : state) {
