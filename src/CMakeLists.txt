@@ -30,8 +30,8 @@ add_subdirectory(libs/xsimd)
 # add Eigen
 add_subdirectory(libs/eigen)
 
-# Blaze build flags
-#set(USE_LAPACK OFF CACHE BOOL "" FORCE)
+find_package(LAPACK REQUIRED)
+find_package(BLAS REQUIRED)
 
 #add Blaze
 add_subdirectory(libs/blaze)
