@@ -11,7 +11,7 @@ static void inversion_blaze(benchmark::State& state) {
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE - i; j++) {
-            m(i, j) = randomFloat(0, 100'000.0);
+            m(i, j) = randomFloat(-1.0, 1.0);
             m(j, i) = m(i, j);
         }
     }

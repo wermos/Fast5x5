@@ -12,7 +12,7 @@ static void inversion_custom(benchmark::State& state) {
     for (int i = 0; i < SIZE; i++) {
         for (int j = i; j < SIZE; j++) {
             // filling the upper triangle
-            a[i * SIZE + j] = randomFloat(0, 100'000.0);
+            a[i * SIZE + j] = randomFloat(-1.0, 1.0);
 			// copying the upper triangle element into
 			// the lower triangle
             a[j * SIZE + i] = a[i * SIZE + j];
