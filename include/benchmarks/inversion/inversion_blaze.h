@@ -3,11 +3,11 @@
 
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
-#include "gemm_header.h"
+#include "shared/common.hpp"
 #include "random.hpp"
 
 static void inversion_blaze(benchmark::State& state) {
-    blaze::StaticMatrix<double, SIZE, SIZE, blaze::rowMajor> m;
+    blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor> m;
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE - i; j++) {
@@ -16,7 +16,7 @@ static void inversion_blaze(benchmark::State& state) {
         }
     }
 
-	blaze::SymmetricMatrix<blaze::StaticMatrix<double, SIZE, SIZE, blaze::rowMajor>> m1(m), res;
+	blaze::SymmetricMatrix<blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor>> m1(m), res;
 
     for (auto _ : state) {
         benchmark::DoNotOptimize(res);

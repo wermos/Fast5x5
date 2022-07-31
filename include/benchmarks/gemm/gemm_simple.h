@@ -2,12 +2,12 @@
 #define GEMM_SIMPLE_H
 
 #include "benchmark/benchmark.h"
-#include "gemm_header.h"
+#include "shared/common.hpp"
 
 static void gemm_simple(benchmark::State& state) {
-    alignas(32) double a[SIZE * SIZE];
-    alignas(32) double b[SIZE * SIZE];
-    alignas(32) double c[SIZE * SIZE];
+    alignas(32) float a[SIZE * SIZE];
+    alignas(32) float b[SIZE * SIZE];
+    alignas(32) float c[SIZE * SIZE];
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -17,7 +17,7 @@ static void gemm_simple(benchmark::State& state) {
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
-            double val;
+            float val;
             if (i == 0 && j == 1)
                 val = -1;
             else if (i == 1 && j == 0)
@@ -35,10 +35,10 @@ static void gemm_simple(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(c);
 
-        gemm<double, SIZE>(a, b, c);
-        gemm<double, SIZE>(b, c, a);
+        gemm<float, SIZE>(a, b, c);
+        gemm<float, SIZE>(b, c, a);
 
-        // print_matrix<double>(a, SIZE, SIZE);
+        // print_matrix<float>(a, SIZE, SIZE);
     }
 }
 

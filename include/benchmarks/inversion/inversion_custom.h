@@ -3,7 +3,7 @@
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
-#include "gemm_header.h"
+#include "shared/common.hpp"
 #include "random.hpp"
 
 static void inversion_custom(benchmark::State& state) {

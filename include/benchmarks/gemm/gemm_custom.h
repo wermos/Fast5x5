@@ -3,12 +3,12 @@
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
-#include "gemm_header.h"
+#include "shared/common.hpp"
 #include "random.hpp"
 
 static void gemm_custom(benchmark::State& state) {
-    alignas(32) double a[SIZE * SIZE];
-    alignas(32) double b[SIZE * SIZE];
+    alignas(32) float a[SIZE * SIZE];
+    alignas(32) float b[SIZE * SIZE];
 
     for (int i = 0; i < SIZE; i++) {
         for (int j = 0; j < SIZE; j++) {
@@ -17,7 +17,7 @@ static void gemm_custom(benchmark::State& state) {
         }
     }
 
-    using M = BaseMatrix<double, SIZE, SIZE>;
+    using M = BaseMatrix<float, SIZE, SIZE>;
     M m1(a), m2(b), res;
 
     for (auto _ : state) {
