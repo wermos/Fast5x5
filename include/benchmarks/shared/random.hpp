@@ -14,7 +14,7 @@ inline double randomDouble(double min, double max) {
     return distribution(generator);
 }
 
-inline double randomFloat(float min, float max) {
+inline float randomFloat(float min, float max) {
     // Returns a random real in [min, max].
     static std::uniform_real_distribution<float> distribution(
         min, std::nextafter(max, std::numeric_limits<float>::infinity()));
