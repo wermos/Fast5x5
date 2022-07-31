@@ -6,7 +6,7 @@
 #include "gemm/gemm_blaze.h"
 #include "gemm/gemm_custom.h"
 #include "gemm/gemm_eigen.h"
-#include "gemm/gemm_simple.h"
+//#include "gemm/gemm_simple.h"
 
 #define BENCHMARK_SUITE(x)            \
     BENCHMARK(x)                      \
@@ -15,7 +15,7 @@
         ->DisplayAggregatesOnly(true) \
         ->UseRealTime();
 
-BENCHMARK_SUITE(gemm_simple);
+//BENCHMARK_SUITE(gemm_simple);
 
 BENCHMARK_SUITE(gemm_eigen);
 
