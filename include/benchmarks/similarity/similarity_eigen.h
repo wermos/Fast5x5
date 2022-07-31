@@ -3,7 +3,7 @@
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
-#include "shared/common.hpp"
+#include "benchmarks/shared/common.hpp"
 
 static void similarity_eigen(benchmark::State& state) {
     Eigen::Matrix<double, SIZE, SIZE> m1, m2, res;
@@ -18,4 +18,4 @@ static void similarity_eigen(benchmark::State& state) {
     }
 }
 
-#endif  // SIMILARITY_EIGEN_H
+#endif // SIMILARITY_EIGEN_H

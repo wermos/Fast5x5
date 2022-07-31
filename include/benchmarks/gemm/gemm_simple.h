@@ -2,7 +2,8 @@
 #define GEMM_SIMPLE_H
 
 #include "benchmark/benchmark.h"
-#include "shared/common.hpp"
+#include "benchmarks/shared/common.hpp"
+#include "gemm_header.h" // for the gemm<> function
 
 static void gemm_simple(benchmark::State& state) {
     alignas(32) float a[SIZE * SIZE];

@@ -3,8 +3,8 @@
 
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
-#include "shared/common.hpp"
-#include "random.hpp"
+#include "benchmarks/shared/common.hpp"
+#include "benchmarks/shared/random.hpp"
 
 static void gemm_blaze(benchmark::State& state) {
     blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor> m1, m2, res;

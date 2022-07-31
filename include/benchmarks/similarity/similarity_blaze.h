@@ -1,12 +1,12 @@
-#ifndef GEMM_BLAZE_H
-#define GEMM_BLAZE_H
+#ifndef SIMILARITY_BLAZE_H
+#define SIMILARITY_BLAZE_H
 
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
-#include "shared/common.hpp"
-#include "random.hpp"
+#include "benchmarks/shared/common.hpp"
+#include "benchmarks/shared/random.hpp"
 
-static void gemm_blaze(benchmark::State& state) {
+static void similarity_blaze(benchmark::State& state) {
     blaze::StaticMatrix<double, SIZE, SIZE, blaze::rowMajor> m1, m2, res;
 
     m1 =
@@ -17,8 +17,8 @@ static void gemm_blaze(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(res);
 
-        res = m1 * m2;
+        res = m1 * m2 * trans(m1);
     }
 }
 
-#endif  // GEMM_BLAZE_H
+#endif // SIMILARITY_BLAZE_H

@@ -3,7 +3,7 @@
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
-#include "shared/common.hpp"
+#include "benchmarks/shared/common.hpp"
 
 static void gemm_eigen(benchmark::State& state) {
     Eigen::Matrix<float, SIZE, SIZE> m1, m2, res;

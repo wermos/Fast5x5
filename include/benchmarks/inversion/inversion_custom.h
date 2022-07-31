@@ -3,8 +3,8 @@
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
-#include "shared/common.hpp"
-#include "random.hpp"
+#include "benchmarks/shared/common.hpp"
+#include "benchmarks/shared/random.hpp"
 
 static void inversion_custom(benchmark::State& state) {
     alignas(32) float a[SIZE * SIZE];
