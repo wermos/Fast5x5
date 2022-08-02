@@ -5,11 +5,12 @@
 #include "benchmark/benchmark.h"
 #include "benchmarks/shared/common.hpp"
 
+template<int SIZE = 8, typename T = float>
 static void similarity_eigen(benchmark::State& state) {
-    Eigen::Matrix<float, SIZE, SIZE> m1, m2, res;
+    Eigen::Matrix<T, SIZE, SIZE> m1, m2, res;
 
-    m1 = Eigen::Matrix<float, SIZE, SIZE>::Random();
-    m2 = Eigen::Matrix<float, SIZE, SIZE>::Random();
+    m1 = Eigen::Matrix<T, SIZE, SIZE>::Random();
+    m2 = Eigen::Matrix<T, SIZE, SIZE>::Random();
 
     for (auto _ : state) {
         benchmark::DoNotOptimize(res);
