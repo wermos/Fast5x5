@@ -25,7 +25,7 @@ static void inversion_custom(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(res);
 
-        Inverse<float, 8>::inverse(m1, res);
+        Inverse<float, SIZE>::inverse(m1, res);
     }
 }
 
