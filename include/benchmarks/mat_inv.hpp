@@ -3,10 +3,9 @@
 
 #include "benchmark/benchmark.h"
 
-#include "shared/common.hpp"
-#include "inversion/inversion_blaze.h"
-#include "inversion/inversion_eigen.h"
-#include "inversion/inversion_custom.h"
+#include "inversion/blaze.h"
+#include "inversion/eigen.h"
+#include "inversion/custom.h"
 
 #define BENCHMARK_SUITE(x)            \
     BENCHMARK(x)                      \

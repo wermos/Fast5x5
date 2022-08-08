@@ -3,10 +3,10 @@
 
 #include "benchmark/benchmark.h"
 
-#include "gemm/gemm_blaze.h"
-#include "gemm/gemm_custom.h"
-#include "gemm/gemm_eigen.h"
-//#include "gemm/gemm_simple.h"
+#include "gemm/blaze.h"
+#include "gemm/custom.h"
+#include "gemm/eigen.h"
+//#include "gemm/simple.h"
 
 #define BENCHMARK_SUITE(x)            \
     BENCHMARK(x)                      \

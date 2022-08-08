@@ -3,9 +3,9 @@
 
 #include "benchmark/benchmark.h"
 
-#include "benchmarks/similarity/similarity_blaze.h"
-#include "benchmarks/similarity/similarity_custom.h"
-#include "benchmarks/similarity/similarity_eigen.h"
+#include "benchmarks/similarity/blaze.h"
+#include "benchmarks/similarity/custom.h"
+#include "benchmarks/similarity/eigen.h"
 
 #define BENCHMARK_SUITE(x)            \
     BENCHMARK(x)                      \
