@@ -4,24 +4,17 @@
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
 #include "benchmarks/shared/common.hpp"
-#include "benchmarks/shared/random.hpp"
 
 static void inversion_blaze(benchmark::State& state) {
-    blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor> m;
+	using M = blaze::SymmetricMatrix<blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor>>;
 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE - i; j++) {
-            m(i, j) = randomFloat(-1.0, 1.0);
-            m(j, i) = m(i, j);
-        }
-    }
-
-	blaze::SymmetricMatrix<blaze::StaticMatrix<float, SIZE, SIZE, blaze::rowMajor>> m1(m), res;
+	M m(genRandomBlazeSymMat<float, SIZE, SIZE>());
+	M res;
 
     for (auto _ : state) {
         benchmark::DoNotOptimize(res);
 
-        res = blaze::inv(m1);
+        res = blaze::inv(m);
     }
 }
 
