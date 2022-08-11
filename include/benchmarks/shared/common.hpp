@@ -13,8 +13,8 @@ template <typename T, std::size_t Rows, std::size_t Columns>
 inline blaze::StaticMatrix<T, Rows, Columns> genRandomBlazeSymMat() {
 	 blaze::StaticMatrix<T, Rows, Columns, blaze::rowMajor> m;
 
-    for (int i = 0; i < SIZE; i++) {
-        for (int j = 0; j < SIZE - i; j++) {
+    for (int i = 0; i < Rows; i++) {
+        for (int j = 0; j < Columns - i; j++) {
             m(i, j) = randomFloat(-1.0, 1.0);
             m(j, i) = m(i, j);
         }
@@ -28,7 +28,7 @@ inline blaze::StaticMatrix<T, Rows, Columns> genRandomBlazeMat() {
 	blaze::StaticMatrix<T, Rows, Columns, blaze::rowMajor> m;
 
     m =
-        blaze::generate(SIZE, SIZE, [](std::size_t i, std::size_t j) { return randomFloat(-1.0, 1.0); });
+        blaze::generate(Rows, Columns, [](std::size_t i, std::size_t j) { return randomFloat(-1.0, 1.0); });
 
 	return m;
 }

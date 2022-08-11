@@ -32,6 +32,17 @@ target_include_directories(similarity_benchmarks PUBLIC ../libs/xsimd/include)
 target_include_directories(similarity_benchmarks PUBLIC ../libs/eigen)
 target_include_directories(similarity_benchmarks PUBLIC ../libs/blaze)
 
+# coordinate transform benchmarks
+add_executable(coord_transform_benchmarks coord_transform_benchmark.cpp)
+
+target_link_libraries(coord_transform_benchmarks PUBLIC benchmark::benchmark PUBLIC xsimd)
+
+target_include_directories(coord_transform_benchmarks PUBLIC ../../include)
+target_include_directories(coord_transform_benchmarks PUBLIC ../libs/benchmark/include)
+target_include_directories(coord_transform_benchmarks PUBLIC ../libs/xsimd/include)
+target_include_directories(coord_transform_benchmarks PUBLIC ../libs/eigen)
+target_include_directories(coord_transform_benchmarks PUBLIC ../libs/blaze)
+
 # combined benchmarks
 add_executable(combined_benchmarks combined_benchmark.cpp)
 
