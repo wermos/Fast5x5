@@ -55,12 +55,12 @@ BENCHMARK(inversion_blaze<6, float>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();
-BENCHMARK(inversion_blaze<8, float>)
+/*BENCHMARK(inversion_blaze<8, float>)
         ->Name("inversion_blaze_8x8_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime();*/
 BENCHMARK(inversion_blaze<4, double>)
         ->Name("inversion_blaze_4x4_double")
         ->Threads(1)
@@ -73,12 +73,12 @@ BENCHMARK(inversion_blaze<6, double>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();
-BENCHMARK(inversion_blaze<8, double>)
+/*BENCHMARK(inversion_blaze<8, double>)
         ->Name("inversion_blaze_8x8_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime();*/
 
 BENCHMARK(inversion_custom<4, float>)
         ->Name("inversion_custom_4x4_float")
@@ -98,13 +98,13 @@ BENCHMARK(inversion_custom<8, float>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();
-/*BENCHMARK(inversion_custom<4, double>)
+BENCHMARK(inversion_custom<4, double>)
         ->Name("inversion_custom_4x4_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();
-BENCHMARK(inversion_custom<6, double>)
+/*BENCHMARK(inversion_custom<6, double>)
         ->Name("inversion_custom_6x6_double")
         ->Threads(1)
         ->Repetitions(repetitions)
