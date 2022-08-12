@@ -1,16 +1,17 @@
-#ifndef FREE_TO_BOUND_CUSTOM_H 
+#ifndef FREE_TO_BOUND_CUSTOM_H
 #define FREE_TO_BOUND_CUSTOM_H
 
 #include "benchmark/benchmark.h"
-#include "fast5x5/fast5x5.hpp"
 #include "benchmarks/shared/common.hpp"
+#include "fast5x5/fast5x5.hpp"
 
+template <typename T = float>
 static void freeToBound_custom(benchmark::State& state) {
-	using M1 = BaseMatrix<float, 6, 6>;
-	using M2 = BaseMatrix<float, 6, 8>;
+    using M1 = BaseMatrix<T, 6, 6>;
+    using M2 = BaseMatrix<T, 6, 8>;
 
-    M1 m1 = genRandomCustomMat<float, 6, 6>();
-    M2 m2 = genRandomCustomMat<float, 6, 8>();
+    M1 m1 = genRandomCustomMat<T, 6, 6>();
+    M2 m2 = genRandomCustomMat<T, 6, 8>();
     M2 res;
 
     for (auto _ : state) {
@@ -20,4 +21,4 @@ static void freeToBound_custom(benchmark::State& state) {
     }
 }
 
-#endif // FREE_TO_BOUND_CUSTOM_H
+#endif  // FREE_TO_BOUND_CUSTOM_H
