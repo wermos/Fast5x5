@@ -1,5 +1,4 @@
-#ifndef MAT_MUL_HPP
-#define MAT_MUL_HPP
+#pragma once
 
 #include "benchmark/benchmark.h"
 
@@ -120,8 +119,3 @@ BENCHMARK(gemm_custom<8, double>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();*/
-
-#undef BENCHMARK
-// cleaning up macros
-
-#endif // MAT_MUL_HPP

@@ -1,5 +1,4 @@
-#ifndef GEMM_EIGEN_H
-#define GEMM_EIGEN_H
+#pragma once
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
@@ -18,5 +17,3 @@ static void gemm_eigen(benchmark::State& state) {
         res = m1 * m2;
     }
 }
-
-#endif  // GEMM_EIGEN_H

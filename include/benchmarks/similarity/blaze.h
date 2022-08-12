@@ -1,5 +1,4 @@
-#ifndef SIMILARITY_BLAZE_H
-#define SIMILARITY_BLAZE_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
@@ -18,5 +17,3 @@ static void similarity_blaze(benchmark::State& state) {
         res = m1 * m2 * trans(m1);
     }
 }
-
-#endif // SIMILARITY_BLAZE_H

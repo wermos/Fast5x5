@@ -1,5 +1,4 @@
-#ifndef SIMILARITY_CUSTOM_H 
-#define SIMILARITY_CUSTOM_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
@@ -20,5 +19,3 @@ static void similarity_custom(benchmark::State& state) {
 		matrix_mul_m_mt(temp, m1, res);
     }
 }
-
-#endif // SIMILARITY_CUSTOM_H

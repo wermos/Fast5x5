@@ -1,5 +1,4 @@
-#ifndef FREE_TO_BOUND_EIGEN_H
-#define FREE_TO_BOUND_EIGEN_H
+#pragma once
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
@@ -19,5 +18,3 @@ static void freeToBound_eigen(benchmark::State& state) {
         res = m1 * m2;
     }
 }
-
-#endif  // FREE_TO_BOUND_EIGEN_H

@@ -1,5 +1,4 @@
-#ifndef COMMON_HPP
-#define COMMON_HPP
+#pragma once
 
 #include <cstddef> // for the std::size_t type
 #include "benchmarks/shared/random.hpp"
@@ -61,5 +60,3 @@ inline BaseMatrix<T, Rows, Columns> genRandomCustomSymMat() {
 
 	return {a};
 }
-
-#endif // COMMON_HPP

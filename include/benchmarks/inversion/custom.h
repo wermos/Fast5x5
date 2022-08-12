@@ -1,5 +1,4 @@
-#ifndef INVERSION_CUSTOM_H
-#define INVERSION_CUSTOM_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
@@ -18,5 +17,3 @@ static void inversion_custom(benchmark::State& state) {
         Inverse<T, SIZE>::inverse(m1, res);
     }
 }
-
-#endif  // INVERSION_CUSTOM_H

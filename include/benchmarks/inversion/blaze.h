@@ -1,5 +1,4 @@
-#ifndef INVERSION_BLAZE_H
-#define INVERSION_BLAZE_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
@@ -18,5 +17,3 @@ static void inversion_blaze(benchmark::State& state) {
         res = blaze::inv(m);
     }
 }
-
-#endif  // INVERSION_BLAZE_H

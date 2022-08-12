@@ -1,5 +1,4 @@
-#ifndef RANDOM_HPP
-#define RANDOM_HPP
+#pragma once
 
 #include <random>
 #include <limits>
@@ -14,5 +13,3 @@ inline T randomEntry(T min, T max) {
 
     return distribution(generator);
 }
-
-#endif // RANDOM_HPP

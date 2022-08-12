@@ -1,5 +1,4 @@
-#ifndef MAT_SIM_HPP
-#define MAT_SIM_HPP
+#pragma once
 
 #include "benchmark/benchmark.h"
 
@@ -117,8 +116,3 @@ BENCHMARK(similarity_custom<8, double>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();*/
-
-#undef BENCHMARK
-// cleaning up macros
-
-#endif // MAT_SIM_HPP

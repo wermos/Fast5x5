@@ -1,5 +1,4 @@
-#ifndef GEMM_BLAZE_H
-#define GEMM_BLAZE_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "blaze/Math.h"
@@ -18,5 +17,3 @@ static void gemm_blaze(benchmark::State& state) {
         res = m1 * m2;
     }
 }
-
-#endif  // GEMM_BLAZE_H

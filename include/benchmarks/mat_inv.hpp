@@ -1,5 +1,4 @@
-#ifndef MAT_INV_HPP
-#define MAT_INV_HPP
+#pragma once
 
 #include "benchmark/benchmark.h"
 
@@ -117,8 +116,3 @@ BENCHMARK(inversion_custom<8, double>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();*/
-
-#undef BENCHMARK
-// cleaning up macros
-
-#endif // MAT_INV_HPP

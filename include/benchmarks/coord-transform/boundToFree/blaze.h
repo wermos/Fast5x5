@@ -1,5 +1,4 @@
-#ifndef BOUND_TO_FREE_BLAZE_H
-#define BOUND_TO_FREE_BLAZE_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "benchmarks/shared/common.hpp"
@@ -19,5 +18,3 @@ static void boundToFree_blaze(benchmark::State& state) {
         res = m1 * m2;
     }
 }
-
-#endif  // BOUND_TO_FREE_BLAZE_H

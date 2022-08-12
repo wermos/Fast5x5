@@ -1,5 +1,4 @@
-#ifndef GEMM_SIMPLE_H
-#define GEMM_SIMPLE_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "benchmarks/shared/common.hpp"
@@ -43,5 +42,3 @@ static void gemm_simple(benchmark::State& state) {
         // print_matrix<float>(a, SIZE, SIZE);
     }
 }
-
-#endif  // GEMM_SIMPLE_H

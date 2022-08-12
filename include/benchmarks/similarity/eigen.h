@@ -1,5 +1,4 @@
-#ifndef SIMILARITY_EIGEN_H
-#define SIMILARITY_EIGEN_H
+#pragma once
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
@@ -18,5 +17,3 @@ static void similarity_eigen(benchmark::State& state) {
         res = m1 * m2 * m1.transpose();
     }
 }
-
-#endif // SIMILARITY_EIGEN_H

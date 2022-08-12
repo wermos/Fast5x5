@@ -1,5 +1,4 @@
-#ifndef BOUND_TO_FREE_CUSTOM_H
-#define BOUND_TO_FREE_CUSTOM_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "benchmarks/shared/common.hpp"
@@ -20,5 +19,3 @@ static void boundToFree_custom(benchmark::State& state) {
         matrix_mul_m_m(m1, m2, res);
     }
 }
-
-#endif  // BOUND_TO_FREE_CUSTOM_H

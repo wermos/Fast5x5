@@ -1,5 +1,4 @@
-#ifndef MAT_COORD_TRANSFORM_HPP
-#define MAT_COORD_TRANSFORM_HPP
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "benchmarks/coord-transform/boundToFree/blaze.h"
@@ -83,8 +82,3 @@ BENCHMARK(freeToBound_custom<float>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();*/
-
-#undef BENCHMARK_SUITE
-// cleaning up macros
-
-#endif  // MAT_COORD_TRANSFORM_HPP
