@@ -16,3 +16,6 @@
 	path = libs/blaze
 	url = https://bitbucket.org/blaze-lib/blaze.git
 	branch = v3.8.1
+[submodule "libs/Fastor"]
+	path = libs/Fastor
+	url = https://github.com/romeric/Fastor.git
