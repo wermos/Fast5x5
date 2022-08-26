@@ -11,7 +11,7 @@ static void boundToFree_custom(benchmark::State& state) {
 
     M1 m1 = genRandomCustomMat<float, 6, 8>();
     M2 m2 = genRandomCustomMat<float, 8, 8>();
-    M1 res;
+	M1 res;
 
     for (auto _ : state) {
         benchmark::DoNotOptimize(res);

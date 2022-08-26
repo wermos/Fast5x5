@@ -30,9 +30,5 @@ add_subdirectory(xsimd)
 # add Eigen
 add_subdirectory(eigen)
 
-# Blaze requires the following libraries for certain operations
-find_package(LAPACK REQUIRED)
-find_package(BLAS REQUIRED)
-
 # add Blaze
 add_subdirectory(blaze)

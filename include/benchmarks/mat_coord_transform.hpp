@@ -19,16 +19,16 @@
         ->UseRealTime();
 
 /* bound to free */
-BENCHMARK_SUITE(boundToFree_eigen);
+//BENCHMARK_SUITE(boundToFree_eigen);
 
-BENCHMARK_SUITE(boundToFree_blaze);
+//BENCHMARK_SUITE(boundToFree_blaze);
 
 BENCHMARK_SUITE(boundToFree_custom);
 
 /* free to bound */
-BENCHMARK_SUITE(freeToBound_eigen);
+//BENCHMARK_SUITE(freeToBound_eigen);
 
-BENCHMARK_SUITE(freeToBound_blaze);
+//BENCHMARK_SUITE(freeToBound_blaze);
 
 BENCHMARK_SUITE(freeToBound_custom);
 
