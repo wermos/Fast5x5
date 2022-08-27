@@ -6,6 +6,7 @@
 #include "gemm/blaze.h"
 #include "gemm/custom.h"
 #include "gemm/eigen.h"
+#include "gemm/fastor.h"
 //#include "gemm/simple.h"
 
 #define BENCHMARK_SUITE(x)            \
@@ -20,6 +21,8 @@
 BENCHMARK_SUITE(gemm_eigen);
 
 BENCHMARK_SUITE(gemm_blaze);
+
+BENCHMARK_SUITE(gemm_fastor);
 
 BENCHMARK_SUITE(gemm_custom);
 
