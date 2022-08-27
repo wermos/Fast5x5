@@ -14,3 +14,6 @@
 [submodule "src/libs/blaze"]
 	path = src/libs/blaze
 	url = https://bitbucket.org/blaze-lib/blaze.git
+[submodule "src/libs/Fastor"]
+	path = src/libs/Fastor
+	url = https://github.com/romeric/Fastor.git

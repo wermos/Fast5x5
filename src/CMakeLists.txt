@@ -33,8 +33,14 @@ add_subdirectory(libs/eigen)
 find_package(LAPACK REQUIRED)
 find_package(BLAS REQUIRED)
 
-#add Blaze
+# add Blaze
 add_subdirectory(libs/blaze)
 
+# Fastor build flags
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
+add_compile_definitions(FASTOR_ENABLE_RUNTIME_CHECKS=0)
+
+# add Fastor
+add_subdirectory(libs/Fastor)
 add_subdirectory(benchmarks)
 add_subdirectory(test)
