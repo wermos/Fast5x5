@@ -5,6 +5,7 @@
 #include "benchmarks/shared/random.hpp"
 #include "blaze/Math.h"
 #include "fast5x5/fast5x5.hpp"
+#include "Fastor/Fastor.h"
 
 static constexpr int SIZE = 4;
 static constexpr int repetitions = 20;
@@ -48,6 +49,36 @@ inline BaseMatrix<T, Rows, Columns> genRandomCustomMat() {
 
 template <typename T, std::size_t Rows, std::size_t Columns>
 inline BaseMatrix<T, Rows, Columns> genRandomCustomSymMat() {
+	alignas(32) T a[Rows * Columns];
+
+    for (int i = 0; i < Rows; i++) {
+        for (int j = 0; j < Columns; j++) {
+			// filling the upper triangle
+            a[i * Columns + j] = randomFloat(-1.0, 1.0);
+            // copying the upper triangle element into
+            // the lower triangle
+            a[j * Columns + i] = a[i * Columns + j];
+        }
+    }
+
+	return {a};
+}
+
+template <typename T, std::size_t Rows, std::size_t Columns>
+inline Fastor::Tensor<T, Rows, Columns> genRandomFastorMat() {
+	alignas(32) T a[Rows * Columns];
+
+    for (int i = 0; i < Rows; i++) {
+        for (int j = 0; j < Columns; j++) {
+            a[i * Columns + j] = randomFloat(-1.0, 1.0);
+        }
+    }
+
+	return {a};
+}
+
+template <typename T, std::size_t Rows, std::size_t Columns>
+inline Fastor::Tensor<T, Rows, Columns> genRandomFastorSymMat() {
 	alignas(32) T a[Rows * Columns];
 
     for (int i = 0; i < Rows; i++) {
