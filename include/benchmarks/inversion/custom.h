@@ -8,13 +8,14 @@
 static void inversion_custom(benchmark::State& state) {
     using M = BaseMatrix<float, SIZE, SIZE>;
 
-    M m1 = genRandomCustomSymMat<float, SIZE, SIZE>();
+    M m = genRandomCustomSymMat<float, SIZE, SIZE>();
 	M res;
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m);
         benchmark::DoNotOptimize(res);
 
-        Inverse<float, SIZE>::inverse(m1, res);
+        Inverse<float, SIZE>::inverse(m, res);
     }
 }
 

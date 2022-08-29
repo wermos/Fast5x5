@@ -11,6 +11,8 @@ static void freeToBound_fastor(benchmark::State& state) {
     Fastor::Tensor<float, 6, 8> res;
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
         benchmark::DoNotOptimize(res);
 
 		res = Fastor::matmul(m1, m2);

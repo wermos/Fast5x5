@@ -12,10 +12,12 @@ static void gemm_blaze(benchmark::State& state) {
     m2 = genRandomBlazeMat<float, SIZE, SIZE>();
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
         benchmark::DoNotOptimize(res);
 
         res = m1 * m2;
     }
 }
 
-#endif  // GEMM_BLAZE_H
+#endif // GEMM_BLAZE_H

@@ -11,6 +11,8 @@ static void similarity_fastor(benchmark::State& state) {
 	Fastor::Tensor<float, SIZE, SIZE> res, temp;
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
         benchmark::DoNotOptimize(res);
 
 		res = Fastor::matmul(Fastor::matmul(m1, m2), Fastor::transpose(m1));

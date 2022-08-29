@@ -6,15 +6,16 @@
 #include "benchmarks/shared/common.hpp"
 
 static void inversion_eigen(benchmark::State& state) {
-    Eigen::Matrix<float, SIZE, SIZE> m1, res;
+    Eigen::Matrix<float, SIZE, SIZE> m, res;
 
-    m1 = Eigen::Matrix<float, SIZE, SIZE>::Random();
+    m = Eigen::Matrix<float, SIZE, SIZE>::Random();
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m);
         benchmark::DoNotOptimize(res);
 
-        res = m1.inverse();
+        res = m.inverse();
     }
 }
 
-#endif  // INVERSION_EIGEN_H
+#endif // INVERSION_EIGEN_H

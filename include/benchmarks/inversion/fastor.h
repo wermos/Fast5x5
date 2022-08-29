@@ -6,14 +6,15 @@
 #include "benchmarks/shared/common.hpp"
 
 static void inversion_fastor(benchmark::State& state) {
-	Fastor::Tensor<float, SIZE, SIZE> m1 = genRandomFastorSymMat<float, SIZE, SIZE>();
+	Fastor::Tensor<float, SIZE, SIZE> m = genRandomFastorSymMat<float, SIZE, SIZE>();
 	Fastor::Tensor<float, SIZE, SIZE> res;
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m);
         benchmark::DoNotOptimize(res);
 
-		res = inverse(m1);
+		res = inverse(m);
     }
 }
 
-#endif  // INVERSION_FASTOR_H
+#endif // INVERSION_FASTOR_H
