@@ -51,7 +51,7 @@ target_include_directories(coord_transform_benchmarks PUBLIC ../libs/Fastor)
 add_executable(combined_benchmarks combined_benchmark.cpp)
 
 target_link_libraries(combined_benchmarks PUBLIC benchmark::benchmark PUBLIC xsimd)
-target_link_libraries(inversion_benchmarks PUBLIC LAPACK::LAPACK PUBLIC BLAS::BLAS)
+target_link_libraries(combined_benchmarks PUBLIC LAPACK::LAPACK PUBLIC BLAS::BLAS)
 
 target_include_directories(combined_benchmarks PUBLIC ../../include)
 target_include_directories(combined_benchmarks PUBLIC ../libs/benchmark/include)
