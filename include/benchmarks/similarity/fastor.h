@@ -13,9 +13,10 @@ static void similarity_fastor(benchmark::State& state) {
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m1);
 		benchmark::DoNotOptimize(m2);
-        benchmark::DoNotOptimize(res);
 
 		res = Fastor::matmul(Fastor::matmul(m1, m2), Fastor::transpose(m1));
+
+        benchmark::DoNotOptimize(res);
     }
 }
 

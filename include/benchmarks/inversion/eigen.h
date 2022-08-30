@@ -12,9 +12,10 @@ static void inversion_eigen(benchmark::State& state) {
 
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m);
-        benchmark::DoNotOptimize(res);
 
         res = m.inverse();
+
+        benchmark::DoNotOptimize(res);
     }
 }
 

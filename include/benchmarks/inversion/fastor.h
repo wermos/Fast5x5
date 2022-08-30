@@ -11,9 +11,10 @@ static void inversion_fastor(benchmark::State& state) {
 
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m);
-        benchmark::DoNotOptimize(res);
 
 		res = inverse(m);
+
+        benchmark::DoNotOptimize(res);
     }
 }
 

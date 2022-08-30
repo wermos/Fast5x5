@@ -13,9 +13,10 @@ static void inversion_blaze(benchmark::State& state) {
 
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m);
-        benchmark::DoNotOptimize(res);
 
         res = blaze::inv(m);
+
+        benchmark::DoNotOptimize(res);
     }
 }
 

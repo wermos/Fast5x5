@@ -14,9 +14,10 @@ static void similarity_blaze(benchmark::State& state) {
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m1);
 		benchmark::DoNotOptimize(m2);
-        benchmark::DoNotOptimize(res);
 
         res = m1 * m2 * trans(m1);
+
+        benchmark::DoNotOptimize(res);
     }
 }
 

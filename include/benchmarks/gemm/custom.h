@@ -15,9 +15,10 @@ static void gemm_custom(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(m1);
         benchmark::DoNotOptimize(m2);
-        benchmark::DoNotOptimize(res);
 
         matrix_mul_m_m(m1, m2, res);
+
+        benchmark::DoNotOptimize(res);
     }
 }
 
