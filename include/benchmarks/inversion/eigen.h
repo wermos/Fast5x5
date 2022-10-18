@@ -1,22 +1,18 @@
-#ifndef INVERSION_EIGEN_H
-#define INVERSION_EIGEN_H
+#pragma once
 
 #include "Eigen/Dense"
 #include "benchmark/benchmark.h"
 #include "benchmarks/shared/common.hpp"
 
+template<int SIZE = 8, typename T = float>
 static void inversion_eigen(benchmark::State& state) {
-    Eigen::Matrix<float, SIZE, SIZE> m, res;
+    Eigen::Matrix<T, SIZE, SIZE> m, res;
 
-    m = Eigen::Matrix<float, SIZE, SIZE>::Random();
+    m1 = Eigen::Matrix<T, SIZE, SIZE>::Random();
 
     for (auto _ : state) {
-		benchmark::DoNotOptimize(m);
-
         res = m.inverse();
 
         benchmark::DoNotOptimize(res);
     }
 }
-
-#endif // INVERSION_EIGEN_H

@@ -1,44 +1,84 @@
-#ifndef MAT_COORD_TRANSFORM_HPP
-#define MAT_COORD_TRANSFORM_HPP
+#pragma once
 
 #include "benchmark/benchmark.h"
+#include "benchmarks/coord-transform/boundToFree/blaze.h"
+#include "benchmarks/coord-transform/boundToFree/custom.h"
+#include "benchmarks/coord-transform/boundToFree/eigen.h"
+#include "benchmarks/coord-transform/freeToBound/blaze.h"
+#include "benchmarks/coord-transform/freeToBound/custom.h"
+#include "benchmarks/coord-transform/freeToBound/eigen.h"
 
-#include "coord-transform/boundToFree/blaze.h"
-#include "coord-transform/boundToFree/custom.h"
-#include "coord-transform/boundToFree/eigen.h"
-#include "coord-transform/boundToFree/fastor.h"
+BENCHMARK(boundToFree_eigen<float>)
+    ->Name("boundToFree_eigen_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(boundToFree_eigen<double>)
+    ->Name("boundToFree_eigen_double")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(freeToBound_eigen<float>)
+    ->Name("freeToBound_eigen_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(freeToBound_eigen<double>)
+    ->Name("freeToBound_eigen_double")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
 
-#include "coord-transform/freeToBound/blaze.h"
-#include "coord-transform/freeToBound/custom.h"
-#include "coord-transform/freeToBound/eigen.h"
-#include "coord-transform/freeToBound/fastor.h"
+BENCHMARK(boundToFree_blaze<float>)
+    ->Name("boundToFree_blaze_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(boundToFree_blaze<double>)
+    ->Name("boundToFree_blaze_double")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(freeToBound_blaze<float>)
+    ->Name("freeToBound_blaze_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(freeToBound_blaze<double>)
+    ->Name("freeToBound_blaze_double")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
 
-#define BENCHMARK_SUITE(x)            \
-    BENCHMARK(x)                      \
-        ->Threads(1)                  \
-        ->Repetitions(repetitions)    \
-        ->DisplayAggregatesOnly(true) \
-        ->UseRealTime();
-
-/* bound to free */
-BENCHMARK_SUITE(boundToFree_eigen);
-
-BENCHMARK_SUITE(boundToFree_blaze);
-
-BENCHMARK_SUITE(boundToFree_fastor);
-
-BENCHMARK_SUITE(boundToFree_custom);
-
-/* free to bound */
-BENCHMARK_SUITE(freeToBound_eigen);
-
-BENCHMARK_SUITE(freeToBound_blaze);
-
-BENCHMARK_SUITE(freeToBound_fastor);
-
-BENCHMARK_SUITE(freeToBound_custom);
-
-#undef BENCHMARK_SUITE
-// cleaning up macros
-
-#endif // MAT_COORD_TRANSFORM_HPP
+BENCHMARK(boundToFree_custom<float>)
+    ->Name("boundToFree_custom_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+/*BENCHMARK(boundToFree_custom<double>)
+        ->Name("boundToFree_custom_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();*/
+BENCHMARK(freeToBound_custom<float>)
+    ->Name("freeToBound_custom_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+/*BENCHMARK(freeToBound_custom<double>)
+        ->Name("freeToBound_custom_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();*/

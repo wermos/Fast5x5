@@ -1,5 +1,4 @@
-#ifndef MAT_MUL_HPP
-#define MAT_MUL_HPP
+#pragma once
 
 #include "benchmark/benchmark.h"
 
@@ -9,24 +8,115 @@
 #include "gemm/fastor.h"
 //#include "gemm/simple.h"
 
-#define BENCHMARK_SUITE(x)            \
-    BENCHMARK(x)                      \
-        ->Threads(1)                  \
-        ->Repetitions(repetitions)    \
-        ->DisplayAggregatesOnly(true) \
+//BENCHMARK(gemm_simple);
+
+BENCHMARK(gemm_eigen<4, float>)
+        ->Name("gemm_eigen_4x4_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_eigen<6, float>)
+        ->Name("gemm_eigen_6x6_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_eigen<8, float>)
+        ->Name("gemm_eigen_8x8_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_eigen<4, double>)
+        ->Name("gemm_eigen_4x4_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_eigen<6, double>)
+        ->Name("gemm_eigen_6x6_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_eigen<8, double>)
+        ->Name("gemm_eigen_8x8_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
         ->UseRealTime();
 
-//BENCHMARK_SUITE(gemm_simple);
+BENCHMARK(gemm_blaze<4, float>)
+        ->Name("gemm_blaze_4x4_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_blaze<6, float>)
+        ->Name("gemm_blaze_6x6_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_blaze<8, float>)
+        ->Name("gemm_blaze_8x8_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_blaze<4, double>)
+        ->Name("gemm_blaze_4x4_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_blaze<6, double>)
+        ->Name("gemm_blaze_6x6_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_blaze<8, double>)
+        ->Name("gemm_blaze_8x8_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
 
-BENCHMARK_SUITE(gemm_eigen);
-
-BENCHMARK_SUITE(gemm_blaze);
-
-BENCHMARK_SUITE(gemm_fastor);
-
-BENCHMARK_SUITE(gemm_custom);
-
-#undef BENCHMARK_SUITE
-// cleaning up macros
-
-#endif // MAT_MUL_HPP
+BENCHMARK(gemm_custom<4, float>)
+        ->Name("gemm_custom_4x4_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_custom<6, float>)
+        ->Name("gemm_custom_6x6_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_custom<8, float>)
+        ->Name("gemm_custom_8x8_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_custom<4, double>)
+        ->Name("gemm_custom_4x4_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+/*BENCHMARK(gemm_custom<6, double>)
+        ->Name("gemm_custom_6x6_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(gemm_custom<8, double>)
+        ->Name("gemm_custom_8x8_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();*/

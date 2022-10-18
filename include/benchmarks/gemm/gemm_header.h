@@ -1,5 +1,4 @@
-#ifndef GEMM_HEADER_H
-#define GEMM_HEADER_H
+#pragma once
 
 #include <iostream>
 
@@ -24,5 +23,3 @@ void gemm(T *a, T *b, T *c) {
         }
     }
 }
-
-#endif  // GEMM_HEADER_H

@@ -1,27 +1,15 @@
-#ifndef RANDOM_HPP
-#define RANDOM_HPP
+#pragma once
 
 #include <random>
 #include <limits>
 
-inline double randomDouble(double min, double max) {
+template<typename T>
+inline T randomEntry(T min, T max) {
     // Returns a random real in [min, max].
-    static std::uniform_real_distribution<double> distribution(
-        min, std::nextafter(max, std::numeric_limits<double>::infinity()));
+    static std::uniform_real_distribution<T> distribution(
+        min, std::nextafter(max, std::numeric_limits<T>::infinity()));
 
     static std::mt19937_64 generator;
 
     return distribution(generator);
 }
-
-inline float randomFloat(float min, float max) {
-    // Returns a random real in [min, max].
-    static std::uniform_real_distribution<float> distribution(
-        min, std::nextafter(max, std::numeric_limits<float>::infinity()));
-
-    static std::mt19937_64 generator;
-
-    return distribution(generator);
-}
-
-#endif // RANDOM_HPP

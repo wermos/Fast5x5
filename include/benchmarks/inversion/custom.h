@@ -1,23 +1,19 @@
-#ifndef INVERSION_CUSTOM_H
-#define INVERSION_CUSTOM_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
 #include "benchmarks/shared/common.hpp"
 
+template<unsigned long SIZE = 8UL, typename T = float>
 static void inversion_custom(benchmark::State& state) {
-    using M = BaseMatrix<float, SIZE, SIZE>;
+    using M = BaseMatrix<T, SIZE, SIZE>;
 
-    M m = genRandomCustomSymMat<float, SIZE, SIZE>();
-	M res;
+    M m = genRandomCustomSymMat<T, SIZE, SIZE>();
+	  M res;
 
     for (auto _ : state) {
-		benchmark::DoNotOptimize(m);
-
-        Inverse<float, SIZE>::inverse(m, res);
+        Inverse<T, SIZE>::inverse(m, res);
 
         benchmark::DoNotOptimize(res);
     }
 }
-
-#endif  // INVERSION_CUSTOM_H

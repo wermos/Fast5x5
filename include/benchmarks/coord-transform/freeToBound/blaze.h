@@ -1,16 +1,16 @@
-#ifndef FREE_TO_BOUND_BLAZE_H
-#define FREE_TO_BOUND_BLAZE_H
+#pragma once
 
 #include "benchmark/benchmark.h"
-#include "blaze/Math.h"
 #include "benchmarks/shared/common.hpp"
+#include "blaze/Math.h"
 
+template <typename T = float>
 static void freeToBound_blaze(benchmark::State& state) {
-	blaze::StaticMatrix<float, 6, 6, blaze::rowMajor> m1;
-	blaze::StaticMatrix<float, 6, 8, blaze::rowMajor> m2, res;
+    blaze::StaticMatrix<T, 6, 6, blaze::rowMajor> m1;
+    blaze::StaticMatrix<T, 6, 8, blaze::rowMajor> m2, res;
 
-    m1 = genRandomBlazeMat<float, 6, 6>();
-    m2 = genRandomBlazeMat<float, 6, 8>();
+    m1 = genRandomBlazeMat<T, 6, 6>();
+    m2 = genRandomBlazeMat<T, 6, 8>();
 
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m1);
@@ -21,5 +21,3 @@ static void freeToBound_blaze(benchmark::State& state) {
         benchmark::DoNotOptimize(res);
     }
 }
-
-#endif // FREE_TO_BOUND_BLAZE_H

@@ -1,16 +1,16 @@
-#ifndef BOUND_TO_FREE_CUSTOM_H 
-#define BOUND_TO_FREE_CUSTOM_H
+#pragma once
 
 #include "benchmark/benchmark.h"
-#include "fast5x5/fast5x5.hpp"
 #include "benchmarks/shared/common.hpp"
+#include "fast5x5/fast5x5.hpp"
 
+template <typename T = float>
 static void boundToFree_custom(benchmark::State& state) {
-	using M1 = BaseMatrix<float, 6, 8>;
-	using M2 = BaseMatrix<float, 8, 8>;
+    using M1 = BaseMatrix<T, 6, 8>;
+    using M2 = BaseMatrix<T, 8, 8>;
 
-    M1 m1 = genRandomCustomMat<float, 6, 8>();
-    M2 m2 = genRandomCustomMat<float, 8, 8>();
+    M1 m1 = genRandomCustomMat<T, 6, 8>();
+    M2 m2 = genRandomCustomMat<T, 8, 8>();
     M1 res;
 
     for (auto _ : state) {
@@ -22,5 +22,3 @@ static void boundToFree_custom(benchmark::State& state) {
         benchmark::DoNotOptimize(res);
     }
 }
-
-#endif // BOUND_TO_FREE_CUSTOM_H
