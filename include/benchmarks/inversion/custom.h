@@ -8,12 +8,12 @@ template<unsigned long SIZE = 8UL, typename T = float>
 static void inversion_custom(benchmark::State& state) {
     using M = BaseMatrix<T, SIZE, SIZE>;
 
-    M m1 = genRandomCustomSymMat<T, SIZE, SIZE>();
-	M res;
+    M m = genRandomCustomSymMat<T, SIZE, SIZE>();
+	  M res;
 
     for (auto _ : state) {
-        benchmark::DoNotOptimize(res);
+        Inverse<T, SIZE>::inverse(m, res);
 
-        Inverse<T, SIZE>::inverse(m1, res);
+        benchmark::DoNotOptimize(res);
     }
 }

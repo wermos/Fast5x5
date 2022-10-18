@@ -14,8 +14,11 @@ static void freeToBound_custom(benchmark::State& state) {
     M2 res;
 
     for (auto _ : state) {
-        benchmark::DoNotOptimize(res);
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
 
         matrix_mul_m_m(m1, m2, res);
+
+        benchmark::DoNotOptimize(res);
     }
 }

@@ -5,6 +5,7 @@
 #include "gemm/blaze.h"
 #include "gemm/custom.h"
 #include "gemm/eigen.h"
+#include "gemm/fastor.h"
 //#include "gemm/simple.h"
 
 //BENCHMARK(gemm_simple);

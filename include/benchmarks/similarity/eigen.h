@@ -12,8 +12,11 @@ static void similarity_eigen(benchmark::State& state) {
     m2 = Eigen::Matrix<T, SIZE, SIZE>::Random();
 
     for (auto _ : state) {
-        benchmark::DoNotOptimize(res);
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
 
         res = m1 * m2 * m1.transpose();
+
+        benchmark::DoNotOptimize(res);
     }
 }

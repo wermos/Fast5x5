@@ -1,10 +1,10 @@
 #pragma once
 
 #include "benchmark/benchmark.h"
-
 #include "inversion/blaze.h"
-#include "inversion/eigen.h"
 #include "inversion/custom.h"
+#include "inversion/eigen.h"
+#include "inversion/fastor.h"
 
 BENCHMARK(inversion_eigen<4, float>)
         ->Name("inversion_eigen_4x4_float")

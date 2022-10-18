@@ -7,10 +7,13 @@
 [submodule "src/libs/xsimd"]
 	path = src/libs/xsimd
 	url = https://github.com/xtensor-stack/xsimd.git
-	branch = 5.0.0
+	branch = 7.6.0
 [submodule "src/libs/eigen"]
 	path = src/libs/eigen
 	url = https://gitlab.com/libeigen/eigen.git
 [submodule "src/libs/blaze"]
 	path = src/libs/blaze
 	url = https://bitbucket.org/blaze-lib/blaze.git
+[submodule "src/libs/Fastor"]
+	path = src/libs/Fastor
+	url = https://github.com/romeric/Fastor.git

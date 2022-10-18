@@ -34,6 +34,8 @@ static void gemm_simple(benchmark::State& state) {
     }
 
     for (auto _ : state) {
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
         benchmark::DoNotOptimize(c);
 
         gemm<T, SIZE>(a, b, c);

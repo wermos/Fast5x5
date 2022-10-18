@@ -8,6 +8,7 @@ target_include_directories(gemm_benchmarks PUBLIC ../libs/benchmark/include)
 target_include_directories(gemm_benchmarks PUBLIC ../libs/xsimd/include)
 target_include_directories(gemm_benchmarks PUBLIC ../libs/eigen)
 target_include_directories(gemm_benchmarks PUBLIC ../libs/blaze)
+target_include_directories(gemm_benchmarks PUBLIC ../libs/Fastor)
 
 # inversion benchmarks
 add_executable(inversion_benchmarks inversion_benchmark.cpp)
@@ -20,6 +21,7 @@ target_include_directories(inversion_benchmarks PUBLIC ../libs/benchmark/include
 target_include_directories(inversion_benchmarks PUBLIC ../libs/xsimd/include)
 target_include_directories(inversion_benchmarks PUBLIC ../libs/eigen)
 target_include_directories(inversion_benchmarks PUBLIC ../libs/blaze)
+target_include_directories(inversion_benchmarks PUBLIC ../libs/Fastor)
 
 # similarity benchmarks
 add_executable(similarity_benchmarks similarity_benchmark.cpp)
@@ -31,6 +33,7 @@ target_include_directories(similarity_benchmarks PUBLIC ../libs/benchmark/includ
 target_include_directories(similarity_benchmarks PUBLIC ../libs/xsimd/include)
 target_include_directories(similarity_benchmarks PUBLIC ../libs/eigen)
 target_include_directories(similarity_benchmarks PUBLIC ../libs/blaze)
+target_include_directories(similarity_benchmarks PUBLIC ../libs/Fastor)
 
 # coordinate transform benchmarks
 add_executable(coord_transform_benchmarks coord_transform_benchmark.cpp)
@@ -42,14 +45,17 @@ target_include_directories(coord_transform_benchmarks PUBLIC ../libs/benchmark/i
 target_include_directories(coord_transform_benchmarks PUBLIC ../libs/xsimd/include)
 target_include_directories(coord_transform_benchmarks PUBLIC ../libs/eigen)
 target_include_directories(coord_transform_benchmarks PUBLIC ../libs/blaze)
+target_include_directories(coord_transform_benchmarks PUBLIC ../libs/Fastor)
 
 # combined benchmarks
 add_executable(combined_benchmarks combined_benchmark.cpp)
 
-target_link_libraries(combined_benchmarks PUBLIC benchmark::benchmark PUBLIC xsimd PUBLIC LAPACK::LAPACK PUBLIC BLAS::BLAS)
+target_link_libraries(combined_benchmarks PUBLIC benchmark::benchmark PUBLIC xsimd)
+target_link_libraries(combined_benchmarks PUBLIC LAPACK::LAPACK PUBLIC BLAS::BLAS)
 
 target_include_directories(combined_benchmarks PUBLIC ../../include)
 target_include_directories(combined_benchmarks PUBLIC ../libs/benchmark/include)
 target_include_directories(combined_benchmarks PUBLIC ../libs/xsimd/include)
 target_include_directories(combined_benchmarks PUBLIC ../libs/eigen)
 target_include_directories(combined_benchmarks PUBLIC ../libs/blaze)
+target_include_directories(combined_benchmarks PUBLIC ../libs/Fastor)

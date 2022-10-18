@@ -2,9 +2,10 @@
 
 #include "benchmark/benchmark.h"
 
-#include "benchmarks/similarity/blaze.h"
-#include "benchmarks/similarity/custom.h"
-#include "benchmarks/similarity/eigen.h"
+#include "similarity/blaze.h"
+#include "similarity/custom.h"
+#include "similarity/eigen.h"
+#include "similarity/fastor.h"
 
 BENCHMARK(similarity_eigen<4, float>)
         ->Name("similarity_eigen_4x4_float")

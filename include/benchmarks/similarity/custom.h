@@ -13,9 +13,12 @@ static void similarity_custom(benchmark::State& state) {
     M res, temp;
 
     for (auto _ : state) {
-        benchmark::DoNotOptimize(res);
+		benchmark::DoNotOptimize(m1);
+		benchmark::DoNotOptimize(m2);
 
         matrix_mul_m_m(m1, m2, temp);
 		matrix_mul_m_mt(temp, m1, res);
+
+        benchmark::DoNotOptimize(res);
     }
 }
