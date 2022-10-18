@@ -1,14 +1,14 @@
-#ifndef FREE_TO_BOUND_FASTOR_H 
-#define FREE_TO_BOUND_FASTOR_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "fast5x5/fast5x5.hpp"
 #include "benchmarks/shared/common.hpp"
 
+template <typename T = float>
 static void freeToBound_fastor(benchmark::State& state) {
-    Fastor::Tensor<float, 6, 6> m1 = genRandomFastorMat<float, 6, 6>();
-    Fastor::Tensor<float, 6, 8> m2 = genRandomFastorMat<float, 6, 8>();
-    Fastor::Tensor<float, 6, 8> res;
+    Fastor::Tensor<T, 6, 6> m1 = genRandomFastorMat<T, 6, 6>();
+    Fastor::Tensor<T, 6, 8> m2 = genRandomFastorMat<T, 6, 8>();
+    Fastor::Tensor<T, 6, 8> res;
 
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m1);
@@ -20,4 +20,3 @@ static void freeToBound_fastor(benchmark::State& state) {
     }
 }
 
-#endif // FREE_TO_BOUND_FASTOR_H

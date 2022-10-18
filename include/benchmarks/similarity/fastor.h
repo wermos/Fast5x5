@@ -1,14 +1,14 @@
-#ifndef SIMILARITY_FASTOR_H 
-#define SIMILARITY_FASTOR_H
+#pragma once
 
 #include "benchmark/benchmark.h"
 #include "Fastor/Fastor.h"
 #include "benchmarks/shared/common.hpp"
 
+template <unsigned long SIZE = 8UL, T = float>
 static void similarity_fastor(benchmark::State& state) {
-	Fastor::Tensor<float, SIZE, SIZE> m1 = genRandomFastorMat<float, SIZE, SIZE>();
-	Fastor::Tensor<float, SIZE, SIZE> m2 = genRandomFastorMat<float, SIZE, SIZE>();
-	Fastor::Tensor<float, SIZE, SIZE> res, temp;
+	Fastor::Tensor<T, SIZE, SIZE> m1 = genRandomFastorMat<T, SIZE, SIZE>();
+	Fastor::Tensor<T, SIZE, SIZE> m2 = genRandomFastorMat<T, SIZE, SIZE>();
+	Fastor::Tensor<T, SIZE, SIZE> res, temp;
 
     for (auto _ : state) {
 		benchmark::DoNotOptimize(m1);
@@ -20,4 +20,3 @@ static void similarity_fastor(benchmark::State& state) {
     }
 }
 
-#endif // SIMILARITY_FASTOR_H
