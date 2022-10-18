@@ -116,3 +116,40 @@ BENCHMARK(inversion_custom<8, double>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();*/
+
+BENCHMARK(inversion_fastor<4, float>)
+        ->Name("inversion_fastor_4x4_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(inversion_fastor<6, float>)
+        ->Name("inversion_fastor_6x6_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(inversion_fastor<8, float>)
+        ->Name("inversion_fastor_8x8_float")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(inversion_fastor<4, double>)
+        ->Name("inversion_fastor_4x4_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(inversion_fastor<6, double>)
+        ->Name("inversion_fastor_6x6_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();
+BENCHMARK(inversion_fastor<8, double>)
+        ->Name("inversion_fastor_8x8_double")
+        ->Threads(1)
+        ->Repetitions(repetitions)
+        ->DisplayAggregatesOnly(true)
+        ->UseRealTime();

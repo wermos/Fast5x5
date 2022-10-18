@@ -1,6 +1,7 @@
 #pragma once
 
 #include "benchmark/benchmark.h"
+
 #include "benchmarks/coord-transform/boundToFree/blaze.h"
 #include "benchmarks/coord-transform/boundToFree/custom.h"
 #include "benchmarks/coord-transform/boundToFree/eigen.h"
@@ -82,3 +83,28 @@ BENCHMARK(freeToBound_custom<float>)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
         ->UseRealTime();*/
+
+BENCHMARK(boundToFree_fastor<float>)
+    ->Name("boundToFree_fastor_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(boundToFree_fastor<double>)
+    ->Name("boundToFree_fastor_double")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(freeToBound_fastor<float>)
+    ->Name("freeToBound_fastor_float")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
+BENCHMARK(freeToBound_fastor<double>)
+    ->Name("freeToBound_fastor_double")
+    ->Threads(1)
+    ->Repetitions(repetitions)
+    ->DisplayAggregatesOnly(true)
+    ->UseRealTime();
