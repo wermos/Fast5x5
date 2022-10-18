@@ -20,4 +20,3 @@ static void gemm_fastor(benchmark::State& state) {
     }
 }
 
-#endif  // FASTOR_CUSTOM_H

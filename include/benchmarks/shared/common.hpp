@@ -68,7 +68,7 @@ inline Fastor::Tensor<T, Rows, Columns> genRandomFastorMat() {
 
     for (int i = 0; i < Rows; i++) {
         for (int j = 0; j < Columns; j++) {
-            a[i * Columns + j] = randomFloat(-1.0, 1.0);
+            a[i * Columns + j] = randomEntry<T>(-1.0, 1.0);
         }
     }
 
@@ -82,7 +82,7 @@ inline Fastor::Tensor<T, Rows, Columns> genRandomFastorSymMat() {
     for (int i = 0; i < Rows; i++) {
         for (int j = 0; j < Columns; j++) {
 			// filling the upper triangle
-            a[i * Columns + j] = randomFloat(-1.0, 1.0);
+            a[i * Columns + j] = randomEntry<T>(-1.0, 1.0);
             // copying the upper triangle element into
             // the lower triangle
             a[j * Columns + i] = a[i * Columns + j];

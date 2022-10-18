@@ -5,9 +5,11 @@
 #include "benchmarks/coord-transform/boundToFree/blaze.h"
 #include "benchmarks/coord-transform/boundToFree/custom.h"
 #include "benchmarks/coord-transform/boundToFree/eigen.h"
+#include "benchmarks/coord-transform/boundToFree/fastor.h"
 #include "benchmarks/coord-transform/freeToBound/blaze.h"
 #include "benchmarks/coord-transform/freeToBound/custom.h"
 #include "benchmarks/coord-transform/freeToBound/eigen.h"
+#include "benchmarks/coord-transform/freeToBound/fastor.h"
 
 BENCHMARK(boundToFree_eigen<float>)
     ->Name("boundToFree_eigen_float")
