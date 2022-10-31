@@ -17,25 +17,29 @@ BENCHMARK(boundToFree_eigen<float>)
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(boundToFree_blaze<float>)
     ->Name("boundToFree_blaze_float")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(boundToFree_custom<float>)
     ->Name("boundToFree_custom_float")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(boundToFree_fastor<float>)
     ->Name("boundToFree_fastor_float")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 
 // free to bound float matrix coordinate transform
 BENCHMARK(freeToBound_eigen<float>)
@@ -43,25 +47,29 @@ BENCHMARK(freeToBound_eigen<float>)
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(freeToBound_blaze<float>)
     ->Name("freeToBound_blaze_float")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(freeToBound_custom<float>)
     ->Name("freeToBound_custom_float")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(freeToBound_fastor<float>)
     ->Name("freeToBound_fastor_float")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 
 // bound to free double matrix coordinate transform
 BENCHMARK(boundToFree_eigen<double>)
@@ -69,25 +77,29 @@ BENCHMARK(boundToFree_eigen<double>)
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(boundToFree_blaze<double>)
     ->Name("boundToFree_blaze_double")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 /*BENCHMARK(boundToFree_custom<double>)
     ->Name("boundToFree_custom_double")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();*/
+    ->UseRealTime();
+	->ReportAggregatesOnly(true);*/
 BENCHMARK(boundToFree_fastor<double>)
     ->Name("boundToFree_fastor_double")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 
 // free to bound double matrix coordinate transform
 BENCHMARK(freeToBound_eigen<double>)
@@ -95,22 +107,26 @@ BENCHMARK(freeToBound_eigen<double>)
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 BENCHMARK(freeToBound_blaze<double>)
     ->Name("freeToBound_blaze_double")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);
 /*BENCHMARK(freeToBound_custom<double>)
     ->Name("freeToBound_custom_double")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();*/
+    ->UseRealTime();
+	->ReportAggregatesOnly(true);*/
 BENCHMARK(freeToBound_fastor<double>)
     ->Name("freeToBound_fastor_double")
     ->Threads(1)
     ->Repetitions(repetitions)
     ->DisplayAggregatesOnly(true)
-    ->UseRealTime();
+    ->UseRealTime()
+	->ReportAggregatesOnly(true);

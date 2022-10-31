@@ -13,25 +13,29 @@ BENCHMARK(gemm_eigen<4, float>)
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_blaze<4, float>)
         ->Name("gemm_blaze_4x4_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_custom<4, float>)
         ->Name("gemm_custom_4x4_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_fastor<4, float>)
         ->Name("gemm_fastor_4x4_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 
 // 6x6 float matrix multiplication
 BENCHMARK(gemm_eigen<6, float>)
@@ -39,25 +43,29 @@ BENCHMARK(gemm_eigen<6, float>)
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_blaze<6, float>)
         ->Name("gemm_blaze_6x6_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_custom<6, float>)
         ->Name("gemm_custom_6x6_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_fastor<6, float>)
         ->Name("gemm_fastor_6x6_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 
 // 8x8 float matrix multiplication
 BENCHMARK(gemm_eigen<8, float>)
@@ -65,25 +73,29 @@ BENCHMARK(gemm_eigen<8, float>)
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_blaze<8, float>)
         ->Name("gemm_blaze_8x8_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_custom<8, float>)
         ->Name("gemm_custom_8x8_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_fastor<8, float>)
         ->Name("gemm_fastor_8x8_float")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 
 // 4x4 double matrix multiplication
 BENCHMARK(gemm_eigen<4, double>)
@@ -91,25 +103,29 @@ BENCHMARK(gemm_eigen<4, double>)
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_blaze<4, double>)
         ->Name("gemm_blaze_4x4_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_custom<4, double>)
         ->Name("gemm_custom_4x4_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_fastor<4, double>)
         ->Name("gemm_fastor_4x4_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 
 // 6x6 double matrix multiplication
 BENCHMARK(gemm_eigen<6, double>)
@@ -117,25 +133,29 @@ BENCHMARK(gemm_eigen<6, double>)
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_blaze<6, double>)
         ->Name("gemm_blaze_6x6_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 /*BENCHMARK(gemm_custom<6, double>)
         ->Name("gemm_custom_6x6_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();*/
+        ->UseRealTime();
+		->ReportAggregatesOnly(true);*/
 BENCHMARK(gemm_fastor<6, double>)
         ->Name("gemm_fastor_6x6_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 
 // 8x8 double matrix multiplication
 BENCHMARK(gemm_eigen<8, double>)
@@ -143,22 +163,26 @@ BENCHMARK(gemm_eigen<8, double>)
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 BENCHMARK(gemm_blaze<8, double>)
         ->Name("gemm_blaze_8x8_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
 /*BENCHMARK(gemm_custom<8, double>)
         ->Name("gemm_custom_8x8_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();*/
+        ->UseRealTime();
+		->ReportAggregatesOnly(true);*/
 BENCHMARK(gemm_fastor<8, double>)
         ->Name("gemm_fastor_8x8_double")
         ->Threads(1)
         ->Repetitions(repetitions)
         ->DisplayAggregatesOnly(true)
-        ->UseRealTime();
+        ->UseRealTime()
+		->ReportAggregatesOnly(true);
