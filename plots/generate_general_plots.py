@@ -112,7 +112,7 @@ if args.task != "free-to-bound" and args.task != "bound-to-free":
 	if args.output_format == "window":
 		plt.show()
 	elif args.output_format == "png":
-		plt.savefig(f"{args.task}_plot.png")
+		plt.savefig(f"{args.task}_plot_{args.precision}.png")
 
 if args.task == "free-to-bound":
 	data = pd.read_csv("processed_data/coord_transform_data.csv", sep=",", index_col=0, usecols=["name", "cpu_time"], encoding="ascii")
@@ -155,7 +155,7 @@ if args.task == "free-to-bound":
 	if args.output_format == "window":
 		plt.show()
 	elif args.output_format == "png":
-		plt.savefig("freeToBound_plot.png")
+		plt.savefig(f"freeToBound_plot_{args.precision}.png")
 
 if args.task == "bound-to-free":
 	data = pd.read_csv("processed_data/coord_transform_data.csv", sep=",", index_col=0, usecols=["name", "cpu_time"], encoding="ascii")
@@ -198,4 +198,4 @@ if args.task == "bound-to-free":
 	if args.output_format == "window":
 		plt.show()
 	elif args.output_format == "png":
-		plt.savefig("boundToFree_plot.png")
+		plt.savefig(f"boundToFree_plot_{args.precision}.png")
